@@ -1,0 +1,63 @@
+﻿@model ISSSC.Models.Meta.MetaNews
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewBag.ActiveMenuItem = "menu-news";
+}
+
+<div class="row content">
+    <div class="col-sm-2 sidenav">
+    </div>
+
+    <div class="col-sm-8 text-left">
+        <h1>Novinky</h1>
+        @if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Administrator))
+        {
+            @Html.ActionLink(SSCISResources.Resources.CREATE_NEWS, "Create", "Contents", new { area = "" }, null)
+        }
+        @foreach (var modelItem in Model.Contents)
+        {
+            <hr />
+            <div class="well">
+                <h3>@Html.DisplayFor(m => modelItem.Header) @Html.DisplayFor(m => modelItem.Created)</h3>
+                <p>
+                    @Html.DisplayFor(m => modelItem.TextContent)
+                </p>
+                @if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals("ADMIN"))
+                {
+                    @Html.ActionLink("Upravit", "Edit", "Contents", new { id = modelItem.Id }, null)
+                    <br>
+                    @Html.ActionLink("Smazat", "Delete", "Contents", new { id = modelItem.Id }, null)
+                }
+            </div>
+        }
+        <hr>
+    </div>
+
+    @{if (ViewContext.HttpContext.Session.GetString("role") != null && (ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.User) || ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Tutor)))
+        {
+            <div class="col-sm-2 sidenav rozvrh">
+                <div class="well">
+                    <p>
+                        USER - rozvrh extra lekcí na které se přihlásil
+                        <br />
+                        TUTOR - rozvrh lekcí co bude vyučovat (pravidelné a nepravidelné)
+                    </p>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-sm-2 sidenav">
+            </div>
+        }
+    }
+
+
+</div>
+
+
+
+
+
+
+

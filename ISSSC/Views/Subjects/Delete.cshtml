@@ -1,0 +1,65 @@
+﻿@model ISSSC.Models.EnumSubject
+
+@{
+    ViewBag.Title = "Delete";
+    ViewBag.ActiveMenuItem = "menu-subjects";
+}
+<div class="body-content container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+        </div>
+
+        <div class="col-sm-8 text-left">
+            <h2>Vymazat</h2>
+
+            <h3>Chcete opravdu vymazat tento předmět?</h3>
+            <div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <h4>Subject</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Code)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Code)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Lesson)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Lesson)
+                    </dd>
+                    <dd>
+                        <br />
+                        <div>
+                            <input type="submit" value="Smazat" class="btn btn-default" />
+                    
+                        </div>
+                    </dd>
+                </dl>
+
+                    <div class="form-actions no-color">
+                        @Html.ActionLink("Zpátky na seznam", "Index")
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="col-sm-2 sidenav">
+        </div>
+    </div>
+    </div>

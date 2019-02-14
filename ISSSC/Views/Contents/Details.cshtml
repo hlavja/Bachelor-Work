@@ -1,0 +1,66 @@
+﻿@model ISSSC.Models.SscisContent
+
+@{
+    ViewBag.Title = @SSCISResources.Resources.DETAIL;
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SSCISContent</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @SSCISResources.Resources.CREATED
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created)
+        </dd>
+
+        <dt>
+            @SSCISResources.Resources.EDITED
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Edited)
+        </dd>
+
+        <dt>
+            @SSCISResources.Resources.HEADER
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Header)
+        </dd>
+
+        <dt>
+            @SSCISResources.Resources.CONTENT
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TextContent)
+        </dd>
+
+        <dt>
+            @SSCISResources.Resources.AUTHOR
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdAuthorNavigation.Login)
+        </dd>
+
+        <dt>
+            @SSCISResources.Resources.EDITED_BY
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdEditedByNavigation.Login)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink(@SSCISResources.Resources.EDIT, "Edit", new { id = Model.Id }) |
+    @Html.ActionLink(@SSCISResources.Resources.BACK, "Index")
+</p>

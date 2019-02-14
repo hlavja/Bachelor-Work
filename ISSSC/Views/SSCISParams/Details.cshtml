@@ -1,0 +1,53 @@
+﻿@model ISSSC.Models.SscisParam
+
+@{
+    ViewBag.Title = "Details";
+    ViewBag.ActiveMenuItem = "menu-params";
+}
+<div class="body-content container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+        </div>
+
+        <div class="col-sm-8 text-left">
+            <h2>Detaily</h2>
+
+            <div>
+                <h4>SSCISParam</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ParamKey)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ParamKey)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ParamValue)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ParamValue)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+
+                </dl>
+            </div>
+            <p>
+                @Html.ActionLink("Upravit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Zpátky na seznam", "Index")
+            </p>
+        </div>
+        <div class="col-sm-2 sidenav">
+        </div>
+    </div>
+</div>

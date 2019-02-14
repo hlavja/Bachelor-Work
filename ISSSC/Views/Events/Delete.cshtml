@@ -1,0 +1,80 @@
+﻿@model ISSSC.Models.Event
+
+@{
+    ViewBag.Title = SSCISResources.Resources.DELETE;
+}
+
+<h2>@SSCISResources.Resources.DELETE</h2>
+
+<h3>@SSCISResources.Resources.EVENT_DELETE_CONFIRMATION</h3>
+<div>
+    <h4>@SSCISResources.Resources.EVENT</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @SSCISResources.Resources.TIME_FROM
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeFrom)
+        </dd>
+
+        <dt>
+            @SSCISResources.Resources.TIME_TO
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeTo)
+        </dd>
+
+        <dt>
+            @SSCISResources.Resources.ACCEPTED
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsAccepted)
+        </dd>
+
+        <dt>
+            @SSCISResources.Resources.CANCELLED
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsCancelled)
+        </dd>
+
+        <dt>
+            @SSCISResources.Resources.CANCELLATION_COMMENT
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CancelationComment)
+        </dd>
+
+        <dt>
+            @SSCISResources.Resources.SUBJECT
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdSubjectNavigation.Code)
+        </dd>
+
+        <dt>
+            @SSCISResources.Resources.TUTOR
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdTutorNavigation.Login)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="@SSCISResources.Resources.DELETE" class="btn btn-default" /> |
+            @Html.ActionLink(SSCISResources.Resources.BACK, "Index")
+        </div>
+    }
+</div>

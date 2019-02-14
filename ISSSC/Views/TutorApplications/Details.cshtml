@@ -1,0 +1,72 @@
+﻿@model ISSSC.Models.Meta.MetaTutorApplication
+
+@{
+    ViewBag.Title = "Details";
+    ViewBag.ActiveMenuItem = "menu-tutors";
+}
+
+<div class="body-content container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+        </div>
+
+        <div class="col-sm-8 text-left">
+
+            <h2>Žádost o tutorství</h2>
+            <div class="well">
+
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        Datum žádosti
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Application.ApplicationDate)
+                    </dd>
+
+                    <dt>
+                        Login uživatele
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Application.IdUserNavigation.Login)
+                    </dd>
+
+                </dl>
+
+                @foreach (var subject in Model.ApplicationSubjects)
+                {
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Předmět
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(m => subject.IdSubjectNavigation.Code)
+                        </dd>
+
+                        <dt>
+                            Známka
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(m => subject.Degree)
+                        </dd>
+
+                    </dl>
+                            <br />
+                            <br />
+                }
+                <p>
+                    @Html.ActionLink(SSCISResources.Resources.ACCEPT, "Accept", new { id = Model.Application.Id }) |
+                    @Html.ActionLink(SSCISResources.Resources.DECLINE, "Decline", new { id = Model.Application.Id }) |
+                    @Html.ActionLink(SSCISResources.Resources.BACK, "Index")
+                </p>
+            </div>
+
+        </div>
+        <div class="col-sm-2 sidenav">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+﻿@model ISSSC.Models.SscisUser
+@using Microsoft.AspNetCore.Http;
+
+@{
+    ViewBag.Title = SSCISResources.Resources.USER_DETAIL;
+    ViewBag.ActiveMenuItem = "menu-users";
+}
+<div class="body-content container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+        </div>
+        <div class="col-sm-8 text-left">
+            <h2>Detaily</h2>
+
+            <div>
+                <h4>Uživatel</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @SSCISResources.Resources.LOGIN
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Login)
+                    </dd>
+
+                    <dt>
+                        @SSCISResources.Resources.NAME
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Firstname)
+                    </dd>
+
+                    <dt>
+                        @SSCISResources.Resources.LASTNAME
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Lastname)
+                    </dd>
+
+                    <dt>
+                        @SSCISResources.Resources.CREATED
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Created)
+                    </dd>
+
+                    <dt>
+                        @SSCISResources.Resources.STUDENT_NUMBER
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.StudentNumber)
+                    </dd>
+
+                    <dt>
+                        @SSCISResources.Resources.ROLE
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.IdRoleNavigation.Role)
+                    </dd>
+
+                </dl>
+            </div>
+            <p>
+                @{if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Administrator))
+                    {
+                    <p>@Html.ActionLink(@SSCISResources.Resources.EDIT, "Edit", new { id = Model.Id }) | @Html.ActionLink(@SSCISResources.Resources.BACK, "Index")</p>
+                }
+                else
+                {
+                    <p>@Html.ActionLink(@SSCISResources.Resources.BACK, "Index")</p>
+                }
+                }
+                </p>
+            </div>
+            <div class="col-sm-2 sidenav">
+
+            </div>
+        </div>
+    </div>

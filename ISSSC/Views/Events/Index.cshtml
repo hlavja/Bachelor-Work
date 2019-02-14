@@ -1,0 +1,99 @@
+﻿@model IEnumerable<ISSSC.Models.Event>
+@using ISSSC.Class
+@using Microsoft.AspNetCore.Http
+
+@{
+    ViewBag.Title = SSCISResources.Resources.EVENTS;
+    ViewBag.ActiveMenuItem = "menu-eventlist";
+}
+
+<div class="body-content container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+        </div>
+
+        <div class="col-sm-8 text-left">
+            <h2>@SSCISResources.Resources.EVENTS</h2>
+
+            <p>
+                @Html.ActionLink(SSCISResources.Resources.CREATE_EVENT, "Create")
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @SSCISResources.Resources.TIME_FROM
+                    </th>
+                    <th>
+                        @SSCISResources.Resources.TIME_TO
+                    </th>
+                    <th>
+                        @SSCISResources.Resources.ACCEPTED
+                    </th>
+                    <th>
+                        @SSCISResources.Resources.CANCELLED
+                    </th>
+                    <th>
+                        @SSCISResources.Resources.CANCELLATION_COMMENT
+                    </th>
+                    <th>
+                        @SSCISResources.Resources.SUBJECT
+                    </th>
+                    <th>
+                        @SSCISResources.Resources.TUTOR
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TimeFrom)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TimeTo)
+                        </td>
+                        <td>
+                            @SSCISHtml.DisplayForBool(item.IsAccepted)
+                        </td>
+                        <td>
+                            @SSCISHtml.DisplayForBool(item.IsCancelled)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CancelationComment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdSubjectNavigation.Code)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdTutorNavigation.Login)
+                        </td>
+                        <td>
+                            @{if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Administrator))
+                                {
+
+                                    <p>
+                                        @if (item.IsAccepted == null || !item.IsAccepted.Value)
+                                        {
+                                            @Html.ActionLink(SSCISResources.Resources.ACCEPT, "Accept", new { id = item.Id })
+                                        }  |
+                                        @if (item.IsCancelled == null || !item.IsCancelled.Value)
+                                        {
+                                            @Html.ActionLink(SSCISResources.Resources.CANCEL, "Cancel", new { id = item.Id })
+                                        }
+                                    </p>
+                                }
+                            }
+                            <p>|@Html.ActionLink(SSCISResources.Resources.DETAIL, "Details", new { id = item.Id })</p>
+                        </td>
+                    </tr>
+                                }
+
+            </table>
+
+        </div>
+            <div class="col-sm-2 sidenav">
+            </div>
+       
+    </div>
+</div>

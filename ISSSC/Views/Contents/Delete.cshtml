@@ -1,0 +1,77 @@
+﻿@model ISSSC.Models.SscisContent;
+
+@{
+    ViewBag.Title = SSCISResources.Resources.DELETE;
+}
+<div class="body-content container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+        </div>
+
+        <div class="col-sm-8 text-left">
+            <h2>Vymazat</h2>
+
+            <h3>@SSCISResources.Resources.CONTENT_DELETE_CONFIRM</h3>
+            <div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @SSCISResources.Resources.CREATED
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Created)
+                    </dd>
+
+                    <dt>
+                        @SSCISResources.Resources.EDITED
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Edited)
+                    </dd>
+
+                    <dt>
+                        @SSCISResources.Resources.HEADER
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Header)
+                    </dd>
+
+                    <dt>
+                        @SSCISResources.Resources.CONTENT
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.TextContent)
+                    </dd>
+
+                    <dt>
+                        @SSCISResources.Resources.AUTHOR
+                    </dt>
+                    
+                    
+                    <dd>
+                        <br />
+                        <div class="form-actions no-color">
+                            <input type="submit" value="@SSCISResources.Resources.DELETE" class="btn btn-default" />
+                        </div>
+                    </dd>
+                </dl>
+
+             
+
+                 
+                }
+            </div>
+        </div>
+
+
+        <div class="col-sm-2 sidenav">
+        </div>
+    </div>
+</div>

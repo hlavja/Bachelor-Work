@@ -1,0 +1,14 @@
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\bin\Debug\netcoreapp2.2\SSCISResources.deps.json
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\bin\Debug\netcoreapp2.2\SSCISResources.runtimeconfig.json
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\bin\Debug\netcoreapp2.2\SSCISResources.runtimeconfig.dev.json
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\bin\Debug\netcoreapp2.2\SSCISResources.dll
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\bin\Debug\netcoreapp2.2\SSCISResources.pdb
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.csprojAssemblyReference.cache
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.Resources.resources
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.Resources1.resources
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.csproj.GenerateResource.cache
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.csproj.CoreCompileInputs.cache
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.AssemblyInfoInputs.cache
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.AssemblyInfo.cs
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.dll
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.pdb

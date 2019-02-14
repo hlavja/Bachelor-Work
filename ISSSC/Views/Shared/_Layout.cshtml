@@ -1,0 +1,99 @@
+﻿@using Microsoft.AspNetCore.Http;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/Site.css" />
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap"></script>
+</head>
+<body style="padding-bottom: 70px;">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid navtop">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" href="https://www.zcu.cz/" target="_blank"><img src="~/Images/logo2.png"></a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar" style="margin-left: 20px">
+                <ul class="nav navbar-nav">
+                    <li class="menu-index">@Html.ActionLink("Domů", "Index", "Home", new { area = "" }, null)</li>
+
+                    @{if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Administrator))
+                        {
+                            <li class="menu-news">@Html.ActionLink("Novinky", "News", "Home", new { area = "" }, null)</li>
+                            <li class="menu-eventlist">@Html.ActionLink("Seznam lekcí", "Index", "Events", new { area = "" }, null)</li>
+                            <li class="menu-params">@Html.ActionLink("Systémové parametry", "Index", "SSCISParams", new { area = "" }, null)</li>
+                            <li class="menu-subjects">@Html.ActionLink("Správa předmětů", "Index", "Subjects", new { area = "" }, null)</li>
+                            <li class="menu-tutors">@Html.ActionLink("Žádosti tutorů", "Index", "TutorApplications", new { area = "" }, null)</li>
+                            <li class="menu-statistics">@Html.ActionLink("Statistiky", "Statistics", "Home", new { area = "" }, null)</li>
+                            <li class="menu-users">@Html.ActionLink("Uživatelé", "Index", "Users", new { area = "" }, null)</li>
+                        }
+                        else if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Tutor))
+                        {
+                            <li class="menu-news">@Html.ActionLink("Novinky", "News", "Home", new { area = "" }, null)</li>
+                            <li class="menu-event">@Html.ActionLink("Vypsat lekci", "Create", "Events", new { area = "" }, null)</li>
+                            <li class="menu-eventlist">@Html.ActionLink("Seznam lekcí", "Index", "Events", new { area = "" }, null)</li>
+                            <li class="menu-tutorevents">@Html.ActionLink("Moje lekce", "TutorEvents", "Events", new { area = "" }, null)</li>
+                            <li class="menu-contact">@Html.ActionLink("Kontakt", "Contact", "Home", new { area = "" }, null)</li>
+                        }
+                        else if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.User))
+                        {
+                            <li class="menu-news">@Html.ActionLink("Novinky", "News", "Home", new { area = "" }, null)</li>
+                            <li class="menu-tutor">@Html.ActionLink("Chci pomáhat", "Create", "TutorApplications", new { area = "" }, null)</li>
+                            <li class="menu-helpme">@Html.ActionLink("Potřebuji pomoc", "HelpMe", "Home", new { area = "" }, null)</li>
+                            <li class="menu-contact">@Html.ActionLink("Kontakt", "Contact", "Home", new { area = "" }, null)</li>
+                        }
+                        else
+                        {
+                            <li class="menu-news">@Html.ActionLink("Novinky", "News", "Home", new { area = "" }, null)</li>
+                            <li class="menu-tutor">@Html.ActionLink("Chci pomáhat", "Create", "TutorApplications", new { area = "" }, null)</li>
+                            <li class="menu-helpme">@Html.ActionLink("Potřebuji pomoc", "HelpMe", "Home", new { area = "" }, null)</li>
+                            <li class="menu-contact">@Html.ActionLink("Kontakt", "Contact", "Home", new { area = "" }, null)</li>
+                        }
+                    }
+
+
+
+
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    @if (ViewContext.HttpContext.Session.GetString("role") == null)
+                    {
+                        <li><a href="@Url.Action("Login", "Home")"><span class="glyphicon glyphicon-log-in"></span> Přihlásit se</a></li>
+                    }
+                    else
+                    {
+                        <li><a class="user" href="@Url.Action("Profil", "Users")">@ViewContext.HttpContext.Session.GetString("Login")</a></li>
+                        <li><a href="@Url.Action("Logout", "Home")"><span class="glyphicon glyphicon-log-in"></span> Odhlásit se</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="body-content container-fluid text-center">
+        @RenderBody()
+    </div>
+    <footer class="container-fluid text-center navbar-fixed-bottom">
+        <p>Copyright © 2018 - @DateTime.Now.Year Západočeská univerzita v Plzni</p>
+        <a href="http://fav.zcu.cz/" target="_blank">Fakulta aplikovaných věd</a> - @Html.ActionLink("Chci pomáhat", "Create", "TutorApplications", new { area = "" }, null) - @Html.ActionLink("Potřebuji pomoc", "HelpMe", "Home", new { area = "" }, null) - @Html.ActionLink("Kontakt", "Contact", "Home", new { area = "" }, null)
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $(".@ViewBag.ActiveMenuItem").addClass("active");
+    </script>
+
+</body>
+</html>

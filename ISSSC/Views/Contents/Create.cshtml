@@ -1,0 +1,63 @@
+﻿@model ISSSC.Models.SscisContent
+@using Microsoft.AspNetCore.Http;
+
+
+@{
+    ViewBag.Title = SSCISResources.Resources.CREATE_NEWS;
+}
+<div class="body-content container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+        </div>
+
+        <div class="col-sm-8 text-left">
+            <h2>@SSCISResources.Resources.CREATE_NEWS</h2>
+
+            @using (Html.BeginForm("Create", "Contents"))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Header, SSCISResources.Resources.HEADER, htmlAttributes: new { @class = "control-label col-md-1" })
+                        <div class="col-md-10 col-md-offset-1">
+                            @Html.EditorFor(model => model.Header, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Header, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TextContent, SSCISResources.Resources.CONTENT, htmlAttributes: new { @class = "control-label col-md-1" })
+                        <div class="col-md-10 col-md-offset-1">
+                            @Html.EditorFor(model => model.TextContent, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TextContent, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="@SSCISResources.Resources.CREATE" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Administrator))
+        {
+            <div class="col-sm-2 sidenav">
+            </div>
+        }
+        else
+        {
+            <div class="col-sm-2 sidenav">
+                <div class="well">
+                    <p>
+                        @SSCISResources.Resources.TIMETABLE_AFTER_LOGIN
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
