@@ -110,7 +110,8 @@ namespace ISSSC.Models
 
                 entity.Property(e => e.Code)
                     .HasColumnName("CODE")
-                    .HasColumnType("int(11)");
+                    .HasMaxLength(160)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.IdParent)
                     .HasColumnName("ID_PARENT")
@@ -261,12 +262,10 @@ namespace ISSSC.Models
                 entity.ToTable("sscis_content", "sscis");
 
                 entity.HasIndex(e => e.IdAuthor)
-                    .HasName("ID_AUTHOR")
-                    .IsUnique();
+                    .HasName("ID_AUTHOR");
 
                 entity.HasIndex(e => e.IdEditedBy)
-                    .HasName("ID_EDITED_BY")
-                    .IsUnique();
+                    .HasName("ID_EDITED_BY");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")

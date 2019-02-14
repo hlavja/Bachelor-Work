@@ -76,6 +76,7 @@ namespace ISSSC.Controllers
                 int authorID = 1;
                 //authorID = (int)HttpContext.Session.GetInt32("userID");
                 model.IdAuthorNavigation = db.SscisUser.Find((int)authorID);
+                model.IdEditedByNavigation = db.SscisUser.Find((int)authorID);
                 db.SscisContent.Add(model);
                 db.SaveChanges();
                 return RedirectToAction("News", "Home");
@@ -112,7 +113,7 @@ namespace ISSSC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
-        public ActionResult Edit([Bind("Id,IdAuthor,IdEditedBy,Created,Edited,TextContent,Header")] SscisContent model)
+        public ActionResult Edit([Bind("Id","IdAuthor","IdEditedBy","Created","Edited","TextContent","Header")] SscisContent model)
         {
             if (ModelState.IsValid)
             {
@@ -123,7 +124,8 @@ namespace ISSSC.Controllers
                 model.TextContent = text;
                 model.Edited = DateTime.Now;
 
-                int authorID = (int)HttpContext.Session.GetInt32("userID");
+                //int authorID = (int)HttpContext.Session.GetInt32("userID");
+                int authorID = 1;
                 model.IdEditedByNavigation = db.SscisUser.Find(authorID);
                 db.SaveChanges();
                 return RedirectToAction("News", "Home");

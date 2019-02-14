@@ -6,7 +6,7 @@ namespace ISSSC.Models
     public partial class EnumSubject
     {
         public int Id { get; set; }
-        public int Code { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
         public Nullable<bool> Lesson { get; set; }
         public int? IdParent { get; set; }

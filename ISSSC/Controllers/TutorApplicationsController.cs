@@ -108,7 +108,8 @@ namespace ISSSC.Controllers
             if (ModelState.IsValid)
             {
                 model.Application.ApplicationDate = DateTime.Now;
-                int? userID = (int)HttpContext.Session.GetInt32("userID");
+                //int? userID = (int)HttpContext.Session.GetInt32("userID");
+                int userID = 2;
                 model.Application.IdUserNavigation = db.SscisUser.Find(userID);
                 db.TutorApplication.Add(model.Application);
                 db.SaveChanges();
