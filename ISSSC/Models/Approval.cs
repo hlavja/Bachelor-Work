@@ -9,7 +9,7 @@ namespace ISSSC.Models
         public int IdTutor { get; set; }
         public int IdSubject { get; set; }
 
-        public EnumSubject IdSubjectNavigation { get; set; }
-        public SscisUser IdTutorNavigation { get; set; }
+        public virtual EnumSubject IdSubjectNavigation { get; set; }
+        public virtual SscisUser IdTutorNavigation { get; set; }
     }
 }

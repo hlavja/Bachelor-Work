@@ -6,6 +6,7 @@ using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ISSSC.Attributes
 {
@@ -38,12 +39,12 @@ namespace ISSSC.Attributes
             _sessionManager = sessionManager;
         }
 
-        //TODO HttpContext problémy!!!
+        
         /// <summary>
         /// Authorizes actionResultMethod
         /// </summary>
         /// <param name="filterContext">authoentification filter context</param>
-       
+
         //public override void OnActionExecuting(ActionExecutingContext filterContext)
         //{
         //    if (AccessLevel != null)
@@ -58,15 +59,17 @@ namespace ISSSC.Attributes
         //    }
         //}
 
-        ///// <summary>
-        ///// Gets apps root url
-        ///// </summary>
-        ///// <returns>Root url</returns>
+        /// <summary>
+        /// Gets apps root url
+        /// </summary>
+        /// <returns>Root url</returns>
         //private string _getBaseUrl()
         //{
 
-        //    var request = HttpContext.Request;
+        //    //TODO HttpContext problémy!!!
+        //    var request = HttpContext.Current.Request;
         //    var appUrl = HttpRuntime.AppDomainAppVirtualPath;
+           
 
         //    if (appUrl != "/")
         //        appUrl = "/" + appUrl;

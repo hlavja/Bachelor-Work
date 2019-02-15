@@ -9,6 +9,6 @@ namespace ISSSC.Models
         public string Role { get; set; }
         public string Description { get; set; }
 
-        public SscisUser SscisUser { get; set; }
+        public virtual SscisUser SscisUser { get; set; }
     }
 }

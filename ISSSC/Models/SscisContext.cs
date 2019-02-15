@@ -30,14 +30,20 @@ namespace ISSSC.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySQL("server=localhost;port=3306;user=root;database=sscis");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                => optionsBuilder
+                    .UseLazyLoadingProxies()
+                .UseMySQL("server=localhost;user id=root;password='';port=3306;database=sscis");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasAnnotation("ProductVersion", "2.2.2-servicing-10034");
+
             modelBuilder.Entity<Approval>(entity =>
             {
                 entity.ToTable("approval", "sscis");
@@ -101,16 +107,16 @@ namespace ISSSC.Models
                 entity.ToTable("enum_subject", "sscis");
 
                 entity.HasIndex(e => e.IdParent)
-                    .HasName("ID_PARENT")
-                    .IsUnique();
+                    .HasName("ID_PARENT");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.Code)
+                    .IsRequired()
                     .HasColumnName("CODE")
-                    .HasMaxLength(160)
+                    .HasMaxLength(10)
                     .IsUnicode(false);
 
                 entity.Property(e => e.IdParent)
@@ -122,13 +128,14 @@ namespace ISSSC.Models
                     .HasColumnType("tinyint(1)");
 
                 entity.Property(e => e.Name)
+                    .IsRequired()
                     .HasColumnName("NAME")
-                    .HasMaxLength(160)
+                    .HasMaxLength(30)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.IdParentNavigation)
-                    .WithOne(p => p.InverseIdParentNavigation)
-                    .HasForeignKey<EnumSubject>(d => d.IdParent)
+                    .WithMany(p => p.InverseIdParentNavigation)
+                    .HasForeignKey(d => d.IdParent)
                     .HasConstraintName("enum_subject_ibfk_1");
             });
 
@@ -296,15 +303,14 @@ namespace ISSSC.Models
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.IdAuthorNavigation)
-                    .WithOne(p => p.SscisContentIdAuthorNavigation)
-                    .HasForeignKey<SscisContent>(d => d.IdAuthor)
+                    .WithMany(p => p.SscisContentIdAuthorNavigation)
+                    .HasForeignKey(d => d.IdAuthor)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("sscis_content_ibfk_1");
 
                 entity.HasOne(d => d.IdEditedByNavigation)
-                    .WithOne(p => p.SscisContentIdEditedByNavigation)
-                    .HasForeignKey<SscisContent>(d => d.IdEditedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .WithMany(p => p.SscisContentIdEditedByNavigation)
+                    .HasForeignKey(d => d.IdEditedBy)
                     .HasConstraintName("sscis_content_ibfk_2");
             });
 
@@ -441,12 +447,10 @@ namespace ISSSC.Models
                 entity.ToTable("tutor_application", "sscis");
 
                 entity.HasIndex(e => e.AcceptedById)
-                    .HasName("ACCEPTED_BY_ID")
-                    .IsUnique();
+                    .HasName("ACCEPTED_BY_ID");
 
                 entity.HasIndex(e => e.IdUser)
-                    .HasName("ID_USER")
-                    .IsUnique();
+                    .HasName("ID_USER");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
@@ -469,13 +473,13 @@ namespace ISSSC.Models
                     .HasColumnType("tinyint(1)");
 
                 entity.HasOne(d => d.AcceptedBy)
-                    .WithOne(p => p.TutorApplicationAcceptedBy)
-                    .HasForeignKey<TutorApplication>(d => d.AcceptedById)
+                    .WithMany(p => p.TutorApplicationAcceptedBy)
+                    .HasForeignKey(d => d.AcceptedById)
                     .HasConstraintName("tutor_application_ibfk_2");
 
                 entity.HasOne(d => d.IdUserNavigation)
-                    .WithOne(p => p.TutorApplicationIdUserNavigation)
-                    .HasForeignKey<TutorApplication>(d => d.IdUser)
+                    .WithMany(p => p.TutorApplicationIdUserNavigation)
+                    .HasForeignKey(d => d.IdUser)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("tutor_application_ibfk_1");
             });
@@ -485,12 +489,10 @@ namespace ISSSC.Models
                 entity.ToTable("tutor_application_subject", "sscis");
 
                 entity.HasIndex(e => e.IdApplication)
-                    .HasName("ID_APPLICATION")
-                    .IsUnique();
+                    .HasName("ID_APPLICATION");
 
                 entity.HasIndex(e => e.IdSubject)
-                    .HasName("ID_SUBJECT")
-                    .IsUnique();
+                    .HasName("ID_SUBJECT");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
@@ -509,15 +511,13 @@ namespace ISSSC.Models
                     .HasColumnType("int(11)");
 
                 entity.HasOne(d => d.IdApplicationNavigation)
-                    .WithOne(p => p.TutorApplicationSubject)
-                    .HasForeignKey<TutorApplicationSubject>(d => d.IdApplication)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .WithMany(p => p.TutorApplicationSubject)
+                    .HasForeignKey(d => d.IdApplication)
                     .HasConstraintName("tutor_application_subject_ibfk_1");
 
                 entity.HasOne(d => d.IdSubjectNavigation)
-                    .WithOne(p => p.TutorApplicationSubject)
-                    .HasForeignKey<TutorApplicationSubject>(d => d.IdSubject)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .WithMany(p => p.TutorApplicationSubject)
+                    .HasForeignKey(d => d.IdSubject)
                     .HasConstraintName("tutor_application_subject_ibfk_2");
             });
         }

@@ -10,13 +10,13 @@ namespace ISSSC.Models
         public DateTime TimeTo { get; set; }
         public int IdSubject { get; set; }
         public int IdTutor { get; set; }
-        public bool? IsAccepted { get; set; }
-        public bool? IsCancelled { get; set; }
+        public Nullable<bool> IsAccepted { get; set; }
+        public Nullable<bool> IsCancelled { get; set; }
         public string CancelationComment { get; set; }
-        public bool? IsExtraLesson { get; set; }
+        public byte IsExtraLesson { get; set; }
 
-        public EnumSubject IdSubjectNavigation { get; set; }
-        public SscisUser IdTutorNavigation { get; set; }
-        public Participation Participation { get; set; }
+        public virtual EnumSubject IdSubjectNavigation { get; set; }
+        public virtual SscisUser IdTutorNavigation { get; set; }
+        public virtual Participation Participation { get; set; }
     }
 }

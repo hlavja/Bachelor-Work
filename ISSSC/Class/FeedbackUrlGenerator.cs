@@ -21,7 +21,7 @@ namespace ISSSC.Class
         //public string GenerateURL(int eventId, SscisContext db)
         //{
         //    Event e = db.Event.Find(eventId);
-        //    string code = string.Format("{0}{1}{2}{3}", e.TimeFrom.Year.ToString("0000").Substring(2), e.TimeFrom.Month.ToString("00"), e.TimeFrom.Day.ToString("00"), eventId);
+        //   string code = string.Format("{0}{1}{2}{3}", e.TimeFrom.Year.ToString("0000").Substring(2), e.TimeFrom.Month.ToString("00"), e.TimeFrom.Day.ToString("00"), eventId);
         //    return string.Format("{0}Feedbacks?code={1}", _addSlash(_getBaseUrl()), code);
         //}
 
@@ -40,7 +40,7 @@ namespace ISSSC.Class
             return null;
         }
 
-        //TODO HttpContext
+        
         /// <summary>
         /// Gets apps root url
         /// </summary>
@@ -49,6 +49,8 @@ namespace ISSSC.Class
         //{
         //    try
         //    {
+
+        //        //TODO HttpContext
         //        var request = HttpContext.Current.Request;
         //        var appUrl = HttpRuntime.AppDomainAppVirtualPath;
 
@@ -60,7 +62,7 @@ namespace ISSSC.Class
         //        return baseUrl;
         //    }
         //    catch (NullReferenceException e)
-        //    {
+        //   {
         //        return "/";
         //    }
         //}

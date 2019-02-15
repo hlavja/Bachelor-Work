@@ -67,7 +67,9 @@ namespace ISSSC.Controllers
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Tutor)]
         public ActionResult Create()
         {
-            int userId = (int)HttpContext.Session.GetInt32("userID");
+            //TODO userID
+            //int userId = (int)HttpContext.Session.GetInt32("userID");
+            int userId = 3;
             List<Approval> approvals = db.Approval.Where(a => a.IdTutor == userId).ToList();
             List<int> subjectsIds = new List<int>();
             foreach (Approval app in approvals)

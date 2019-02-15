@@ -53,18 +53,18 @@ namespace ISSSC.Class
             {
                 httpSession.Session.SetInt32("sessionId", (int) session.Id);
 
-                //httpSession.Session.SetString("role", session.IdUserNavigation.IdRoleNavigation.Role);
+                httpSession.Session.SetString("role", session.IdUserNavigation.IdRoleNavigation.Role);
 
-                if(session.IdUserNavigation.IdRole == 1)
-                {
-                    httpSession.Session.SetString("role", "ADMIN");
-                } else if (session.IdUserNavigation.IdRole == 2)
-                {
-                    httpSession.Session.SetString("role", "TUTOR");
-                } else if(session.IdUserNavigation.IdRole == 3)
-                {
-                    httpSession.Session.SetString("role", "USER");
-                }
+                //if(session.IdUserNavigation.IdRole == 1)
+                //{
+                //    httpSession.Session.SetString("role", "ADMIN");
+                //} else if (session.IdUserNavigation.IdRole == 2)
+                //{
+                //    httpSession.Session.SetString("role", "TUTOR");
+                //} else if(session.IdUserNavigation.IdRole == 3)
+                //{
+                //    httpSession.Session.SetString("role", "USER");
+                //}
 
                 httpSession.Session.SetString("hash", session.Hash);
                 httpSession.Session.SetString("login", login);

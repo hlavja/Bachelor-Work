@@ -11,6 +11,6 @@ namespace ISSSC.Models
         public DateTime Expiration { get; set; }
         public string Hash { get; set; }
 
-        public SscisUser IdUserNavigation { get; set; }
+        public virtual SscisUser IdUserNavigation { get; set; }
     }
 }

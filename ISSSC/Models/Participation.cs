@@ -9,8 +9,8 @@ namespace ISSSC.Models
         public int IdEvent { get; set; }
         public int IdUser { get; set; }
 
-        public Event IdEventNavigation { get; set; }
-        public SscisUser IdUserNavigation { get; set; }
-        public Feedback Feedback { get; set; }
+        public virtual Event IdEventNavigation { get; set; }
+        public virtual SscisUser IdUserNavigation { get; set; }
+        public virtual Feedback Feedback { get; set; }
     }
 }

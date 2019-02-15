@@ -99,7 +99,6 @@ namespace ISSSC.Controllers
         /// <param name="model">Application model</param>
         /// <returns>Result of creation</returns>
         /// 
-        //TODO dodělat ajaxové volání
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.User)]
@@ -109,25 +108,31 @@ namespace ISSSC.Controllers
             {
                 model.Application.ApplicationDate = DateTime.Now;
                 //int? userID = (int)HttpContext.Session.GetInt32("userID");
-                int userID = 2;
+                int userID = 3; //TODO
                 model.Application.IdUserNavigation = db.SscisUser.Find(userID);
                 db.TutorApplication.Add(model.Application);
                 db.SaveChanges();
 
                 int countOfSubjects = int.Parse(Request.Form["subjects_count"]);
-                if (countOfSubjects < 1)
-                {
-                    return View(model.Application);
-                }
-                for (int i = 0; i < countOfSubjects; i++)
-                {
-                    TutorApplicationSubject s = new TutorApplicationSubject
-                    {
-                        IdApplicationNavigation = model.Application,
-                        IdSubjectNavigation = db.EnumSubject.Find(int.Parse(HttpContext.Request.Form["SubjectID"].Single().Split(',')[i]))
-                    };
+                //if (countOfSubjects < 1)
+                //{
+                //    return View(model.Application);
+                //}
 
-                    byte.TryParse(Request.Form["Degree"].Single().Split(',')[i], out byte deg);
+                string znamky = Request.Form["Degree"];
+                string predmety = HttpContext.Request.Form["SubjectID"];
+
+                string[] znamkyPole = znamky.Split(',');
+                string[] predmetyPole = predmety.Split(',');
+
+                for (int i = 0; i <= countOfSubjects; i++)
+                {
+                    TutorApplicationSubject s = new TutorApplicationSubject();
+
+                    s.IdApplicationNavigation = model.Application;
+                    s.IdSubjectNavigation = db.EnumSubject.Find(Int32.Parse(predmetyPole[i]));
+                    
+                    byte.TryParse(znamkyPole[i], out byte deg);
                     if (deg == 0)
                     {
                         s.Degree = null;
@@ -165,7 +170,11 @@ namespace ISSSC.Controllers
             {
                 return NotFound();
             }
-            int? userID = (int)HttpContext.Session.GetInt32("userID");
+            //int? userID = (int)HttpContext.Session.GetInt32("userID");
+
+            TutorApplicationSubject subj = db.TutorApplicationSubject.Find(15);
+
+            int userID = 3;
             tutorApplication.AcceptedDate = DateTime.Now;
             tutorApplication.IsAccepted = 1;
             tutorApplication.AcceptedBy = db.SscisUser.Find(userID);
@@ -178,7 +187,6 @@ namespace ISSSC.Controllers
             List<EnumSubject> parents = new List<EnumSubject>();
             foreach (TutorApplicationSubject subject in subjects)
             {
-                //TODO Špatná struktura databáze - dodělat
                 if (subject.IdSubjectNavigation.IdParentNavigation != null && !parents.Contains(subject.IdSubjectNavigation.IdParentNavigation))
                 {
                     parents.Add(subject.IdSubjectNavigation.IdParentNavigation);

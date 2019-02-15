@@ -76,7 +76,7 @@ namespace ISSSC.Controllers
                 int authorID = 1;
                 //authorID = (int)HttpContext.Session.GetInt32("userID");
                 model.IdAuthorNavigation = db.SscisUser.Find((int)authorID);
-                model.IdEditedByNavigation = db.SscisUser.Find((int)authorID);
+                model.IdEditedByNavigation = null;
                 db.SscisContent.Add(model);
                 db.SaveChanges();
                 return RedirectToAction("News", "Home");

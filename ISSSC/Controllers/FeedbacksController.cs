@@ -109,30 +109,30 @@ namespace SSCIS.Controllers
         /// </summary>
         /// <param name="id">Event ID</param>
         /// <returns>View with QR code of URL</returns>
-        [HttpGet]
-        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Tutor)]
-        public ActionResult EventQR(int? id)
-        {
-            if (id == null)
-            {
-                return new StatusCodeResult((int)HttpStatusCode.BadRequest);
-            }
+        //[HttpGet]
+        //[SSCISAuthorize(AccessLevel = AuthorizationRoles.Tutor)]
+        //public ActionResult EventQR(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+        //    }
 
-            using (MemoryStream ms = new MemoryStream())
-            {
-                QRCodeGenerator qrGenerator = new QRCodeGenerator();
-                string url = urlGenerator.GenerateURL(id.Value, db);
-                ViewBag.FeedbackURL = url;
-                QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
-                QRCode qrCode = new QRCode(qrCodeData);
-                using (Bitmap bitMap = qrCode.GetGraphic(20))
-                {
-                    bitMap.Save(ms, ImageFormat.Png);
-                    ViewBag.QRCodeImage = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
-                }
-            }
-            return View();
-        }
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+        //        QRCodeGenerator qrGenerator = new QRCodeGenerator();
+        //        string url = urlGenerator.GenerateURL(id.Value, db);
+        //        ViewBag.FeedbackURL = url;
+        //        QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
+        //        QRCode qrCode = new QRCode(qrCodeData);
+        //        using (Bitmap bitMap = qrCode.GetGraphic(20))
+        //        {
+        //            bitMap.Save(ms, ImageFormat.Png);
+        //            ViewBag.QRCodeImage = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+        //        }
+        //    }
+        //    return View();
+        //}
 
         /// <summary>
         /// Creates view with form with filter for generating csv file with feedback

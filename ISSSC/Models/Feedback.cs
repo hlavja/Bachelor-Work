@@ -9,6 +9,6 @@ namespace ISSSC.Models
         public int IdParticipation { get; set; }
         public string Text { get; set; }
 
-        public Participation IdParticipationNavigation { get; set; }
+        public virtual Participation IdParticipationNavigation { get; set; }
     }
 }
