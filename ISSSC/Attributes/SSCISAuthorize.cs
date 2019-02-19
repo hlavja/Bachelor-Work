@@ -39,45 +39,24 @@ namespace ISSSC.Attributes
             _sessionManager = sessionManager;
         }
 
-        
+
         /// <summary>
         /// Authorizes actionResultMethod
         /// </summary>
         /// <param name="filterContext">authoentification filter context</param>
-
-        //public override void OnActionExecuting(ActionExecutingContext filterContext)
-        //{
-        //    if (AccessLevel != null)
-        //    {
-        //        if (!_sessionManager.VerifySession(filterContext.HttpContext.Session))
-        //        {
-        //            filterContext.Result = new RedirectResult(string.Format("{0}Home/Login", _addSlash(_getBaseUrl())));
-        //        }
-        //        var role = filterContext.HttpContext.Session.GetString("role");
-        //        if (role == null || !role.Equals(AccessLevel) && !role.Equals(AuthorizationRoles.Administrator))
-        //            filterContext.Result = new RedirectResult(string.Format("{0}Home/Unauthorized", _addSlash(_getBaseUrl())));
-        //    }
-        //}
-
-        /// <summary>
-        /// Gets apps root url
-        /// </summary>
-        /// <returns>Root url</returns>
-        //private string _getBaseUrl()
-        //{
-
-        //    //TODO HttpContext problémy!!!
-        //    var request = HttpContext.Current.Request;
-        //    var appUrl = HttpRuntime.AppDomainAppVirtualPath;
-           
-
-        //    if (appUrl != "/")
-        //        appUrl = "/" + appUrl;
-
-        //    var baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
-
-        //    return baseUrl;
-        //}
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (AccessLevel != null)
+            {
+                if (!_sessionManager.VerifySession(filterContext.HttpContext.Session))
+                {
+                    filterContext.Result = new RedirectResult(string.Format("{0}Home/Login", _addSlash(SSCHttpContext.AppBaseUrl)));
+                }
+                var role = filterContext.HttpContext.Session.GetString("role");
+                if (role == null || !role.Equals(AccessLevel) && !role.Equals(AuthorizationRoles.Administrator))
+                    filterContext.Result = new RedirectResult(string.Format("{0}Home/Unauthorized", _addSlash(SSCHttpContext.AppBaseUrl)));
+            }
+        }
 
         /// <summary>
         /// Adds slash at the end of URL if needed

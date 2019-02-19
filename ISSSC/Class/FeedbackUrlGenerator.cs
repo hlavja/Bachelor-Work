@@ -18,12 +18,12 @@ namespace ISSSC.Class
         /// <param name="eventId">Event ID</param>
         /// <param name="db">Database context</param>
         /// <returns>Generated URL</returns>
-        //public string GenerateURL(int eventId, SscisContext db)
-        //{
-        //    Event e = db.Event.Find(eventId);
-        //   string code = string.Format("{0}{1}{2}{3}", e.TimeFrom.Year.ToString("0000").Substring(2), e.TimeFrom.Month.ToString("00"), e.TimeFrom.Day.ToString("00"), eventId);
-        //    return string.Format("{0}Feedbacks?code={1}", _addSlash(_getBaseUrl()), code);
-        //}
+        public string GenerateURL(int eventId, SscisContext db)
+        {
+            Event e = db.Event.Find(eventId);
+            string code = string.Format("{0}{1}{2}{3}", e.TimeFrom.Year.ToString("0000").Substring(2), e.TimeFrom.Month.ToString("00"), e.TimeFrom.Day.ToString("00"), eventId);
+            return string.Format("{0}Feedbacks?code={1}", _addSlash(SSCHttpContext.AppBaseUrl), code);
+        }
 
         /// <summary>
         /// Resolves event id from feedback code
@@ -40,38 +40,11 @@ namespace ISSSC.Class
             return null;
         }
 
-        
         /// <summary>
-        /// Gets apps root url
+        /// Adds slash at the end of URL if needed
         /// </summary>
-        /// <returns>Root url</returns>
-        //private string _getBaseUrl()
-        //{
-        //    try
-        //    {
-
-        //        //TODO HttpContext
-        //        var request = HttpContext.Current.Request;
-        //        var appUrl = HttpRuntime.AppDomainAppVirtualPath;
-
-        //        if (appUrl != "/")
-        //            appUrl = "/" + appUrl;
-
-        //        var baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
-
-        //        return baseUrl;
-        //    }
-        //    catch (NullReferenceException e)
-        //   {
-        //        return "/";
-        //    }
-        //}
-
-            /// <summary>
-            /// Adds slash at the end of URL if needed
-            /// </summary>
-            /// <param name="url">URL string</param>
-            /// <returns>Url with slash at the end</returns>
+        /// <param name="url">URL string</param>
+        /// <returns>Url with slash at the end</returns>
         private string _addSlash(string url)
         {
             return url.EndsWith("/") ? url : url + "/";
