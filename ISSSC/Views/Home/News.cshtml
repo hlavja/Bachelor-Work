@@ -18,7 +18,9 @@
         {
             <hr />
             <div class="well">
-                <h3>@Html.DisplayFor(m => modelItem.Header) @Html.DisplayFor(m => modelItem.Created)</h3>
+                <h3>@Html.DisplayFor(m => modelItem.Header)</h3>
+                <h6>@Html.DisplayFor(m => modelItem.Created)</h6>
+                <hr />
                 <p>
                     @Html.DisplayFor(m => modelItem.TextContent)
                 </p>

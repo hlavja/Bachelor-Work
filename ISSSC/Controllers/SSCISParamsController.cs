@@ -116,7 +116,7 @@ namespace ISSSC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
-        public ActionResult Edit([Bind("Id,ParamKey,ParamValue,Description")] SscisParam sSCISParam)
+        public ActionResult Edit([Bind("Id","ParamKey","ParamValue","Description")] SscisParam sSCISParam)
         {
             if (ModelState.IsValid)
             {

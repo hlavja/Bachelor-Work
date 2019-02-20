@@ -53,8 +53,7 @@ namespace ISSSC.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //TODO public ActionResult Create([Bind(Include = "ID,SubjectID,ApplicationID,Degree")] TutorApplicationSubject tutorApplicationSubject)
-        public ActionResult Create([Bind("Id,IdSubject,IdApplication,Degree")] TutorApplicationSubject tutorApplicationSubject)
+        public ActionResult Create([Bind("Id","IdSubject","IdApplication","Degree")] TutorApplicationSubject tutorApplicationSubject)
         {
             if (ModelState.IsValid)
             {
@@ -90,8 +89,7 @@ namespace ISSSC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //TODO public ActionResult Edit([Bind(Include = "ID,SubjectID,ApplicationID,Degree")] TutorApplicationSubject tutorApplicationSubject)
-        public ActionResult Edit([Bind("Id,IdSubject,IdApplication,Degree")] TutorApplicationSubject tutorApplicationSubject)
+        public ActionResult Edit([Bind("Id","IdSubject","IdApplication","Degree")] TutorApplicationSubject tutorApplicationSubject)
         {
             if (ModelState.IsValid)
             {

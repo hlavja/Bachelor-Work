@@ -75,7 +75,7 @@ namespace ISSSC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
-        public ActionResult Create([Bind("Id,Code,Name")] EnumSubject subject)
+        public ActionResult Create([Bind("Id","Code","Name")] EnumSubject subject)
         {
             if (ModelState.IsValid)
             {

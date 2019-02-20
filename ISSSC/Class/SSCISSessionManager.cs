@@ -73,7 +73,18 @@ namespace ISSSC.Class
         public bool VerifySession(ISession httpSession)
         {
             var dbSession = db.SscisSession.Find(httpSession.GetInt32("sessionId"));
-            if (dbSession.Expiration < DateTime.Now) return false;
+
+            //TODO hack
+            if (dbSession == null)
+            {
+                return false;
+            }
+
+            if (dbSession.Expiration < DateTime.Now)
+            {
+                return false;
+            }
+
             return httpSession.GetString("hash") != null && dbSession.Hash.Equals((string)httpSession.GetString("hash"));
         }
 

@@ -73,8 +73,7 @@ namespace ISSSC.Controllers
             if (ModelState.IsValid)
             {
                 model.Created = DateTime.Now;
-                int authorID = 1;
-                //authorID = (int)HttpContext.Session.GetInt32("userID");
+                int authorID = (int)HttpContext.Session.GetInt32("userId");
                 model.IdAuthorNavigation = db.SscisUser.Find((int)authorID);
                 model.IdEditedByNavigation = null;
                 db.SscisContent.Add(model);
@@ -123,9 +122,9 @@ namespace ISSSC.Controllers
                 model.Header = header;
                 model.TextContent = text;
                 model.Edited = DateTime.Now;
+                int authorID = 0;
+                authorID = (int)HttpContext.Session.GetInt32("userId");
 
-                //int authorID = (int)HttpContext.Session.GetInt32("userID");
-                int authorID = 1;
                 model.IdEditedByNavigation = db.SscisUser.Find(authorID);
                 db.SaveChanges();
                 return RedirectToAction("News", "Home");

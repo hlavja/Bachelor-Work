@@ -104,6 +104,8 @@ namespace SSCIS.Controllers
             return View(feedback);
         }
 
+
+        //TODO
         /// <summary>
         /// Generates QR code of URL for adding feedback to event
         /// </summary>

@@ -100,15 +100,15 @@ namespace ISSSC.Controllers
         /// <returns>Result of creation</returns>
         /// 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       // [ValidateAntiForgeryToken]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.User)]
         public ActionResult Create(MetaTutorApplication model)
         {
             if (ModelState.IsValid)
             {
+                int userID = (int)HttpContext.Session.GetInt32("userId");
                 model.Application.ApplicationDate = DateTime.Now;
-                //int? userID = (int)HttpContext.Session.GetInt32("userID");
-                int userID = 3; //TODO
+                
                 model.Application.IdUserNavigation = db.SscisUser.Find(userID);
                 db.TutorApplication.Add(model.Application);
                 db.SaveChanges();

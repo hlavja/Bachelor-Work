@@ -67,9 +67,7 @@ namespace ISSSC.Controllers
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Tutor)]
         public ActionResult Create()
         {
-            //TODO userID
-            //int userId = (int)HttpContext.Session.GetInt32("userID");
-            int userId = 3;
+            int userId = (int)HttpContext.Session.GetInt32("userId");
             List<Approval> approvals = db.Approval.Where(a => a.IdTutor == userId).ToList();
             List<int> subjectsIds = new List<int>();
             foreach (Approval app in approvals)
@@ -94,10 +92,11 @@ namespace ISSSC.Controllers
             model.Event = new Event();
             if (ModelState.IsValid)
             {
-                int userId = (int)HttpContext.Session.GetInt32("userID");
+                int userId = (int)HttpContext.Session.GetInt32("userId");
                 model.Event.IdTutorNavigation = db.SscisUser.Find(userId);
                 model.Event.IsCancelled = false;
                 model.Event.IsAccepted = false;
+                model.Event.IsExtraLesson = false;
                 model.Event.TimeFrom = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour, model.TimeFrom.Minute, 0);
                 model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeTo.Hour, model.TimeTo.Minute, 0);
                 model.Event.IdSubjectNavigation = db.EnumSubject.Find(model.SubjectID);
@@ -180,7 +179,7 @@ namespace ISSSC.Controllers
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Tutor)]
         public ActionResult TutorEvents()
         {
-            int userId = (int)HttpContext.Session.GetInt32("userID");
+            int userId = (int)HttpContext.Session.GetInt32("userId");
             ViewBag.TutorEventsTable = timetableRenderer.RenderTutor(db, userId);
             return View();
         }

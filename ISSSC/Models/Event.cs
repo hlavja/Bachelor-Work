@@ -13,7 +13,7 @@ namespace ISSSC.Models
         public Nullable<bool> IsAccepted { get; set; }
         public Nullable<bool> IsCancelled { get; set; }
         public string CancelationComment { get; set; }
-        public byte IsExtraLesson { get; set; }
+        public Nullable<bool> IsExtraLesson { get; set; }
 
         public virtual EnumSubject IdSubjectNavigation { get; set; }
         public virtual SscisUser IdTutorNavigation { get; set; }

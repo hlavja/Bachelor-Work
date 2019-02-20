@@ -87,3 +87,4 @@ E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcor
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.csproj.CopyComplete
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.dll
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.pdb
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\appsettings.json

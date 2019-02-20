@@ -24,8 +24,6 @@ namespace SSCIS.Controllers
         /// </summary>
         private SscisContext db = new SscisContext();
 
-        
-
         /// <summary>
         /// Users list
         /// </summary>
@@ -66,8 +64,7 @@ namespace SSCIS.Controllers
         [HttpGet]
         public ActionResult Profil()
         {
-            //int? id = (int)Session["userID"];
-            int? id = (int)HttpContext.Session.GetInt32("userID");
+            int? id = (int)HttpContext.Session.GetInt32("userId");
             if (id == null)
             {
                 return new StatusCodeResult((int)HttpStatusCode.BadRequest);
@@ -98,8 +95,8 @@ namespace SSCIS.Controllers
             {
                 return NotFound();
             }
-            ViewBag.RoleID = new SelectList(db.EnumRole, "ID", "RoleCode", sSCISUser.IdRole);
-            ViewBag.ActivatedByID = new SelectList(db.SscisUser, "ID", "Login", sSCISUser.IsActivatedBy);
+            ViewBag.RoleID = new SelectList(db.EnumRole, "Id", "RoleCode", sSCISUser.IdRole);
+            ViewBag.ActivatedByID = new SelectList(db.SscisUser, "Id", "Login", sSCISUser.IsActivatedBy);
             return View(sSCISUser);
         }
 
@@ -111,8 +108,7 @@ namespace SSCIS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
-        //TODO public ActionResult Edit([Bind(Include = "ID,Login,Firstname,Lastname,Password,RoleID,IsActive,Created,Activated,ActivatedByID,StudentNumber")] SSCISUser sSCISUser)
-        public ActionResult Edit([Bind("Id,Login,Firstname,Lastname,IdRole,IsActive,Created,Activated,StudentNumber,IsActivatedBy")] SscisUser sSCISUser)
+        public ActionResult Edit([Bind("Id","Login","Firstname","Lastname","IdRole","IsActive","Created","Activated","StudentNumber","IsActivatedBy")] SscisUser sSCISUser)
         {
             if (ModelState.IsValid)
             {
