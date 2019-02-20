@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,23 +29,19 @@ namespace ISSSC
         }
 
         public IConfiguration Configuration { get; }
-
-
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            // var connection = "server=localhost;user id=root;password='';port=3306;database=sscis";
-            /*Configuration.GetConnectionString("Localhost")*/
             //TODO Matějka mail ohledně připojení do databáze z .NET Core
-            services.AddDbContext<SscisContext>(options => options.UseLazyLoadingProxies().UseMySQL("server=localhost;user id=root;password='';port=3306;database=sscis"));
+            services.AddDbContext<SscisContext>();
             services.AddMvc().AddJsonOptions(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDistributedMemoryCache();
@@ -70,7 +67,6 @@ namespace ISSSC
             app.UseCookiePolicy();
             app.UseSession();
         
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
