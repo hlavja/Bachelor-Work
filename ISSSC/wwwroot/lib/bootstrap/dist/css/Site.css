@@ -36,6 +36,7 @@
 
     .row.content {
         padding-top: 104px;
+        min-width: 560px;
     }
 
 .label.control-label.col-md-2 {
@@ -44,7 +45,7 @@
 }
 
 .body {
-    min-width: 250px;
+    min-width: 460px !important;
     padding-bottom: 70px !important;
 }
 

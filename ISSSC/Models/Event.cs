@@ -5,6 +5,11 @@ namespace ISSSC.Models
 {
     public partial class Event
     {
+        public Event()
+        {
+            Participation = new HashSet<Participation>();
+        }
+
         public int Id { get; set; }
         public DateTime TimeFrom { get; set; }
         public DateTime TimeTo { get; set; }
@@ -17,6 +22,6 @@ namespace ISSSC.Models
 
         public virtual EnumSubject IdSubjectNavigation { get; set; }
         public virtual SscisUser IdTutorNavigation { get; set; }
-        public virtual Participation Participation { get; set; }
+        public virtual ICollection<Participation> Participation { get; set; }
     }
 }

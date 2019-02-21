@@ -38,7 +38,7 @@ namespace ISSSC.Models
                     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                     .AddJsonFile("appsettings.json")
                     .Build();
-                optionsBuilder.UseLazyLoadingProxies().UseMySQL(configuration.GetConnectionString("DefaultConnection"));
+                optionsBuilder.UseLazyLoadingProxies().UseMySQL(configuration.GetConnectionString("Localhost"));
             }
         }
 
@@ -51,12 +51,10 @@ namespace ISSSC.Models
                 entity.ToTable("approval", "sscis");
 
                 entity.HasIndex(e => e.IdSubject)
-                    .HasName("ID_SUBJECT")
-                    .IsUnique();
+                    .HasName("ID_SUBJECT");
 
                 entity.HasIndex(e => e.IdTutor)
-                    .HasName("ID_TUTOR")
-                    .IsUnique();
+                    .HasName("ID_TUTOR");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
@@ -71,14 +69,14 @@ namespace ISSSC.Models
                     .HasColumnType("int(11)");
 
                 entity.HasOne(d => d.IdSubjectNavigation)
-                    .WithOne(p => p.Approval)
-                    .HasForeignKey<Approval>(d => d.IdSubject)
+                    .WithMany(p => p.Approval)
+                    .HasForeignKey(d => d.IdSubject)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("approval_ibfk_2");
 
                 entity.HasOne(d => d.IdTutorNavigation)
-                    .WithOne(p => p.Approval)
-                    .HasForeignKey<Approval>(d => d.IdTutor)
+                    .WithMany(p => p.Approval)
+                    .HasForeignKey(d => d.IdTutor)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("approval_ibfk_1");
             });
@@ -146,19 +144,16 @@ namespace ISSSC.Models
                 entity.ToTable("event", "sscis");
 
                 entity.HasIndex(e => e.IdSubject)
-                    .HasName("ID_SUBJECT")
-                    .IsUnique();
+                    .HasName("ID_SUBJECT");
 
                 entity.HasIndex(e => e.IdTutor)
-                    .HasName("ID_TUTOR")
-                    .IsUnique();
+                    .HasName("ID_TUTOR");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.CancelationComment)
-                    .IsRequired()
                     .HasColumnName("CANCELATION_COMMENT")
                     .HasMaxLength(480)
                     .IsUnicode(false);
@@ -188,14 +183,14 @@ namespace ISSSC.Models
                 entity.Property(e => e.TimeTo).HasColumnName("TIME_TO");
 
                 entity.HasOne(d => d.IdSubjectNavigation)
-                    .WithOne(p => p.Event)
-                    .HasForeignKey<Event>(d => d.IdSubject)
+                    .WithMany(p => p.Event)
+                    .HasForeignKey(d => d.IdSubject)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("event_ibfk_1");
 
                 entity.HasOne(d => d.IdTutorNavigation)
-                    .WithOne(p => p.Event)
-                    .HasForeignKey<Event>(d => d.IdTutor)
+                    .WithMany(p => p.Event)
+                    .HasForeignKey(d => d.IdTutor)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("event_ibfk_2");
             });
@@ -205,8 +200,7 @@ namespace ISSSC.Models
                 entity.ToTable("feedback", "sscis");
 
                 entity.HasIndex(e => e.IdParticipation)
-                    .HasName("ID_PARTICIPATION")
-                    .IsUnique();
+                    .HasName("ID_PARTICIPATION");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
@@ -223,8 +217,8 @@ namespace ISSSC.Models
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.IdParticipationNavigation)
-                    .WithOne(p => p.Feedback)
-                    .HasForeignKey<Feedback>(d => d.IdParticipation)
+                    .WithMany(p => p.Feedback)
+                    .HasForeignKey(d => d.IdParticipation)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("feedback_ibfk_1");
             });
@@ -234,12 +228,10 @@ namespace ISSSC.Models
                 entity.ToTable("participation", "sscis");
 
                 entity.HasIndex(e => e.IdEvent)
-                    .HasName("ID_EVENT")
-                    .IsUnique();
+                    .HasName("ID_EVENT");
 
                 entity.HasIndex(e => e.IdUser)
-                    .HasName("ID_USER")
-                    .IsUnique();
+                    .HasName("ID_USER");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
@@ -254,14 +246,14 @@ namespace ISSSC.Models
                     .HasColumnType("int(11)");
 
                 entity.HasOne(d => d.IdEventNavigation)
-                    .WithOne(p => p.Participation)
-                    .HasForeignKey<Participation>(d => d.IdEvent)
+                    .WithMany(p => p.Participation)
+                    .HasForeignKey(d => d.IdEvent)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("participation_ibfk_1");
 
                 entity.HasOne(d => d.IdUserNavigation)
-                    .WithOne(p => p.Participation)
-                    .HasForeignKey<Participation>(d => d.IdUser)
+                    .WithMany(p => p.Participation)
+                    .HasForeignKey(d => d.IdUser)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("participation_ibfk_2");
             });
@@ -348,8 +340,7 @@ namespace ISSSC.Models
                 entity.ToTable("sscis_session", "sscis");
 
                 entity.HasIndex(e => e.IdUser)
-                    .HasName("ID_USER")
-                    .IsUnique();
+                    .HasName("ID_USER");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
@@ -370,8 +361,8 @@ namespace ISSSC.Models
                 entity.Property(e => e.SessionStart).HasColumnName("SESSION_START");
 
                 entity.HasOne(d => d.IdUserNavigation)
-                    .WithOne(p => p.SscisSession)
-                    .HasForeignKey<SscisSession>(d => d.IdUser)
+                    .WithMany(p => p.SscisSession)
+                    .HasForeignKey(d => d.IdUser)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("sscis_session_ibfk_1");
             });
@@ -381,12 +372,10 @@ namespace ISSSC.Models
                 entity.ToTable("sscis_user", "sscis");
 
                 entity.HasIndex(e => e.IdRole)
-                    .HasName("ID_ROLE")
-                    .IsUnique();
+                    .HasName("ID_ROLE");
 
                 entity.HasIndex(e => e.IsActivatedBy)
-                    .HasName("IS_ACTIVATED_BY")
-                    .IsUnique();
+                    .HasName("IS_ACTIVATED_BY");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
@@ -427,20 +416,19 @@ namespace ISSSC.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.StudentNumber)
-                    .IsRequired()
                     .HasColumnName("STUDENT_NUMBER")
                     .HasMaxLength(10)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.IdRoleNavigation)
-                    .WithOne(p => p.SscisUser)
-                    .HasForeignKey<SscisUser>(d => d.IdRole)
+                    .WithMany(p => p.SscisUser)
+                    .HasForeignKey(d => d.IdRole)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("sscis_user_ibfk_2");
 
                 entity.HasOne(d => d.IsActivatedByNavigation)
-                    .WithOne(p => p.InverseIsActivatedByNavigation)
-                    .HasForeignKey<SscisUser>(d => d.IsActivatedBy)
+                    .WithMany(p => p.InverseIsActivatedByNavigation)
+                    .HasForeignKey(d => d.IsActivatedBy)
                     .HasConstraintName("sscis_user_ibfk_1");
             });
 

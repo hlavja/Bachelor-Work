@@ -12,8 +12,11 @@
     <div class="col-sm-8 text-left">
         <h1>Vítejte na stránkách Student Support Centre (SSC)</h1>
         <hr />
+        <h2>Aktualita</h2>
         <div class="well">
-            <h3>Aktualita: @Html.DisplayFor(m => m.Header) @Html.DisplayFor(m => m.Created)</h3>
+            <h3>@Html.DisplayFor(m => m.Header)</h3>
+            <h6>@Html.DisplayFor(m => m.Created)</h6>
+            <hr />
             <p>
                 @Html.DisplayFor(m => m.TextContent)
             </p>

@@ -170,17 +170,18 @@ namespace ISSSC.Controllers
             {
                 return NotFound();
             }
-            //int? userID = (int)HttpContext.Session.GetInt32("userID");
+            int? userID = (int)HttpContext.Session.GetInt32("userId");
 
             TutorApplicationSubject subj = db.TutorApplicationSubject.Find(15);
 
-            int userID = 3;
+          
             tutorApplication.AcceptedDate = DateTime.Now;
             tutorApplication.IsAccepted = 1;
             tutorApplication.AcceptedBy = db.SscisUser.Find(userID);
             db.SaveChanges();
 
             tutorApplication.IdUserNavigation.IdRoleNavigation = db.EnumRole.Where(r => "TUTOR".Equals(r.Role)).Single();
+            tutorApplication.IdUserNavigation.IsActivatedBy = userID;
             db.SaveChanges();
 
             List<TutorApplicationSubject> subjects = db.TutorApplicationSubject.Where(s => s.IdApplication == id).ToList();
@@ -194,14 +195,13 @@ namespace ISSSC.Controllers
             }
             foreach (EnumSubject subject in parents)
             {
-                Approval app = new Approval
-                {
-                    IdTutorNavigation = tutorApplication.IdUserNavigation,
-                    IdSubjectNavigation = subject
-                };
+                Approval app = new Approval();
+                app.IdTutorNavigation = tutorApplication.IdUserNavigation;
+                app.IdSubjectNavigation = subject;
                 db.Approval.Add(app);
+                db.SaveChanges();
             }
-            db.SaveChanges();
+            
 
             return RedirectToAction("Index");
         }

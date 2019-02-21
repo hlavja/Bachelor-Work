@@ -9,7 +9,7 @@ namespace ISSSC.Models
         public int IdAuthor { get; set; }
         public int? IdEditedBy { get; set; }
         public DateTime Created { get; set; }
-        public DateTime Edited { get; set; }
+        public DateTime? Edited { get; set; }
         public string TextContent { get; set; }
         public string Header { get; set; }
 
