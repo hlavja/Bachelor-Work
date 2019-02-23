@@ -62,6 +62,7 @@ namespace SSCIS.Controllers
         /// </summary>
         /// <returns>View with logged user detail</returns>
         [HttpGet]
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.User)]
         public ActionResult Profil()
         {
             int? id = (int)HttpContext.Session.GetInt32("userId");
@@ -95,7 +96,7 @@ namespace SSCIS.Controllers
             {
                 return NotFound();
             }
-            ViewBag.RoleID = new SelectList(db.EnumRole, "Id", "RoleCode", sSCISUser.IdRole);
+            ViewBag.IdRole = new SelectList(db.EnumRole.ToList(), "Id", "Role");
             ViewBag.ActivatedByID = new SelectList(db.SscisUser, "Id", "Login", sSCISUser.IsActivatedBy);
             return View(sSCISUser);
         }
@@ -108,16 +109,18 @@ namespace SSCIS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
-        public ActionResult Edit([Bind("Id","Login","Firstname","Lastname","IdRole","IsActive","Created","Activated","StudentNumber","IsActivatedBy")] SscisUser sSCISUser)
+        public ActionResult Edit([Bind("Id","Login","Firstname","Lastname","IdRole","StudentNumber","Email")] SscisUser sSCISUser)
         {
             if (ModelState.IsValid)
             {
+                sSCISUser.IdRoleNavigation = db.EnumRole.Find(sSCISUser.IdRole);
                 db.Entry(sSCISUser).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.RoleID = new SelectList(db.EnumRole, "ID", "RoleCode", sSCISUser.IdRole);
-            ViewBag.ActivatedByID = new SelectList(db.SscisUser, "ID", "Login", sSCISUser.IsActivatedBy);
+            ViewBag.RoleID = new SelectList(db.EnumRole, "Id", "Role", sSCISUser.IdRole);
+            //ViewBag.RoleID = new SelectList(db.EnumRole.ToList(), "Id", "Role");
+            ViewBag.ActivatedByID = new SelectList(db.SscisUser, "Id", "Login", sSCISUser.IsActivatedBy);
             return View(sSCISUser);
         }
 

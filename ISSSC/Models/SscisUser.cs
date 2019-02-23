@@ -8,7 +8,8 @@ namespace ISSSC.Models
         public SscisUser()
         {
             Approval = new HashSet<Approval>();
-            Event = new HashSet<Event>();
+            EventIdApplicantNavigation = new HashSet<Event>();
+            EventIdTutorNavigation = new HashSet<Event>();
             InverseIsActivatedByNavigation = new HashSet<SscisUser>();
             Participation = new HashSet<Participation>();
             SscisContentIdAuthorNavigation = new HashSet<SscisContent>();
@@ -27,12 +28,14 @@ namespace ISSSC.Models
         public DateTime Created { get; set; }
         public DateTime? Activated { get; set; }
         public string StudentNumber { get; set; }
+        public string Email { get; set; }
         public int? IsActivatedBy { get; set; }
 
         public virtual EnumRole IdRoleNavigation { get; set; }
         public virtual SscisUser IsActivatedByNavigation { get; set; }
         public virtual ICollection<Approval> Approval { get; set; }
-        public virtual ICollection<Event> Event { get; set; }
+        public virtual ICollection<Event> EventIdApplicantNavigation { get; set; }
+        public virtual ICollection<Event> EventIdTutorNavigation { get; set; }
         public virtual ICollection<SscisUser> InverseIsActivatedByNavigation { get; set; }
         public virtual ICollection<Participation> Participation { get; set; }
         public virtual ICollection<SscisContent> SscisContentIdAuthorNavigation { get; set; }

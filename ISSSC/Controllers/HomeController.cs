@@ -90,6 +90,7 @@ namespace ISSSC.Controllers
         }
 
 
+    
         /// <summary>
         /// Cretes new event
         /// </summary>
@@ -98,27 +99,28 @@ namespace ISSSC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.User)]
-        public ActionResult Create(MetaEvent model)
+        public ActionResult HelpMe(MetaEvent model)
         {
             model.Event = new Event();
             if (ModelState.IsValid)
             {
                 int userId = (int)HttpContext.Session.GetInt32("userId");
-                model.Event.IdTutorNavigation = Db.SscisUser.Find(userId);
-                model.Event.IsCancelled = false;
-                model.Event.IsAccepted = false;
-                model.Event.IsExtraLesson = false;
+
                 model.Event.TimeFrom = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour, model.TimeFrom.Minute, 0);
-                model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeTo.Hour, model.TimeTo.Minute, 0);
+                model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour + 1, model.TimeFrom.Minute, 0);
                 model.Event.IdSubjectNavigation = Db.EnumSubject.Find(model.SubjectID);
-
-
+                model.Event.IdTutorNavigation = null;
+                model.Event.IdTutor = null;
+                model.Event.IsAccepted = false;
+                model.Event.IsCancelled = false;
+                model.Event.IsExtraLesson = true;
+                model.Event.IdApplicantNavigation = Db.SscisUser.Find(userId);
 
                 Db.Event.Add(model.Event);
                 Db.SaveChanges();
-                return RedirectToAction("TutorEvents");
+                return RedirectToAction("HelpMe");
             }
-            return RedirectToAction("Create");
+            return RedirectToAction("HelpMe");
         }
 
         /// <summary>

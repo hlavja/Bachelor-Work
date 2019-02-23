@@ -11,6 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="Resources1.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

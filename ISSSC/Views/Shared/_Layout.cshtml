@@ -41,6 +41,7 @@
                             <li class="menu-event">@Html.ActionLink("Vypsat lekci", "Create", "Events", new { area = "" }, null)</li>
                             <li class="menu-eventlist">@Html.ActionLink("Seznam lekcí", "Index", "Events", new { area = "" }, null)</li>
                             <li class="menu-tutorevents">@Html.ActionLink("Moje lekce", "TutorEvents", "Events", new { area = "" }, null)</li>
+                            <li class="menu-helpme">@Html.ActionLink("Potřebuji pomoc", "HelpMe", "Home", new { area = "" }, null)</li>
                             <li class="menu-contact">@Html.ActionLink("Kontakt", "Contact", "Home", new { area = "" }, null)</li>
                         }
                         else if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.User))
@@ -71,7 +72,7 @@
                     }
                     else
                     {
-                        <li><a class="user" href="@Url.Action("Profil", "Users")">@ViewContext.HttpContext.Session.GetString("Login")</a></li>
+                        <li><a class="user" href="@Url.Action("Profil", "Users")">@ViewContext.HttpContext.Session.GetString("login")</a></li>
                         <li><a href="@Url.Action("Logout", "Home")"><span class="glyphicon glyphicon-log-in"></span> Odhlásit se</a></li>
                     }
                 </ul>

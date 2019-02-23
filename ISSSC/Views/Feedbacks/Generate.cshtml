@@ -15,36 +15,44 @@
         </div>
         <div class="col-sm-8 text-left">
             <h2>Generování souboru s feedbacky</h2>
-            @using (Html.BeginForm())
-            {
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div>
+                @using (Html.BeginForm())
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.From, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(m => m.From, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(m => m.From, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.From, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(m => m.From, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.From, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(m => m.To, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(m => m.To, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(m => m.To, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.To, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(m => m.To, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.To, "", new { @class = "text-danger" })
+                        </div>
+
+
                     </div>
-              
 
-                </div>
-               
                     <div class="col-md-offset-2 col-md-10" style="padding-top: 10px">
                         <input type="submit" value="Zobraz" formaction="List" />
                         <input type="submit" value="Generuj" formaction="Generate" />
                     </div>
-              
-            }
 
-        </div>
+                }
+
+          </div>
+
+            <div class="col-sm-8 text-left" style="padding-top:2%">
+                <p>
+                    Poznámka: Feedbacky jsou generovány ve formátu .csv, kde je použit jako oddělovač tabulátor.
+                </p>
+            </div>
+            </div>
         <div class="col-sm-2 sidenav">
 
         </div>

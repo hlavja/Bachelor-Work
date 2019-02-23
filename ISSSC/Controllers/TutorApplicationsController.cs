@@ -114,10 +114,11 @@ namespace ISSSC.Controllers
                 db.SaveChanges();
 
                 int countOfSubjects = int.Parse(Request.Form["subjects_count"]);
-                //if (countOfSubjects < 1)
-                //{
-                //    return View(model.Application);
-                //}
+
+                if (countOfSubjects < 1)
+                {
+                    return View(model.Application);
+                }
 
                 string znamky = Request.Form["Degree"];
                 string predmety = HttpContext.Request.Form["SubjectID"];

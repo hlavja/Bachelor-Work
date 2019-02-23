@@ -56,13 +56,13 @@ namespace ISSSC.Controllers
             var count = db.SscisUser.Count(usr => usr.Login.Equals(username));
             if (count < 1)
             {
-                //string email = Request.Headers[EMAIL_KEY];
+                string email = Request.Headers[EMAIL_KEY];
                 SscisUser user = new SscisUser();
                 user.Created = DateTime.Now;
                 user.Activated = DateTime.Now;
                 user.Login = username;
                 user.IsActive = true;
-                //user.Email = email; //TODO dodat do db
+                user.Email = email;
                 user.IdRoleNavigation = db.EnumRole.Where(r => r.Role.Equals(AuthorizationRoles.User)).Single();
                 db.SscisUser.Add(user);
                 db.SaveChanges();

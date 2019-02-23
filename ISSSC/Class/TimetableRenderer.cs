@@ -46,7 +46,19 @@ namespace ISSSC.Class
 
             foreach (var item in events)
             {
-                builder.Append(item.IsCancelled != null && item.IsCancelled.Value ? "<tr class=\"canceled-evnt\">" : "<tr>");
+
+                if(item.IsCancelled != null && item.IsCancelled.Value)
+                {
+                    builder.Append("<tr class=\"canceled-evnt\">");
+                } else if (item.IsExtraLesson == true)
+                {
+                    builder.Append("<tr class=\"extra-evnt\">");
+                } else
+                {
+                    builder.Append("<tr>");
+                }
+                /*builder.Append(item.IsCancelled != null && item.IsCancelled.Value ? "<tr class=\"canceled-evnt\">" : "<tr>");
+                builder.Append(item.IsExtraLesson == true ? "<tr class=\"extra-evnt\">" : "<tr>");*/
                 builder.Append("<td>");
                 builder.Append(item.TimeFrom.ToString("d") + " " + item.TimeFrom.ToString("t"));
                 builder.Append("</td>");
@@ -91,7 +103,9 @@ namespace ISSSC.Class
             DateTime start = _startOfWeek(now, DayOfWeek.Monday);
             DateTime end = start.AddDays(7);
 
-            List<Event> events = db.Event.Where(e => e.TimeFrom >= start && e.TimeTo <= end && e.IsAccepted != null && e.IsAccepted.Value).OrderBy(e => e.TimeFrom).ToList();
+            DateTime endTime = now.AddDays(7);
+
+            List<Event> events = db.Event.Where(e => e.TimeFrom >= now && e.TimeFrom <= endTime && e.IsAccepted != null && e.IsAccepted.Value).OrderBy(e => e.TimeFrom).ToList();
             return Render(events, "public-timetable");
         }
 
@@ -109,7 +123,7 @@ namespace ISSSC.Class
             DateTime start = _startOfWeek(now, DayOfWeek.Monday);
             DateTime end = start.AddDays(7);
 
-            List<Event> events = db.Event.Where(e => e.TimeFrom >= start && /*e.TimeTo <= end &&*/ e.IdTutor == tutorId).OrderBy(e => e.TimeFrom).ToList();
+            List<Event> events = db.Event.Where(e => e.TimeFrom >= start /*&& e.TimeFrom <= end*/ && e.IdTutor == tutorId).OrderBy(e => e.TimeFrom).ToList();
             return Render(events, "tutor-timetable", true);
         }
 

@@ -20,19 +20,99 @@
             </p>
             <table class="table">
                 <tr>
-                    <th>
+                    <th class="col-md-2">
                         @SSCISResources.Resources.TIME_FROM
                     </th>
-                    <th>
+                    <th class="col-md-2">
                         @SSCISResources.Resources.TIME_TO
                     </th>
-                    <th>
+                    <th class="col-md-1">
                         @SSCISResources.Resources.ACCEPTED
                     </th>
-                    <th>
+                    <th class="col-md-1">
                         @SSCISResources.Resources.CANCELLED
                     </th>
+                    <th class="col-md-4">
+                        @SSCISResources.Resources.CANCELLATION_COMMENT
+                    </th>
                     <th>
+                        @SSCISResources.Resources.SUBJECT
+                    </th>
+                    <th >
+                        @SSCISResources.Resources.TUTOR
+                    </th>
+                    <th class="col-md-2"></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    if (item.IdTutorNavigation != null)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TimeFrom)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TimeTo)
+                            </td>
+                            <td>
+                                @SSCISHtml.DisplayForBool(item.IsAccepted)
+                            </td>
+                            <td>
+                                @SSCISHtml.DisplayForBool(item.IsCancelled)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CancelationComment)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IdSubjectNavigation.Code)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IdTutorNavigation.Login)
+                            </td>
+                            <td>
+                                
+                                @{if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Administrator))
+                                    {
+                                            @if (item.IsAccepted == null || !item.IsAccepted.Value)
+                                            {
+                                                @Html.ActionLink(SSCISResources.Resources.ACCEPT, "Accept", new { id = item.Id })
+                                               
+                                            }  
+                                             else if (item.IsCancelled == null || !item.IsCancelled.Value)
+                                            {
+                                                @Html.ActionLink(SSCISResources.Resources.CANCEL, "Cancel", new { id = item.Id })
+                                            }  
+                                        
+                                    }
+                                }
+                                @Html.ActionLink(SSCISResources.Resources.DETAIL, "Details", new { id = item.Id })
+                                
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </table>
+
+   
+            <h2>Žádosti o extra lekce</h2>
+
+            <table class="table">
+                <tr>
+                    <th class="col-md-2">
+                        @SSCISResources.Resources.TIME_FROM
+                    </th>
+                    <th class="col-md-2">
+                        @SSCISResources.Resources.TIME_TO
+                    </th>
+                    <th class="col-md-1">
+                        @SSCISResources.Resources.ACCEPTED
+                    </th>
+                    <th class="col-md-1">
+                        @SSCISResources.Resources.CANCELLED
+                    </th>
+                    <th class="col-md-4">
                         @SSCISResources.Resources.CANCELLATION_COMMENT
                     </th>
                     <th>
@@ -41,59 +121,47 @@
                     <th>
                         @SSCISResources.Resources.TUTOR
                     </th>
-                    <th></th>
+                    <th class="col-md-2"></th>
                 </tr>
 
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TimeFrom)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TimeTo)
-                        </td>
-                        <td>
-                            @SSCISHtml.DisplayForBool(item.IsAccepted)
-                        </td>
-                        <td>
-                            @SSCISHtml.DisplayForBool(item.IsCancelled)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CancelationComment)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdSubjectNavigation.Code)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdTutorNavigation.Login)
-                        </td>
-                        <td>
-                            @{if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Administrator))
-                                {
-
-                                    <p>
-                                        @if (item.IsAccepted == null || !item.IsAccepted.Value)
-                                        {
-                                            @Html.ActionLink(SSCISResources.Resources.ACCEPT, "Accept", new { id = item.Id })
-                                        }  |
-                                        @if (item.IsCancelled == null || !item.IsCancelled.Value)
-                                        {
-                                            @Html.ActionLink(SSCISResources.Resources.CANCEL, "Cancel", new { id = item.Id })
-                                        }
-                                    </p>
-                                }
-                            }
-                            <p>|@Html.ActionLink(SSCISResources.Resources.DETAIL, "Details", new { id = item.Id })</p>
-                        </td>
-                    </tr>
-                                }
+                    if (item.IsExtraLesson == true && item.IdTutorNavigation == null)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TimeFrom)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TimeTo)
+                            </td>
+                            <td>
+                                @SSCISHtml.DisplayForBool(item.IsAccepted)
+                            </td>
+                            <td>
+                                @SSCISHtml.DisplayForBool(item.IsCancelled)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CancelationComment)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IdSubjectNavigation.Code)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IdTutorNavigation.Login)
+                            </td>
+                            <td>
+                                <p>@Html.ActionLink(SSCISResources.Resources.ACCEPT_LESSON, "AcceptLesson", new { id = item.Id })</p>
+                            </td>
+                        </tr>
+                    }
+                }
 
             </table>
 
         </div>
-            <div class="col-sm-2 sidenav">
-            </div>
-       
+        <div class="col-sm-2 sidenav">
+        </div>
+
     </div>
 </div>

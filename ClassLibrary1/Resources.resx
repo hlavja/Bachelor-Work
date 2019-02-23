@@ -118,10 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ACCEPT" xml:space="preserve">
-    <value>Schválit</value>
+    <value>Schválit |</value>
   </data>
   <data name="ACCEPTED" xml:space="preserve">
     <value>Schváleno</value>
+  </data>
+  <data name="ACCEPT_LESSON" xml:space="preserve">
+    <value>Přijmout lekci</value>
   </data>
   <data name="ADD_SUBJECT" xml:space="preserve">
     <value>Přidat předmět</value>
@@ -136,7 +139,7 @@
     <value>Zpět</value>
   </data>
   <data name="CANCEL" xml:space="preserve">
-    <value>Zrušit</value>
+    <value>Zrušit |</value>
   </data>
   <data name="CANCELLATION_COMMENT" xml:space="preserve">
     <value>Poznámka ke zrušení</value>
@@ -192,6 +195,9 @@
   <data name="EDIT_NEWS" xml:space="preserve">
     <value>Upravit novinku</value>
   </data>
+  <data name="EMAIL" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
   <data name="EVENT" xml:space="preserve">
     <value>Událost</value>
   </data>
@@ -211,7 +217,7 @@
     <value>Detail události</value>
   </data>
   <data name="GENERATE_FEEDBACK_LINK" xml:space="preserve">
-    <value>Generuj odkaz pro feedback</value>
+    <value>Generuj odkaz pro feedback |</value>
   </data>
   <data name="HEADER" xml:space="preserve">
     <value>Nadpis</value>

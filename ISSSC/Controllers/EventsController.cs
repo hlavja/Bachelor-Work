@@ -38,7 +38,7 @@ namespace ISSSC.Controllers
         public ActionResult Index()
         {
             DateTime now = DateTime.Now;
-            var eventModel = db.Event.Where(e => e.TimeFrom > now).Include(@e => @e.IdSubjectNavigation).Include(@e => @e.IdTutorNavigation);
+            var eventModel = db.Event.Where(e => e.TimeFrom > now /*&& e.IsExtraLesson == false*/).Include(@e => @e.IdSubjectNavigation).Include(@e => @e.IdTutorNavigation);
             return View(eventModel.ToList());
         }
 
@@ -58,6 +58,45 @@ namespace ISSSC.Controllers
             return View(@event);
         }
         #endregion
+
+        public ActionResult AcceptLesson(int? id)
+        {
+            if (id == null)
+            {
+                return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+            }
+            Event @event = db.Event.Find(id);
+            if (@event == null)
+            {
+                return NotFound();
+            }
+            return View(@event);
+        }
+
+        /// <summary>
+        /// Acceptation of created event
+        /// </summary>
+        /// <param name="id">Event ID</param>
+        /// <returns>Redirection to list of events</returns>
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Tutor)]
+        [HttpGet]
+        public ActionResult AcceptLesson2(int? id)
+        {
+            if (id == null)
+            {
+                return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+            }
+            Event @event = db.Event.Find(id);
+            if (@event == null)
+            {
+                return NotFound();
+            }
+            int userId = (int)HttpContext.Session.GetInt32("userId");
+            @event.IdTutorNavigation = db.SscisUser.Find(id = userId);
+            @event.IsAccepted = true;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         /// <summary>
         /// Creates new event
@@ -93,14 +132,15 @@ namespace ISSSC.Controllers
             if (ModelState.IsValid)
             {
                 int userId = (int)HttpContext.Session.GetInt32("userId");
-                model.Event.IdTutorNavigation = null;
-
+                model.Event.IdTutorNavigation = db.SscisUser.Find(userId);
                 model.Event.IsCancelled = false;
                 model.Event.IsAccepted = false;
                 model.Event.IsExtraLesson = false;
                 model.Event.TimeFrom = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour, model.TimeFrom.Minute, 0);
                 model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeTo.Hour, model.TimeTo.Minute, 0);
                 model.Event.IdSubjectNavigation = db.EnumSubject.Find(model.SubjectID);
+                model.Event.IdApplicantNavigation = null;
+                model.Event.IdApplicant = null;
                 db.Event.Add(model.Event);
                 db.SaveChanges();
                 return RedirectToAction("TutorEvents");

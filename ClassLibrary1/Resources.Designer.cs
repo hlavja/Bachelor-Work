@@ -61,11 +61,20 @@ namespace SSCISResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Schválit.
+        ///   Looks up a localized string similar to Schválit |.
         /// </summary>
         public static string ACCEPT {
             get {
                 return ResourceManager.GetString("ACCEPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Přijmout lekci.
+        /// </summary>
+        public static string ACCEPT_LESSON {
+            get {
+                return ResourceManager.GetString("ACCEPT_LESSON", resourceCulture);
             }
         }
         
@@ -115,7 +124,7 @@ namespace SSCISResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Zrušit.
+        ///   Looks up a localized string similar to Zrušit |.
         /// </summary>
         public static string CANCEL {
             get {
@@ -286,6 +295,15 @@ namespace SSCISResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-mail.
+        /// </summary>
+        public static string EMAIL {
+            get {
+                return ResourceManager.GetString("EMAIL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Událost.
         /// </summary>
         public static string EVENT {
@@ -340,7 +358,7 @@ namespace SSCISResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generuj odkaz pro feedback.
+        ///   Looks up a localized string similar to Generuj odkaz pro feedback |.
         /// </summary>
         public static string GENERATE_FEEDBACK_LINK {
             get {

@@ -57,6 +57,14 @@
                     </dd>
 
                     <dt>
+                        @SSCISResources.Resources.EMAIL
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+
+                    <dt>
                         @SSCISResources.Resources.ROLE
                     </dt>
 
@@ -70,10 +78,6 @@
                 @{if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Administrator))
                     {
                     <p>@Html.ActionLink(@SSCISResources.Resources.EDIT, "Edit", new { id = Model.Id }) | @Html.ActionLink(@SSCISResources.Resources.BACK, "Index")</p>
-                }
-                else
-                {
-                    <p>@Html.ActionLink(@SSCISResources.Resources.BACK, "Index")</p>
                 }
                 }
                 </p>

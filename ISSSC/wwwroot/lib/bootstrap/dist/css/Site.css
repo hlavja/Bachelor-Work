@@ -148,6 +148,10 @@ tr.canceled-evnt {
     background-color: #FFDDDD;
 }
 
+tr.extra-evnt {
+    background-color: #b1f29b;
+}
+
 /*Menu button apear more quickly*/
 @media (max-width: 950px) {
     .navbar-header {

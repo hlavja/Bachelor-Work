@@ -46,7 +46,6 @@ E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcor
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Home\ProcessLogin.g.cshtml.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Home\Statistics.g.cshtml.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Home\Unauthorized.g.cshtml.cs
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Home\Username.g.cshtml.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Error.g.cshtml.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Layout.g.cshtml.cs
@@ -88,3 +87,4 @@ E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcor
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.dll
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.pdb
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\appsettings.json
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Events\AcceptLesson.g.cshtml.cs
