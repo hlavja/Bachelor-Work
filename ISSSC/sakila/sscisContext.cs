@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
-namespace ISSSC.Models
+namespace ISSSC.sakila
 {
-    public partial class SscisContext : DbContext
+    public partial class sscisContext : DbContext
     {
-        public SscisContext()
+        public sscisContext()
         {
         }
 
-        public SscisContext(DbContextOptions<SscisContext> options)
+        public sscisContext(DbContextOptions<sscisContext> options)
             : base(options)
         {
         }
@@ -34,11 +32,8 @@ namespace ISSSC.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                IConfigurationRoot configuration = new ConfigurationBuilder()
-                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                    .AddJsonFile("appsettings.json")
-                    .Build();
-                optionsBuilder.UseLazyLoadingProxies().UseMySQL(configuration.GetConnectionString("Localhost"));
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseMySQL("server=localhost;user id=root;password='';port=3306;database=sscis");
             }
         }
 

@@ -93,7 +93,8 @@ namespace ISSSC.Controllers
             if (ModelState.IsValid)
             {
                 int userId = (int)HttpContext.Session.GetInt32("userId");
-                model.Event.IdTutorNavigation = db.SscisUser.Find(userId);
+                model.Event.IdTutorNavigation = null;
+
                 model.Event.IsCancelled = false;
                 model.Event.IsAccepted = false;
                 model.Event.IsExtraLesson = false;

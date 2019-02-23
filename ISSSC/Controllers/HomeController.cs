@@ -9,6 +9,9 @@ using ISSSC.Models;
 using ISSSC.Class;
 using ISSSC.Attributes;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Net;
 
 namespace ISSSC.Controllers
 {
@@ -78,9 +81,44 @@ namespace ISSSC.Controllers
         [HttpGet]
         public ActionResult HelpMe()
         {
+            //TODO změna
+            ViewBag.SubjectID = new SelectList(Db.EnumSubject.Where(s => s.IdParent == null), "Id", "Code");
+
             ViewBag.Title = "Potřebuji pomoc";
             ViewBag.PublicTimeTable = timeTableRenderer.RenderPublic(Db);
             return View();
+        }
+
+
+        /// <summary>
+        /// Cretes new event
+        /// </summary>
+        /// <param name="@event">Event model</param>
+        /// <returns>Creation result</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.User)]
+        public ActionResult Create(MetaEvent model)
+        {
+            model.Event = new Event();
+            if (ModelState.IsValid)
+            {
+                int userId = (int)HttpContext.Session.GetInt32("userId");
+                model.Event.IdTutorNavigation = Db.SscisUser.Find(userId);
+                model.Event.IsCancelled = false;
+                model.Event.IsAccepted = false;
+                model.Event.IsExtraLesson = false;
+                model.Event.TimeFrom = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour, model.TimeFrom.Minute, 0);
+                model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeTo.Hour, model.TimeTo.Minute, 0);
+                model.Event.IdSubjectNavigation = Db.EnumSubject.Find(model.SubjectID);
+
+
+
+                Db.Event.Add(model.Event);
+                Db.SaveChanges();
+                return RedirectToAction("TutorEvents");
+            }
+            return RedirectToAction("Create");
         }
 
         /// <summary>
