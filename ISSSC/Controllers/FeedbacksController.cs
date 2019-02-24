@@ -168,12 +168,71 @@ namespace SSCIS.Controllers
         /// </summary>
         /// <param name="model">Interval model</param>
         /// <returns>View with list of feedback</returns>
+        //[HttpPost]
+        //[SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
+        //public IActionResult List(MetaInterval model)
+        //{
+        //    List<Feedback> feedbacks = db.Feedback.Where(f => f.IdParticipationNavigation.IdEventNavigation.TimeFrom >= model.From && f.IdParticipationNavigation.IdEventNavigation.TimeTo <= model.To).ToList();
+        //    return View(feedbacks);
+        //}
+
+
+        [HttpGet]
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
+        public ActionResult Detail(int? id)
+        {
+
+            if (id == null)
+            {
+                return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+            }
+
+            List<Feedback> feedbacks = db.Feedback.Where(f => f.IdParticipationNavigation.IdEvent == id).ToList();
+            return View(feedbacks);
+        }
+
+
         [HttpPost]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public IActionResult List(MetaInterval model)
         {
-            List<Feedback> feedbacks = db.Feedback.Where(f => f.IdParticipationNavigation.IdEventNavigation.TimeFrom >= model.From && f.IdParticipationNavigation.IdEventNavigation.TimeTo <= model.To).ToList();
-            return View(feedbacks);
+            Statistics statistics = new Statistics();
+            List<Event> events = new List<Event>();
+
+            events = db.Event.Where(e => e.TimeFrom >= model.From && e.TimeTo <= model.To).ToList();
+            
+
+
+            foreach (var item in events)
+            {
+                MetaStat meta = new MetaStat();
+                meta.IdSubjectNavigation = item.IdSubjectNavigation;
+                meta.IdTutorNavigation = item.IdTutorNavigation;
+                meta.TimeFrom = item.TimeFrom;
+                meta.TimeTo = item.TimeTo;
+                meta.Id = item.Id;
+
+
+                int feedbackCount = db.Participation.Where(p => p.IdEvent == item.Id).Count();
+                meta.FeedbacksCount = feedbackCount;
+
+                if (statistics.Event == null)
+                {
+                    statistics.Event = new List<MetaStat>();
+                }
+
+                statistics.Event.Add(meta);
+            }
+
+            statistics.Event.Sort(delegate (MetaStat x, MetaStat y)
+            {
+                if (x.TimeFrom == null && y.TimeFrom == null) return 0;
+                else if (x.TimeFrom == null) return -1;
+                else if (y.TimeFrom == null) return 1;
+                else return x.TimeFrom.CompareTo(y.TimeFrom);
+            });
+
+            return View(statistics);
         }
 
         /// <summary>

@@ -32,7 +32,7 @@
                             <li class="menu-params">@Html.ActionLink("Systémové parametry", "Index", "SSCISParams", new { area = "" }, null)</li>
                             <li class="menu-subjects">@Html.ActionLink("Správa předmětů", "Index", "Subjects", new { area = "" }, null)</li>
                             <li class="menu-tutors">@Html.ActionLink("Žádosti tutorů", "Index", "TutorApplications", new { area = "" }, null)</li>
-                            <li class="menu-statistics">@Html.ActionLink("Statistiky", "Statistics", "Home", new { area = "" }, null)</li>
+                            <li class="menu-statistics">@Html.ActionLink("Statistiky", "Generate", "Feedbacks", new { area = "" }, null)</li>
                             <li class="menu-users">@Html.ActionLink("Uživatelé", "Index", "Users", new { area = "" }, null)</li>
                         }
                         else if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Tutor))

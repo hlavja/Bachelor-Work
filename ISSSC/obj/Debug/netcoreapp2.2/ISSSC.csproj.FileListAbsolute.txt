@@ -88,3 +88,4 @@ E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcor
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.pdb
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\appsettings.json
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Events\AcceptLesson.g.cshtml.cs
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Feedbacks\Detail.g.cshtml.cs

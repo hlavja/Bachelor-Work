@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ISSSC.Models.Feedback>
+﻿@model ISSSC.Models.Meta.Statistics
 
 @{
     ViewBag.Title = "Feedback";
@@ -13,9 +13,12 @@
         <div class="col-sm-2 sidenav">
         </div>
         <div class="col-sm-8 text-left">
-            <h2>Feedback</h2>
+            <h2>Statistiky</h2>
             <table class="table">
                 <tr>
+                    <th>
+                        Hodina
+                    </th>
                     <th>
                         Čas od
                     </th>
@@ -23,29 +26,32 @@
                         Čas do
                     </th>
                     <th>
-                        Předmět
+                        Počet feedbacků
                     </th>
                     <th>
-                        Text
+                        Tutor
                     </th>
                 </tr>
 
-                @foreach (var item in Model)
+                @foreach (var item in Model.Event)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdParticipationNavigation.IdEventNavigation.TimeFrom)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdParticipationNavigation.IdEventNavigation.TimeTo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdParticipationNavigation.IdEventNavigation.IdSubjectNavigation.Code)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Text)
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdSubjectNavigation.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TimeFrom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TimeTo)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.FeedbacksCount.ToString(), "Detail", new { id = item.Id })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdTutorNavigation.Login)
+                    </td>
+                </tr>
                 }
 
             </table>
