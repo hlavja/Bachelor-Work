@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Net;
+using System.Text;
 
 namespace ISSSC.Controllers
 {
@@ -21,6 +22,7 @@ namespace ISSSC.Controllers
         /// Time table components renderer
         /// </summary>
         private TimetableRenderer timeTableRenderer = new TimetableRenderer();
+        private PersonalTimetable personalTimetable = new PersonalTimetable();
 
         public SscisContext Db { get; set; }
 
@@ -50,7 +52,19 @@ namespace ISSSC.Controllers
                     TextContent = "Žádná aktualita nebyla nalezena"
                 };
             }
+
+
+            int userId = 0;
+
+            if (HttpContext.Session.GetInt32("userId").HasValue)
+            {
+                userId = (int)HttpContext.Session.GetInt32("userId");
+            }
+
+
             ViewBag.PublicTimeTable = timeTableRenderer.RenderPublic(Db);
+            ViewBag.PersonalTimeTable = personalTimetable.RenderEvents(Db, userId);
+
             return View(model);
         }
 
@@ -68,7 +82,14 @@ namespace ISSSC.Controllers
         [HttpGet]
         public ActionResult Contact()
         {
-            ViewBag.MapToken = Db.SscisParam.Where(p => p.ParamKey.Equals("MAP_TOKEN")).Single().ParamValue;
+            StringBuilder builder = new StringBuilder();
+            builder.Append("https://maps.googleapis.com/maps/api/js?key=");
+            builder.Append(Db.SscisParam.Where(p => p.ParamKey.Equals("MAP_TOKEN")).Single().ParamValue);
+            builder.Append("&callback=myMap");
+
+
+
+            ViewBag.MapToken = builder.ToString();
             ViewBag.Title = "Contact";
             return View();
         }
@@ -83,8 +104,15 @@ namespace ISSSC.Controllers
         {
             //TODO změna
             ViewBag.SubjectID = new SelectList(Db.EnumSubject.Where(s => s.IdParent == null), "Id", "Code");
+            int userId = 0;
+
+            if (HttpContext.Session.GetInt32("userId").HasValue)
+            {
+                userId = (int)HttpContext.Session.GetInt32("userId"); ;
+            }
 
             ViewBag.Title = "Potřebuji pomoc";
+            ViewBag.PersonalTimeTable = personalTimetable.RenderEvents(Db, userId);
             ViewBag.PublicTimeTable = timeTableRenderer.RenderPublic(Db);
             return View();
         }
@@ -135,6 +163,14 @@ namespace ISSSC.Controllers
             {
                 Contents = Db.SscisContent.OrderByDescending(c => c.Created).ToList()
             };
+
+            int userId = 0;
+
+            if (HttpContext.Session.GetInt32("userId").HasValue)
+            {
+                userId = (int)HttpContext.Session.GetInt32("userId");
+            }
+            ViewBag.PersonalTimeTable = personalTimetable.RenderEvents(Db, userId);
             return View(model);
         }
 

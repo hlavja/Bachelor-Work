@@ -119,7 +119,7 @@
                         @SSCISResources.Resources.SUBJECT
                     </th>
                     <th>
-                        @SSCISResources.Resources.TUTOR
+                        @SSCISResources.Resources.APPLICANT
                     </th>
                     <th class="col-md-2"></th>
                 </tr>
@@ -148,7 +148,7 @@
                                 @Html.DisplayFor(modelItem => item.IdSubjectNavigation.Code)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.IdTutorNavigation.Login)
+                                @Html.DisplayFor(modelItem => item.IdApplicantNavigation.Login)
                             </td>
                             <td>
                                 <p>@Html.ActionLink(SSCISResources.Resources.ACCEPT_LESSON, "AcceptLesson", new { id = item.Id })</p>

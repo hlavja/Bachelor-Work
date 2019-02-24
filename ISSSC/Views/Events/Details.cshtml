@@ -1,4 +1,5 @@
 ﻿@model ISSSC.Models.Event
+@using Microsoft.AspNetCore.Http;
 
 @{
     ViewBag.Title = SSCISResources.Resources.EVENT_DETAIL;
@@ -74,10 +75,10 @@
                 </dl>
             </div>
             <p>
-                @if (Model.IsAccepted == true)
+                @if (Model.IsAccepted == true && (ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Administrator) || (ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Tutor) && ViewContext.HttpContext.Session.GetInt32("userId") == Model.IdTutor)))
                 {
                     @Html.ActionLink(SSCISResources.Resources.GENERATE_FEEDBACK_LINK, "EventQR", "Feedbacks", new { id = Model.Id }, new { })
-    
+
                 }
                 @Html.ActionLink(SSCISResources.Resources.BACK, "Index")
             </p>

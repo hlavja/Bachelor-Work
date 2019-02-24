@@ -37,15 +37,12 @@
 
     @{if (ViewContext.HttpContext.Session.GetString("role") != null && (ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.User) || ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Tutor)))
         {
-            <div class="col-sm-2 sidenav rozvrh">
-                <div class="well">
-                    <p>
-                        USER - rozvrh extra lekcí na které se přihlásil
-                        <br />
-                        TUTOR - rozvrh lekcí co bude vyučovat (pravidelné a nepravidelné)
-                    </p>
-                </div>
-            </div>
+    <div class="col-sm-2 sidenav rozvrh">
+        <div class="well">
+            @ViewBag.PersonalTimeTable
+
+        </div>
+    </div>
         }
         else
         {

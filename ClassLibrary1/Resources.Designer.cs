@@ -70,7 +70,7 @@ namespace SSCISResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Přijmout lekci.
+        ///   Looks up a localized string similar to Přijmout lekci |.
         /// </summary>
         public static string ACCEPT_LESSON {
             get {
@@ -93,6 +93,15 @@ namespace SSCISResources {
         public static string ADD_SUBJECT {
             get {
                 return ResourceManager.GetString("ADD_SUBJECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Žadatel.
+        /// </summary>
+        public static string APPLICANT {
+            get {
+                return ResourceManager.GetString("APPLICANT", resourceCulture);
             }
         }
         

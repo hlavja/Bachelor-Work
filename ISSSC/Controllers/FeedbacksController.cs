@@ -168,16 +168,8 @@ namespace SSCIS.Controllers
         /// </summary>
         /// <param name="model">Interval model</param>
         /// <returns>View with list of feedback</returns>
-        //[HttpPost]
-        //[SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
-        //public IActionResult List(MetaInterval model)
-        //{
-        //    List<Feedback> feedbacks = db.Feedback.Where(f => f.IdParticipationNavigation.IdEventNavigation.TimeFrom >= model.From && f.IdParticipationNavigation.IdEventNavigation.TimeTo <= model.To).ToList();
-        //    return View(feedbacks);
-        //}
-
-
         [HttpGet]
+        [Route("Detail")]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public ActionResult Detail(int? id)
         {

@@ -21,25 +21,30 @@
             <div class="well">
                 <div id="map" style="width:100%;height:400px;"></div>
             </div>
+
+            <p>
+                @ViewBag.MapToken
+            </p>
             <hr>
         </div>
 
 
         <script>
-                function myMap() {
-                    var mapCanvas = document.getElementById("map");
-                    var mapOptions = {
-                        center: new google.maps.LatLng(49.726903, 13.352262), zoom: 17
-                    };
-                    var map = new google.maps.Map(mapCanvas, mapOptions);
-                }
+            function myMap() {
+                var mapCanvas = document.getElementById("map");
+                var mapOptions = {
+                    center: new google.maps.LatLng(49.726903, 13.352262), zoom: 17
+                };
+                var map = new google.maps.Map(mapCanvas, mapOptions);
+            }
         </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key="+ViewBag.MapToken + "&callback=myMap"></script>
+        <script src=@ViewBag.MapToken></script>
 
-            <div class="col-sm-2 sidenav">
-            </div>
+        <div class="col-sm-2 sidenav">
+
+        </div>
 
     </div>
-</div>
+    </div>
 
 
