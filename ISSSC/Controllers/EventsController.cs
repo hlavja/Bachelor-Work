@@ -59,6 +59,9 @@ namespace ISSSC.Controllers
         }
         #endregion
 
+        [Route("ExtraLesson/Accept")]
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Tutor)]
+        [HttpGet]
         public ActionResult AcceptLesson(int? id)
         {
             if (id == null)
@@ -80,7 +83,7 @@ namespace ISSSC.Controllers
         /// <returns>Redirection to list of events</returns>
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Tutor)]
         [HttpGet]
-        public ActionResult AcceptLesson2(int? id)
+        public ActionResult AcceptLessonConfirm(int? id)
         {
             if (id == null)
             {
@@ -216,6 +219,7 @@ namespace ISSSC.Controllers
         /// Shows tutors events
         /// </summary>
         /// <returns>Tutors events view</returns>
+        [Route("MyEvents")]
         [HttpGet]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Tutor)]
         public ActionResult TutorEvents()

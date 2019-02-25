@@ -24,12 +24,14 @@ namespace ISSSC.Controllers
         private TimetableRenderer timeTableRenderer = new TimetableRenderer();
         private PersonalTimetable personalTimetable = new PersonalTimetable();
 
+        private readonly IEmailService _emailService;
         public SscisContext Db { get; set; }
 
-        public HomeController(SscisContext context)
+        public HomeController(SscisContext context, IEmailService emailService)
         {
             Db = context;
-        }
+            _emailService = emailService;
+        }    
 
         /// <summary>
         /// Home page
@@ -146,6 +148,47 @@ namespace ISSSC.Controllers
 
                 Db.Event.Add(model.Event);
                 Db.SaveChanges();
+
+                int newId = model.Event.Id;
+
+                EmailMessage emailMessage = new EmailMessage();
+
+                //TODO Emaily!!
+                //odeslat email všem lidem co ho můžou vyučovat a mají vyplněný email
+
+                EmailAddress emailFrom = new EmailAddress();
+                emailFrom.Address = "studentsuportcentre@gmail.com";
+                emailFrom.Name = "Student Suport Centre";
+
+                List<EmailAddress> listFrom = new List<EmailAddress>();
+                listFrom.Add(emailFrom);
+
+                List<EmailAddress> listTo = new List<EmailAddress>();
+
+                foreach (var item in Db.Approval)
+                {
+                    if (item.IdSubject == model.SubjectID)
+                    {
+                        if (item.IdTutorNavigation.Email != null)
+                        {
+                            EmailAddress emailTo = new EmailAddress();
+                            emailTo.Name = item.IdTutorNavigation.Login;
+                            emailTo.Address = item.IdTutorNavigation.Email;
+                            listTo.Add(emailTo);
+                        }
+                    }
+                }
+
+                string subjectCode = Db.EnumSubject.Where(s => s.Id == model.SubjectID).Single().Code;
+
+                emailMessage.FromAddresses = listFrom;
+                emailMessage.ToAddresses = listTo;
+                            
+                emailMessage.Subject = "Žádost o extra lekci " + subjectCode + " v Student Support Centru";
+                emailMessage.Content = "Evidujeme novou žádost o extra lekci z předmětu, který můžeš vyučovat.\n" +
+                    "Pokud chceš lekci z " + subjectCode + " přijmout klikni na následující link: https://localhost:44386/ExtraLesson/Accept?id=" + newId;
+                
+                _emailService.Send(emailMessage);
                 return RedirectToAction("HelpMe");
             }
             return RedirectToAction("HelpMe");
@@ -156,6 +199,7 @@ namespace ISSSC.Controllers
         /// </summary>
         /// <returns>View with news</returns>
         [HttpGet]
+        [Route("News")]
         public ActionResult News()
         {
             ViewBag.Title = "Novniky";

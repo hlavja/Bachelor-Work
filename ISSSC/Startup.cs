@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using ISSSC.Controllers;
 using ISSSC.Extensions;
 using ISSSC.Models;
 using Microsoft.AspNetCore.Builder;
@@ -41,6 +42,8 @@ namespace ISSSC
             });
 
             //TODO Matějka mail ohledně připojení do databáze z .NET Core
+            services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
+            services.AddTransient<IEmailService, EmailService>();
             services.AddDbContext<SscisContext>();
             services.AddMvc().AddJsonOptions(options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

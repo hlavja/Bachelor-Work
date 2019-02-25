@@ -4,8 +4,6 @@ using System.Data;
 using System.Linq;
 using System.Net;
 using System.Web;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ISSSC.Models;
 using ISSSC.Models.Meta;
