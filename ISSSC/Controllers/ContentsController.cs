@@ -70,7 +70,7 @@ namespace ISSSC.Controllers
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public ActionResult Create(SscisContent model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.Header != null && model.TextContent != null)
             {
                 model.Created = DateTime.Now;
                 int authorID = (int)HttpContext.Session.GetInt32("userId");

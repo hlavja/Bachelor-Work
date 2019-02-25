@@ -63,7 +63,7 @@ namespace ISSSC.Controllers
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public ActionResult Create()
         {
-            ViewBag.ParentID = new SelectList(db.EnumSubject.Where(s => s.Lesson != null && s.Lesson.Value).ToList(), "Id", "Code");
+            ViewBag.ParentID = new SelectList(db.EnumSubject.Where(s => s.Lesson == false /*&& s.Lesson.Value*/).ToList(), "Id", "Code");
             return View();
         }
 
@@ -77,7 +77,7 @@ namespace ISSSC.Controllers
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public ActionResult Create([Bind("Id","Code","Name")] EnumSubject subject)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && subject.Code != null && subject.Name != null && subject.IdParent != null)
             {
                 db.EnumSubject.Add(subject);
                 db.SaveChanges();

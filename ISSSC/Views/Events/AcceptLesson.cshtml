@@ -9,53 +9,65 @@
         <div class="col-sm-2 sidenav">
         </div>
         <div class="col-sm-8 text-left">
-            <h2>Detaily</h2>
 
-            <div>
-                <h4>Opravdu chcete přijmout tuto extra hodinu?</h4>
-                <hr />
-                <dl class="dl-horizontal">
-                    <dt>
-                        @SSCISResources.Resources.TIME_FROM
-                    </dt>
+            @{ if (Model.IsAccepted == true)
+                {
+                    <h2>Požadovaná extra lekce již byla přijata!</h2>
+                }
+                else
+                {
 
-                    <dd>
-                        @Html.DisplayFor(model => model.TimeFrom)
-                    </dd>
 
-                    <dt>
-                        @SSCISResources.Resources.TIME_TO
-                    </dt>
+                    <h2>Detaily</h2>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.TimeTo)
-                    </dd>
+                    <div>
+                        <h4>Opravdu chcete přijmout tuto extra hodinu?</h4>
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @SSCISResources.Resources.TIME_FROM
+                            </dt>
 
-                    <dt>
-                        @SSCISResources.Resources.CANCELLATION_COMMENT
-                    </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.TimeFrom)
+                            </dd>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.CancelationComment)
-                    </dd>
+                            <dt>
+                                @SSCISResources.Resources.TIME_TO
+                            </dt>
 
-                    <dt>
-                        @SSCISResources.Resources.SUBJECT
-                    </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.TimeTo)
+                            </dd>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.IdSubjectNavigation.Code)
-                    </dd>
-                </dl>
+                            <dt>
+                                @SSCISResources.Resources.CANCELLATION_COMMENT
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.CancelationComment)
+                            </dd>
+
+                            <dt>
+                                @SSCISResources.Resources.SUBJECT
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.IdSubjectNavigation.Code)
+                            </dd>
+                        </dl>
+                    </div>
+                    <p>
+
+                        @Html.ActionLink(SSCISResources.Resources.ACCEPT_LESSON, "AcceptLesson2", new { id = Model.Id })
+                        @Html.ActionLink(SSCISResources.Resources.BACK, "Index")
+                    </p>
+
+                }
+            }
+        </div>
+            <div class="col-sm-2 sidenav">
+
             </div>
-            <p>
-
-                @Html.ActionLink(SSCISResources.Resources.ACCEPT_LESSON, "AcceptLesson2", new { id = Model.Id })
-                @Html.ActionLink(SSCISResources.Resources.BACK, "Index")
-            </p>
         </div>
-        <div class="col-sm-2 sidenav">
-
-        </div>
-    </div>
 </div>

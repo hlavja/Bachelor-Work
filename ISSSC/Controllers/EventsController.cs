@@ -129,7 +129,7 @@ namespace ISSSC.Controllers
         public ActionResult Create(MetaEvent model)
         {
             model.Event = new Event();
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.Date >= DateTime.Now)
             {
                 int userId = (int)HttpContext.Session.GetInt32("userId");
                 model.Event.IdTutorNavigation = db.SscisUser.Find(userId);
