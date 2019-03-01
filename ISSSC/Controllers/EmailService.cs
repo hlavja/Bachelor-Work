@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ISSSC.Class;
 using MailKit.Net.Smtp;
 using MimeKit;
@@ -10,7 +11,7 @@ namespace ISSSC.Controllers
 {
     public interface IEmailService
     {
-        void Send(EmailMessage emailMessage);
+        Task Send(EmailMessage emailMessage);
     }
 
     public class EmailService : IEmailService
@@ -22,7 +23,7 @@ namespace ISSSC.Controllers
             _emailConfiguration = emailConfiguration;
         }
 
-        public void Send(EmailMessage emailMessage)
+        public async Task Send(EmailMessage emailMessage)
         {
             var message = new MimeMessage();
             message.To.AddRange(emailMessage.ToAddresses.Select(x => new MailboxAddress(x.Name, x.Address)));
@@ -46,11 +47,11 @@ namespace ISSSC.Controllers
 
                 emailClient.Authenticate(_emailConfiguration.SmtpUsername, _emailConfiguration.SmtpPassword);
 
-                emailClient.Send(message);
+                await emailClient.SendAsync(message);
 
                 emailClient.Disconnect(true);
             }
-
+            return;
         }
     }
 }

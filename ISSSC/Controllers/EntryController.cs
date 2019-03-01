@@ -53,6 +53,9 @@ namespace ISSSC.Controllers
         {
             if (HttpContext.Request.Headers["WEB_AUTH_USER"].Equals("")) return RedirectToAction("Index", "Home");
             string username = Request.Headers[USERNAME_KEY];
+            //string redirectUrl = Request.Headers[redirect];
+
+            //TODO CIV kontakt Pavel Jindru
             var count = db.SscisUser.Count(usr => usr.Login.Equals(username));
             if (count < 1)
             {

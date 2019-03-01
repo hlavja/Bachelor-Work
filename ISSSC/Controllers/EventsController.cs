@@ -140,7 +140,16 @@ namespace ISSSC.Controllers
                 model.Event.IsAccepted = false;
                 model.Event.IsExtraLesson = false;
                 model.Event.TimeFrom = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour, model.TimeFrom.Minute, 0);
-                model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeTo.Hour, model.TimeTo.Minute, 0);
+                //model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeTo.Hour, model.TimeTo.Minute, 0);
+             
+                if (!BoolParser.Parse(db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.STANDART_EVENT_LENGTH)).ParamValue))
+                {
+                    int hour = Convert.ToInt32(db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.STANDART_EVENT_LENGTH)).Single().ParamValue);
+                    model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour + hour, model.TimeFrom.Minute, 0);
+                } else
+                {
+                    model.Event.TimeTo = model.Event.TimeFrom.AddHours(2);
+                }
                 model.Event.IdSubjectNavigation = db.EnumSubject.Find(model.SubjectID);
                 model.Event.IdApplicantNavigation = null;
                 model.Event.IdApplicant = null;

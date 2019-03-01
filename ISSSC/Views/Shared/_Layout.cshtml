@@ -67,7 +67,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if (ViewContext.HttpContext.Session.GetString("role") == null)
                     {
-                        <li><a href="@Url.Action("Login", "Home")"><span class="glyphicon glyphicon-log-in"></span> Přihlásit se</a></li>
+                        <li><a href="@Url.Action("Login", "Home", ViewData.ContainsKey("RedirectionUrl") ? new { redirectionUrl = ViewBag.RedirectionUrl } : null)"><span class="glyphicon glyphicon-log-in"></span> Přihlásit se</a></li>
                     }
                     else
                     {

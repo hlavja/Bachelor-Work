@@ -128,7 +128,7 @@ namespace ISSSC.Controllers
         /// <returns>Creation result</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [SSCISAuthorize(AccessLevel = AuthorizationRoles.User)]
+        [SSCISAuthorize(AccessLevels =new[] { AuthorizationRoles.User, AuthorizationRoles.Tutor })]
         public ActionResult HelpMe(MetaEvent model)
         {
             model.Event = new Event();
@@ -137,7 +137,16 @@ namespace ISSSC.Controllers
                 int userId = (int)HttpContext.Session.GetInt32("userId");
 
                 model.Event.TimeFrom = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour, model.TimeFrom.Minute, 0);
-                model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour + 1, model.TimeFrom.Minute, 0);
+                if (!BoolParser.Parse(Db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.EXTRA_EVENT_LENGTH)).ParamValue))
+                {
+                    int hour = Convert.ToInt32(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.EXTRA_EVENT_LENGTH)).Single().ParamValue);
+                    model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour + hour, model.TimeFrom.Minute, 0);
+                }
+                else
+                {
+                    model.Event.TimeTo = model.Event.TimeFrom.AddHours(1);
+                }
+                //model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour + 1, model.TimeFrom.Minute, 0);
                 model.Event.IdSubjectNavigation = Db.EnumSubject.Find(model.SubjectID);
                 model.Event.IdTutorNavigation = null;
                 model.Event.IdTutor = null;
@@ -224,17 +233,22 @@ namespace ISSSC.Controllers
         /// <param name="validationMessage">validation message</param>
         /// <returns>View with login form</returns>
         [HttpGet]
-        public ActionResult Login(string validationMessage = null)
+        public ActionResult Login(string validationMessage = null, string redirectionUrl = null)
         {
+            string redirectUrl = WebUtility.UrlDecode(redirectionUrl);
             bool webauth = BoolParser.Parse(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEB_AUTH_ON)).Single().ParamValue);
+            //string redirectUrl = HttpContext.Request.Path.Value + HttpContext.Request.QueryString.Value;
+            
             if (webauth)
             {
+                
                 return Redirect(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEB_AUTH_URL)).Single().ParamValue);
             }
             ViewBag.Title = "Login";
             MetaLogin model = new MetaLogin
             {
-                ValidationMessage = validationMessage
+                ValidationMessage = validationMessage,
+                RedirectionUrl = redirectionUrl
             };
             return View(model);
         }
@@ -251,6 +265,10 @@ namespace ISSSC.Controllers
             if (count == 1)
             {
                 new SSCISSessionManager().SessionStart(model.Login, HttpContext);
+                if(model.RedirectionUrl != null)
+                {                    
+                    return Redirect(model.RedirectionUrl);
+                }
                 return RedirectToAction("Index");
             }
             return Login("Invalid login");
@@ -272,8 +290,10 @@ namespace ISSSC.Controllers
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult Unauthorized()
+        [Route("Home/Unauthorized/{redirection}")]
+        public ActionResult Unauthorized(string redirection = null)
         {
+            ViewData["RedirectionUrl"] = SSCHttpContext.AppBaseUrl + WebUtility.UrlDecode(redirection);
             return View();
         }
 

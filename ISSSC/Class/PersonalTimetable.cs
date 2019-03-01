@@ -35,7 +35,7 @@ namespace ISSSC.Class
 
             foreach (var item in myEvents)
             {
-                if (item.IsCancelled == false)
+                if (item.IsCancelled == false && item.TimeFrom >= DateTime.Now)
                 {
                     builder.Append("<tr>");
                     builder.Append("<td>");
@@ -65,7 +65,7 @@ namespace ISSSC.Class
 
             foreach (var item in myExtraEvents)
             {
-                if (item.IdApplicant == userId && item.IdTutor != null)
+                if (item.IdApplicant == userId && item.IdTutor != null && item.TimeFrom >= DateTime.Now)
                 {
                     builder.Append("<tr>");
                     builder.Append("<td>");
@@ -95,7 +95,7 @@ namespace ISSSC.Class
 
             foreach (var item in myExtraEvents)
             {
-                if (item.IdApplicant == userId && item.IdTutor == null && item.IsAccepted == false)
+                if (item.IdApplicant == userId && item.IdTutor == null && item.IsAccepted == false && item.TimeFrom >= DateTime.Now)
                 {
                     builder.Append("<tr>");
                     builder.Append("<td>");

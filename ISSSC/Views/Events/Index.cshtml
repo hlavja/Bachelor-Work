@@ -151,7 +151,10 @@
                                 @Html.DisplayFor(modelItem => item.IdApplicantNavigation.Login)
                             </td>
                             <td>
+                                @if (ViewContext.HttpContext.Session.GetInt32("userId") != item.IdApplicant)
+                                {
                                 <p>@Html.ActionLink(SSCISResources.Resources.ACCEPT_LESSON, "AcceptLesson", new { id = item.Id })</p>
+                                }
                             </td>
                         </tr>
                     }

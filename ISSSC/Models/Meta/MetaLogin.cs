@@ -10,5 +10,6 @@ namespace ISSSC.Models.Meta
     {
         public string Login { get; set; }
         public string ValidationMessage { get; set; }
+        public string RedirectionUrl { get; set; }
     }
 }

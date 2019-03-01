@@ -12,5 +12,7 @@ namespace ISSSC.Class
         public const string WEB_AUTH_URL = "WEB_AUTH_URL";
         public const string VERSION = "VERSION";
         public const string SESSION_LENGTH = "SESSION_LENGTH";
+        public const string STANDART_EVENT_LENGTH = "STANDART_EVENT_LENGTH";
+        public const string EXTRA_EVENT_LENGTH = "EXTRA_EVENT_LENGTH";
     }
 }

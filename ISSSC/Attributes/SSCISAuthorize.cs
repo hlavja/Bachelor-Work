@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Hosting;
+using System.Net;
 
 namespace ISSSC.Attributes
 {
@@ -15,8 +16,15 @@ namespace ISSSC.Attributes
     /// </summary>
     public class SSCISAuthorize : ActionFilterAttribute
     {
-        public string AccessLevel { get; set; }
-
+        public string AccessLevel { get {
+                return AccessLevels != null ? AccessLevels[0] : null;
+            }
+            set {
+                AccessLevels = new string[]{value};
+            } }
+             
+        
+        public string[] AccessLevels { get; set; }
         /// <summary>
         /// Session manager
         /// </summary>
@@ -53,8 +61,8 @@ namespace ISSSC.Attributes
                     filterContext.Result = new RedirectResult(string.Format("{0}Home/Login", _addSlash(SSCHttpContext.AppBaseUrl)));
                 }
                 var role = filterContext.HttpContext.Session.GetString("role");
-                if (role == null || !role.Equals(AccessLevel) && !role.Equals(AuthorizationRoles.Administrator))
-                    filterContext.Result = new RedirectResult(string.Format("{0}Home/Unauthorized", _addSlash(SSCHttpContext.AppBaseUrl)));
+                if (role == null || !AccessLevels.Contains(role) && !role.Equals(AuthorizationRoles.Administrator))
+                    filterContext.Result = new RedirectResult($"{_addSlash(SSCHttpContext.AppBaseUrl)}Home/Unauthorized/{WebUtility.UrlEncode(filterContext.HttpContext.Request.Path.Value+ filterContext.HttpContext.Request.QueryString)}");
             }
         }
 
