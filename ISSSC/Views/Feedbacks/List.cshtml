@@ -17,6 +17,35 @@
             <table class="table">
                 <tr>
                     <th>
+                        Počet hodin: @Html.DisplayFor(model => model.Lessons)
+                    </th>
+                    <th>
+                        MATH: @Html.DisplayFor(model => model.MathLessons)
+                    </th>
+                    <th>
+                        INF: @Html.DisplayFor(model => model.InfLessons)
+                    </th>
+                    <th>
+                        MECH: @Html.DisplayFor(model => model.MechLessons)
+                    </th>
+                    <th>
+                        Odučené hodiny: @Html.DisplayFor(model => model.LessonsHours)
+                    </th>
+                    <th>
+                        MATH: @Html.DisplayFor(model => model.MathLessonsHours)
+                    </th>
+                    <th>
+                        INF: @Html.DisplayFor(model => model.InfLessonsHours)
+                    </th>
+                    <th>
+                        MECH: @Html.DisplayFor(model => model.MechLessonsHours)
+                    </th>
+                </tr>
+            </table>
+
+            <table class="table">
+                <tr>
+                    <th>
                         Hodina
                     </th>
                     <th>
@@ -35,23 +64,23 @@
 
                 @foreach (var item in Model.Event)
                 {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdSubjectNavigation.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TimeFrom)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TimeTo)
-                    </td>
-                    <td>
-                        @Html.ActionLink(item.FeedbacksCount.ToString(), "Detail", new { id = item.Id })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdTutorNavigation.Login)
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdSubjectNavigation.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TimeFrom)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TimeTo)
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.FeedbacksCount.ToString(), "Detail", new { id = item.Id })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdTutorNavigation.Login)
+                        </td>
+                    </tr>
                 }
 
             </table>

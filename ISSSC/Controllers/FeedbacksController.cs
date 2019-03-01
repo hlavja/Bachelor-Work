@@ -199,11 +199,36 @@ namespace SSCIS.Controllers
             {
                 MetaStat meta = new MetaStat();
                 meta.IdSubjectNavigation = item.IdSubjectNavigation;
+                statistics.Lessons++;
+
+                if (item.IdSubjectNavigation.Code.Equals("MAT"))
+                {
+                    statistics.MathLessons++;
+                } else if (item.IdSubjectNavigation.Code.Equals("INF"))
+                {
+                    statistics.InfLessons++;
+                } else if (item.IdSubjectNavigation.Code.Equals("MECH"))
+                {
+                    statistics.MechLessons++;
+                }
+
+                int standartLessonLength = int.Parse(db.SscisParam.Where(p => p.ParamKey == SSCISParameters.STANDART_EVENT_LENGTH).Single().ParamValue);
+                if(standartLessonLength == 0)
+                {
+                    standartLessonLength = 2;
+                }
+
+                statistics.LessonsHours = statistics.Lessons * standartLessonLength;
+                statistics.MathLessonsHours = statistics.MathLessons * standartLessonLength;
+                statistics.InfLessonsHours = statistics.InfLessons * standartLessonLength;
+                statistics.MechLessonsHours = statistics.MechLessons * standartLessonLength;
+
                 meta.IdTutorNavigation = item.IdTutorNavigation;
                 meta.TimeFrom = item.TimeFrom;
                 meta.TimeTo = item.TimeTo;
                 meta.Id = item.Id;
 
+            
 
                 int feedbackCount = db.Participation.Where(p => p.IdEvent == item.Id).Count();
                 meta.FeedbacksCount = feedbackCount;
