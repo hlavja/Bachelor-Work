@@ -227,8 +227,7 @@ namespace SSCIS.Controllers
                 meta.TimeFrom = item.TimeFrom;
                 meta.TimeTo = item.TimeTo;
                 meta.Id = item.Id;
-
-            
+                meta.IdEventNavigation = item;
 
                 int feedbackCount = db.Participation.Where(p => p.IdEvent == item.Id).Count();
                 meta.FeedbacksCount = feedbackCount;

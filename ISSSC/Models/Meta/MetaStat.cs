@@ -12,8 +12,8 @@ namespace ISSSC.Models.Meta
         public DateTime TimeFrom { get; set; }
         public DateTime TimeTo { get; set; }
         public int FeedbacksCount { get; set; }
-
-
+        
+        public virtual Event IdEventNavigation { get; set; }
         public virtual SscisUser IdTutorNavigation { get; set; }
         public virtual EnumSubject IdSubjectNavigation { get; set; }
     }
