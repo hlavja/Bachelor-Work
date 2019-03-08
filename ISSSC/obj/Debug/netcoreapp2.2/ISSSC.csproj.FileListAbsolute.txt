@@ -181,3 +181,4 @@ D:\Skola\bakalarka\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.csproj.CopyComplete
 D:\Skola\bakalarka\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.dll
 D:\Skola\bakalarka\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.pdb
 D:\Skola\bakalarka\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Feedbacks\TutorList.g.cshtml.cs
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Feedbacks\TutorList.g.cshtml.cs
