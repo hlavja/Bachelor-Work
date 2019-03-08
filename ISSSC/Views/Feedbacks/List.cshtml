@@ -17,6 +17,8 @@
             <table class="table">
                 <tr>
                     <th>
+                        
+                    <th>
                         Počet hodin: @Html.DisplayFor(model => model.Lessons)
                     </th>
                     <th>
@@ -25,7 +27,7 @@
                     <th>
                         INF: @Html.DisplayFor(model => model.InfLessons)
                     </th>
-                    <th>
+                    <th class="col-md-5">
                         MECH: @Html.DisplayFor(model => model.MechLessons)
                     </th>
                     <th>
@@ -39,6 +41,7 @@
                     </th>
                     <th>
                         MECH: @Html.DisplayFor(model => model.MechLessonsHours)
+                    </th>
                     </th>
                 </tr>
             </table>
@@ -61,7 +64,7 @@
                         Tutor
                     </th>
                 </tr>
-
+                @if(Model.Event != null) { 
                 @foreach (var item in Model.Event)
                 {
                     <tr>
@@ -81,6 +84,7 @@
                             @Html.DisplayFor(modelItem => item.IdTutorNavigation.Login)
                         </td>
                     </tr>
+                }
                 }
 
             </table>

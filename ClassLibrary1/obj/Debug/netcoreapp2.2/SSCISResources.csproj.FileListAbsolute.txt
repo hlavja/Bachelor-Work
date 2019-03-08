@@ -11,3 +11,16 @@ E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debu
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.AssemblyInfo.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.dll
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.pdb
+D:\Skola\bakalarka\ClassLibrary1\bin\Debug\netcoreapp2.2\SSCISResources.deps.json
+D:\Skola\bakalarka\ClassLibrary1\bin\Debug\netcoreapp2.2\SSCISResources.runtimeconfig.json
+D:\Skola\bakalarka\ClassLibrary1\bin\Debug\netcoreapp2.2\SSCISResources.runtimeconfig.dev.json
+D:\Skola\bakalarka\ClassLibrary1\bin\Debug\netcoreapp2.2\SSCISResources.dll
+D:\Skola\bakalarka\ClassLibrary1\bin\Debug\netcoreapp2.2\SSCISResources.pdb
+D:\Skola\bakalarka\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.csprojAssemblyReference.cache
+D:\Skola\bakalarka\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.Resources.resources
+D:\Skola\bakalarka\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.csproj.GenerateResource.cache
+D:\Skola\bakalarka\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.csproj.CoreCompileInputs.cache
+D:\Skola\bakalarka\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.AssemblyInfoInputs.cache
+D:\Skola\bakalarka\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.AssemblyInfo.cs
+D:\Skola\bakalarka\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.dll
+D:\Skola\bakalarka\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.pdb

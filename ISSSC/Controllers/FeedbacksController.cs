@@ -191,7 +191,7 @@ namespace SSCIS.Controllers
             Statistics statistics = new Statistics();
             List<Event> events = new List<Event>();
 
-            events = db.Event.Where(e => e.TimeFrom >= model.From && e.TimeTo <= model.To).ToList();
+            events = db.Event.Where(e => e.TimeFrom >= model.From && e.TimeTo <= model.To.AddHours(20)).ToList();
             
 
 
@@ -227,8 +227,7 @@ namespace SSCIS.Controllers
                 meta.TimeFrom = item.TimeFrom;
                 meta.TimeTo = item.TimeTo;
                 meta.Id = item.Id;
-
-            
+                meta.IdEventNavigation = item;
 
                 int feedbackCount = db.Participation.Where(p => p.IdEvent == item.Id).Count();
                 meta.FeedbacksCount = feedbackCount;
@@ -241,12 +240,88 @@ namespace SSCIS.Controllers
                 statistics.Event.Add(meta);
             }
 
+            if(statistics.Event != null)
+            {
             statistics.Event.Sort(delegate (MetaStat x, MetaStat y)
             {
                 if (x.TimeFrom == null && y.TimeFrom == null) return 0;
                 else if (x.TimeFrom == null) return -1;
                 else if (y.TimeFrom == null) return 1;
                 else return x.TimeFrom.CompareTo(y.TimeFrom);
+            });
+            }
+
+            return View(statistics);
+        }
+
+        [HttpPost]
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
+        public IActionResult TutorList(MetaInterval model)
+        {
+            StatisticsTutor statistics = new StatisticsTutor();
+            List<Event> events = new List<Event>();
+            List<SscisUser> tutors = new List<SscisUser>();
+
+
+            tutors = db.SscisUser.Where(t => t.IdRoleNavigation.Role.Equals(AuthorizationRoles.Tutor)).ToList();
+            events = db.Event.Where(e => e.TimeFrom >= model.From && e.TimeTo <= model.To.AddHours(20)).ToList();
+
+            foreach (var tutor in tutors)
+            {
+                MetaTutor metaTutor = new MetaTutor();
+                metaTutor.Id = tutor.Id;
+                metaTutor.IdTutorNavigation = tutor;
+                if (statistics.Tutor == null)
+                {
+                    statistics.Tutor = new List<MetaTutor>();
+                }
+                statistics.Tutor.Add(metaTutor);
+                
+            }
+
+
+            foreach (var item in events)
+            {
+                if (item.IsAccepted == true && item.IsCancelled != true)
+                {
+                    
+                foreach (var storedTutor in statistics.Tutor)
+                {
+                    if(item.IdTutor == storedTutor.Id)
+                    {
+                        if (item.IdSubjectNavigation.Code.Equals("MAT"))
+                        {
+                            storedTutor.MathLessons++;
+                        }
+                        else if (item.IdSubjectNavigation.Code.Equals("INF"))
+                        {
+                            storedTutor.InfLessons++;
+                        }
+                        else if (item.IdSubjectNavigation.Code.Equals("MECH"))
+                        {
+                            storedTutor.MechLessons++;
+                        }
+
+                        int standartLessonLength = int.Parse(db.SscisParam.Where(p => p.ParamKey == SSCISParameters.STANDART_EVENT_LENGTH).Single().ParamValue);
+                        if (standartLessonLength == 0)
+                        {
+                            standartLessonLength = 2;
+                        }
+
+                        storedTutor.LessonsHours = storedTutor.MathLessons + storedTutor.InfLessons + storedTutor.MechLessons;
+                        storedTutor.LessonsHours = storedTutor.LessonsHours * standartLessonLength;
+                    }
+                }
+
+                }
+            }
+
+            statistics.Tutor.Sort(delegate (MetaTutor x, MetaTutor y)
+            {
+                if (x.IdTutorNavigation.Login == null && y.IdTutorNavigation.Login == null) return 0;
+                else if (x.IdTutorNavigation.Login == null) return -1;
+                else if (y.IdTutorNavigation.Login == null) return 1;
+                else return x.IdTutorNavigation.Login.CompareTo(y.IdTutorNavigation.Login);
             });
 
             return View(statistics);
