@@ -156,6 +156,10 @@ namespace ISSSC.Models
                     .HasColumnName("ID")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.Attendance)
+                    .HasColumnName("ATTENDANCE")
+                    .HasColumnType("int(50)");
+
                 entity.Property(e => e.CancelationComment)
                     .HasColumnName("CANCELATION_COMMENT")
                     .HasMaxLength(480)

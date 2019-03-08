@@ -16,6 +16,7 @@ namespace ISSSC.Models
         public int IdSubject { get; set; }
         public int? IdTutor { get; set; }
         public Nullable<bool> IsAccepted { get; set; }
+        public int? Attendance { get; set; }
         public Nullable<bool> IsCancelled { get; set; }
         public string CancelationComment { get; set; }
         public Nullable<bool> IsExtraLesson { get; set; }

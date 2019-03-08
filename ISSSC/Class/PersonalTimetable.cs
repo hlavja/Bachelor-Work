@@ -21,7 +21,7 @@ namespace ISSSC.Class
         /// <param name="events">List of events to display</param>
         /// <param name="showState">Show state of event</param>
         /// <returns>rendered component</returns>
-        public HtmlString Render(List<Event> myEvents, List<Event> myExtraEvents, int userId, bool showState = false)
+        public HtmlString Render(List<Event> myEvents, List<Event> myExtraEvents, List<Event> myEventsWithoutAttendace, int userId, bool showState = false)
         {
             StringBuilder builder = new StringBuilder();
 
@@ -112,6 +112,32 @@ namespace ISSSC.Class
             }
 
             builder.Append("</table>");
+
+            builder.Append("<h4>Nevyplněné návštěvnosti</h4>");
+            builder.Append("<table class=\"table\">");
+            builder.Append("<tr>");
+            builder.Append("<th>Čas od</th>");
+            builder.Append("<th>Předmět</th>");
+            builder.Append("<th>Vyplnit</th>");
+            builder.Append("</tr>");
+
+            foreach (var item in myEventsWithoutAttendace)
+            {
+                    builder.Append("<tr>");
+                    builder.Append("<td>");
+                    builder.Append(item.TimeFrom.ToString("d") + " " + item.TimeFrom.ToString("t"));
+                    builder.Append("</td>");
+                    builder.Append("<td>");
+                    builder.Append(item.IdSubjectNavigation.Code);
+                    builder.Append("</td>");
+                    builder.Append("<td>");
+                //TODO udělat link? how? vygooglit
+                    builder.Append("Zadat");
+                    builder.Append("</td>");
+                    builder.Append("</tr>");
+            }
+
+            builder.Append("</table>");
             return new HtmlString(builder.ToString());
         }
 
@@ -131,7 +157,8 @@ namespace ISSSC.Class
 
             List<Event> myEvents = db.Event.Where(e => e.IdTutor == userID).ToList();
             List<Event> myExtraEvents = db.Event.Where(e => e.IdApplicant == userID).ToList();
-            return Render(myEvents, myExtraEvents, userID);
+            List<Event> myEventsWithoutAttendance = db.Event.Where(e => (e.IdTutor == userID && e.IsAccepted == true && e.Attendance == null && e.IsCancelled == false)).ToList();
+            return Render(myEvents, myExtraEvents, myEventsWithoutAttendance, userID);
         }
 
         /// <summary>

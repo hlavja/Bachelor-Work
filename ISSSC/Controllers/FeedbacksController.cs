@@ -308,8 +308,8 @@ namespace SSCIS.Controllers
                             standartLessonLength = 2;
                         }
 
-                        storedTutor.LessonsHours = storedTutor.MathLessons + storedTutor.InfLessons + storedTutor.MechLessons;
-                        storedTutor.LessonsHours = storedTutor.LessonsHours * standartLessonLength;
+                        storedTutor.Lessons = storedTutor.MathLessons + storedTutor.InfLessons + storedTutor.MechLessons;
+                        storedTutor.LessonsHours = storedTutor.Lessons * standartLessonLength;
                     }
                 }
 
