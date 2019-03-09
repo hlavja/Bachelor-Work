@@ -54,8 +54,9 @@ namespace ISSSC.Class
             builder.Append("</table>");
 
 
-
-            builder.Append("<h4>Přijaté lekce</h4>");
+            if (myExtraEvents.Any())
+            {
+                builder.Append("<h4>Přijaté lekce</h4>");
             builder.Append("<table class=\"table\">");
             builder.Append("<tr>");
             builder.Append("<th>Čas od</th>");
@@ -84,35 +85,36 @@ namespace ISSSC.Class
             builder.Append("</table>");
 
 
+            
+                builder.Append("<h4>Žádosti o lekce</h4>");
+                builder.Append("<table class=\"table\">");
+                builder.Append("<tr>");
+                builder.Append("<th>Čas od</th>");
+                builder.Append("<th>Čas do</th>");
+                builder.Append("<th>Předmět</th>");
+                builder.Append("</tr>");
 
-            builder.Append("<h4>Žádosti o lekce</h4>");
-            builder.Append("<table class=\"table\">");
-            builder.Append("<tr>");
-            builder.Append("<th>Čas od</th>");
-            builder.Append("<th>Čas do</th>");
-            builder.Append("<th>Předmět</th>");
-            builder.Append("</tr>");
-
-            foreach (var item in myExtraEvents)
-            {
-                if (item.IdApplicant == userId && item.IdTutor == null && item.IsAccepted == false && item.TimeFrom >= DateTime.Now)
+                foreach (var item in myExtraEvents)
                 {
-                    builder.Append("<tr>");
-                    builder.Append("<td>");
-                    builder.Append(item.TimeFrom.ToString("d") + " " + item.TimeFrom.ToString("t"));
-                    builder.Append("</td>");
-                    builder.Append("<td>");
-                    builder.Append(item.TimeTo.ToString("d") + " " + item.TimeTo.ToString("t"));
-                    builder.Append("</td>");
-                    builder.Append("<td>");
-                    builder.Append(item.IdSubjectNavigation.Code);
-                    builder.Append("</td>");
-                    builder.Append("</tr>");
+                    if (item.IdApplicant == userId && item.IdTutor == null && item.IsAccepted == false && item.TimeFrom >= DateTime.Now)
+                    {
+                        builder.Append("<tr>");
+                        builder.Append("<td>");
+                        builder.Append(item.TimeFrom.ToString("d") + " " + item.TimeFrom.ToString("t"));
+                        builder.Append("</td>");
+                        builder.Append("<td>");
+                        builder.Append(item.TimeTo.ToString("d") + " " + item.TimeTo.ToString("t"));
+                        builder.Append("</td>");
+                        builder.Append("<td>");
+                        builder.Append(item.IdSubjectNavigation.Code);
+                        builder.Append("</td>");
+                        builder.Append("</tr>");
+                    }
                 }
+
+                builder.Append("</table>");
             }
-
-            builder.Append("</table>");
-
+            if (myEventsWithoutAttendace.Any()) { 
             builder.Append("<h4>Nevyplněné návštěvnosti</h4>");
             builder.Append("<table class=\"table\">");
             builder.Append("<tr>");
@@ -138,6 +140,7 @@ namespace ISSSC.Class
             }
 
             builder.Append("</table>");
+            }
             return new HtmlString(builder.ToString());
         }
 
