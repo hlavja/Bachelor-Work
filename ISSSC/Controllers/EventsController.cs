@@ -238,6 +238,40 @@ namespace ISSSC.Controllers
             return View();
         }
 
+        [HttpGet]
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Tutor)]
+        public ActionResult Attendance(int? id)
+        {
+            if (id == null)
+            {
+                return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+            }
+            Event @event = db.Event.Find(id);
+            if (@event == null)
+            {
+                return NotFound();
+            }
+            ViewBag.SubjectID = new SelectList(db.EnumSubject, "Id", "Code", @event.IdSubject);
+            ViewBag.TutorID = new SelectList(db.SscisUser, "Id", "Login", @event.IdTutor);
+            return View(@event);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Tutor)]
+        public ActionResult Attendance([Bind("Id","TimeFrom","TimeTo","IdSubject","IdTutor","IsAccepted","IsCancelled","CancellationComment", "Attendance")] Event model)
+        {
+            if (ModelState.IsValid)
+            {
+                int? attendance = model.Attendance;
+                model = db.Event.Find(model.Id);
+                model.Attendance = attendance;
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+            return View(model);
+        }
+
         #region Unused
         // GET: Events/Edit/5
         public ActionResult Edit(int? id)
@@ -256,9 +290,8 @@ namespace ISSSC.Controllers
             return View(@event);
         }
 
+       
         // POST: Events/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind("ID,TimeFrom,TimeTo,SubjectID,TutorID,IsAccepted,IsCancelled,CancellationComment")] Event @event)

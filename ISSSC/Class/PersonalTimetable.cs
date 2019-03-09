@@ -131,8 +131,8 @@ namespace ISSSC.Class
                     builder.Append(item.IdSubjectNavigation.Code);
                     builder.Append("</td>");
                     builder.Append("<td>");
-                //TODO udělat link? how? vygooglit
-                    builder.Append("Zadat");
+                    //TODO upravit link
+                    builder.Append("<a href=\"/Events/Attendance/"+item.Id+"\" > Vyplnit</a>");
                     builder.Append("</td>");
                     builder.Append("</tr>");
             }
@@ -157,7 +157,7 @@ namespace ISSSC.Class
 
             List<Event> myEvents = db.Event.Where(e => e.IdTutor == userID).ToList();
             List<Event> myExtraEvents = db.Event.Where(e => e.IdApplicant == userID).ToList();
-            List<Event> myEventsWithoutAttendance = db.Event.Where(e => (e.IdTutor == userID && e.IsAccepted == true && e.Attendance == null && e.IsCancelled == false)).ToList();
+            List<Event> myEventsWithoutAttendance = db.Event.Where(e => (e.IdTutor == userID && e.IsAccepted == true && e.Attendance == null && e.IsCancelled == false && e.TimeTo <= DateTime.Now)).ToList();
             return Render(myEvents, myExtraEvents, myEventsWithoutAttendance, userID);
         }
 

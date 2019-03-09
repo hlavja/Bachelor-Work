@@ -135,6 +135,9 @@
   <data name="APPLICATION_NAME" xml:space="preserve">
     <value>Student Support Centre</value>
   </data>
+  <data name="ATTENDANCE" xml:space="preserve">
+    <value>Účast</value>
+  </data>
   <data name="AUTHOR" xml:space="preserve">
     <value>Autor</value>
   </data>

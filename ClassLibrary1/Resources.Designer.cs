@@ -115,6 +115,15 @@ namespace SSCISResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Účast.
+        /// </summary>
+        public static string ATTENDANCE {
+            get {
+                return ResourceManager.GetString("ATTENDANCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Autor.
         /// </summary>
         public static string AUTHOR {
