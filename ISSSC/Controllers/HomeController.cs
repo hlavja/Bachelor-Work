@@ -63,6 +63,13 @@ namespace ISSSC.Controllers
                 userId = (int)HttpContext.Session.GetInt32("userId");
             }
 
+            List<Event> myEventsWithoutAttendance = Db.Event.Where(e => (e.IdTutor == userId && e.IsAccepted == true && e.Attendance == null && e.IsCancelled == false && e.TimeTo <= DateTime.Now)).ToList();
+            if (myEventsWithoutAttendance.Any())
+            {
+                ViewBag.EventsWithoutAttendance = true;
+                ViewBag.RenderAttendance = personalTimetable.RenderAttendance(Db, userId);
+            }
+
 
             ViewBag.PublicTimeTable = timeTableRenderer.RenderPublic(Db);
             ViewBag.PersonalTimeTable = personalTimetable.RenderEvents(Db, userId);

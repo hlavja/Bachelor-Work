@@ -141,6 +141,45 @@ namespace ISSSC.Class
             return new HtmlString(builder.ToString());
         }
 
+
+        public HtmlString RenderAttendance(List<Event> myEventsWithoutAttendace, bool showState = false)
+        {
+            StringBuilder builder = new StringBuilder();
+
+
+            builder.Append("<h4>Nevyplněné návštěvnosti</h4>");
+            builder.Append("<table class=\"table\">");
+            builder.Append("<tr>");
+            builder.Append("<th class=\"col-md-5\">Čas od</th>");
+            builder.Append("<th class=\"col-md-3\">Předmět</th>");
+            builder.Append("<th>Vyplnit</th>");
+            builder.Append("</tr>");
+
+            foreach (var item in myEventsWithoutAttendace)
+            {
+                builder.Append("<tr>");
+                builder.Append("<td class=\"col-md-3\">");
+                builder.Append(item.TimeFrom.ToString("d") + " " + item.TimeFrom.ToString("t"));
+                builder.Append("</td>");
+                builder.Append("<td class=\"col-md-3\">");
+                builder.Append(item.IdSubjectNavigation.Code);
+                builder.Append("</td>");
+                builder.Append("<td>");
+                builder.Append("<a href=\"/Events/Attendance/" + item.Id + "\" > Vyplnit</a>");
+                builder.Append("</td>");
+                builder.Append("</tr>");
+            }
+
+            builder.Append("</table>");
+            return new HtmlString(builder.ToString());
+        }
+
+        public HtmlString RenderAttendance(SscisContext db, int userID, int weeks = 0)
+        {
+            List<Event> myEventsWithoutAttendance = db.Event.Where(e => (e.IdTutor == userID && e.IsAccepted == true && e.Attendance == null && e.IsCancelled == false && e.TimeTo <= DateTime.Now)).ToList();
+            return RenderAttendance(myEventsWithoutAttendance);
+        }
+
         /// <summary>
         /// Renders public event timetable component
         /// </summary>
