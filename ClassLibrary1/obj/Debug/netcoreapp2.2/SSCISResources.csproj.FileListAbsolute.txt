@@ -23,3 +23,4 @@ D:\Skola\bakalarka\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.Assembly
 D:\Skola\bakalarka\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.AssemblyInfo.cs
 D:\Skola\bakalarka\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.dll
 D:\Skola\bakalarka\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.pdb
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.csprojAssemblyReference.cache
