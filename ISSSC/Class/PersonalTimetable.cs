@@ -133,7 +133,6 @@ namespace ISSSC.Class
                     builder.Append(item.IdSubjectNavigation.Code);
                     builder.Append("</td>");
                     builder.Append("<td>");
-                    //TODO upravit link
                     builder.Append("<a href=\"/Events/Attendance/"+item.Id+"\" > Vyplnit</a>");
                     builder.Append("</td>");
                     builder.Append("</tr>");

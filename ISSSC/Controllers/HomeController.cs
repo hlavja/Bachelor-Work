@@ -111,7 +111,7 @@ namespace ISSSC.Controllers
         [HttpGet]
         public ActionResult HelpMe()
         {
-            //TODO změna
+   
             ViewBag.SubjectID = new SelectList(Db.EnumSubject.Where(s => s.IdParent == null), "Id", "Code");
             int userId = 0;
 
@@ -168,9 +168,6 @@ namespace ISSSC.Controllers
                 int newId = model.Event.Id;
 
                 EmailMessage emailMessage = new EmailMessage();
-
-                //TODO Emaily!!
-                //odeslat email všem lidem co ho můžou vyučovat a mají vyplněný email
 
                 EmailAddress emailFrom = new EmailAddress();
                 emailFrom.Address = "studentsuportcentre@gmail.com";

@@ -71,7 +71,6 @@ namespace SSCIS.Controllers
             Feedback feedback = new Feedback() { Text = model.Text };
             Participation part = new Participation() { IdEventNavigation = evnt, IdUser = userId };
 
-            //TODO chyba
             db.Participation.Add(part);
             db.SaveChanges();
             feedback.IdParticipationNavigation = part;
@@ -159,7 +158,6 @@ namespace SSCIS.Controllers
             List<Feedback> feedbacks = db.Feedback.Where(f => f.IdParticipationNavigation.IdEventNavigation.TimeFrom >= model.From && f.IdParticipationNavigation.IdEventNavigation.TimeTo <= model.To).ToList();
             string csv = csvConverter.Convert(feedbacks, db);
             string filename = string.Format("feedback.csv");
-            //TODO pokud se nezobrazuje diakritika tak je to starým excelem - neumí UTF-8 (Excel 2019 by to už měl umět defaultně)
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", filename);
         }
 

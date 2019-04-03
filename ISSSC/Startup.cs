@@ -41,7 +41,6 @@ namespace ISSSC
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //TODO Matějka mail ohledně připojení do databáze z .NET Core
             services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             services.AddTransient<IEmailService, EmailService>();
             services.AddDbContext<SscisContext>();
