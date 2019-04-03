@@ -255,7 +255,7 @@ namespace SSCIS.Controllers
 
         [HttpPost]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
-        public IActionResult LastMontTutors()
+        public IActionResult LastMonthTutors()
         {
             StatisticsTutor statistics = new StatisticsTutor();
             List<Event> events = new List<Event>();
@@ -327,7 +327,7 @@ namespace SSCIS.Controllers
                 else return x.IdTutorNavigation.Login.CompareTo(y.IdTutorNavigation.Login);
             });
 
-            return View(statistics);
+            return View("TutorList",statistics);
         }
 
 
