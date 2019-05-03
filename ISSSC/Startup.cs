@@ -41,6 +41,11 @@ namespace ISSSC
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AutomaticAuthentication = false;
+            });
+
             services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             services.AddTransient<IEmailService, EmailService>();
             services.AddDbContext<SscisContext>();
@@ -64,7 +69,7 @@ namespace ISSSC
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();

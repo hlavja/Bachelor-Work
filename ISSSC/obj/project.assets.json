@@ -2,6 +2,20 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.2": {
+      "BouncyCastle.NetCore/1.8.3": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.0",
+          "System.Reflection": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.1.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "Castle.Core/4.2.1": {
         "type": "package",
         "dependencies": {
@@ -23,7 +37,7 @@
           "lib/netstandard1.3/Castle.Core.dll": {}
         }
       },
-      "Google.Protobuf/3.5.1": {
+      "Google.Protobuf/3.6.1": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.1"
@@ -35,10 +49,10 @@
           "lib/netstandard1.0/Google.Protobuf.dll": {}
         }
       },
-      "MailKit/2.1.3": {
+      "MailKit/2.1.4": {
         "type": "package",
         "dependencies": {
-          "MimeKit": "2.1.3",
+          "MimeKit": "2.1.4",
           "NETStandard.Library": "1.6.1",
           "Portable.BouncyCastle": "1.8.2",
           "System.Data.Common": "4.3.0",
@@ -1355,7 +1369,7 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Server.HttpSys.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Server.IIS/2.2.0": {
+      "Microsoft.AspNetCore.Server.IIS/2.2.2": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Authentication.Core": "2.2.0",
@@ -1744,11 +1758,11 @@
           "lib/netstandard1.3/Microsoft.DotNet.PlatformAbstractions.dll": {}
         }
       },
-      "Microsoft.EntityFrameworkCore/2.2.3": {
+      "Microsoft.EntityFrameworkCore/2.2.4": {
         "type": "package",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Abstractions": "2.2.3",
-          "Microsoft.EntityFrameworkCore.Analyzers": "2.2.3",
+          "Microsoft.EntityFrameworkCore.Abstractions": "2.2.4",
+          "Microsoft.EntityFrameworkCore.Analyzers": "2.2.4",
           "Microsoft.Extensions.Caching.Memory": "2.2.0",
           "Microsoft.Extensions.DependencyInjection": "2.2.0",
           "Microsoft.Extensions.Logging": "2.2.0",
@@ -1765,7 +1779,7 @@
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.dll": {}
         }
       },
-      "Microsoft.EntityFrameworkCore.Abstractions/2.2.3": {
+      "Microsoft.EntityFrameworkCore.Abstractions/2.2.4": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {}
@@ -1774,14 +1788,14 @@
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {}
         }
       },
-      "Microsoft.EntityFrameworkCore.Analyzers/2.2.3": {
+      "Microsoft.EntityFrameworkCore.Analyzers/2.2.4": {
         "type": "package"
       },
-      "Microsoft.EntityFrameworkCore.Design/2.2.3": {
+      "Microsoft.EntityFrameworkCore.Design/2.2.4": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.5.0",
-          "Microsoft.EntityFrameworkCore.Relational": "2.2.3"
+          "Microsoft.EntityFrameworkCore.Relational": "2.2.4"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Design.dll": {}
@@ -1805,11 +1819,11 @@
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.InMemory.dll": {}
         }
       },
-      "Microsoft.EntityFrameworkCore.Proxies/2.2.3": {
+      "Microsoft.EntityFrameworkCore.Proxies/2.2.4": {
         "type": "package",
         "dependencies": {
           "Castle.Core": "4.2.1",
-          "Microsoft.EntityFrameworkCore": "2.2.3"
+          "Microsoft.EntityFrameworkCore": "2.2.4"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Proxies.dll": {}
@@ -1818,10 +1832,10 @@
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Proxies.dll": {}
         }
       },
-      "Microsoft.EntityFrameworkCore.Relational/2.2.3": {
+      "Microsoft.EntityFrameworkCore.Relational/2.2.4": {
         "type": "package",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "2.2.3"
+          "Microsoft.EntityFrameworkCore": "2.2.4"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Relational.dll": {}
@@ -1830,10 +1844,10 @@
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Relational.dll": {}
         }
       },
-      "Microsoft.EntityFrameworkCore.SqlServer/2.2.3": {
+      "Microsoft.EntityFrameworkCore.SqlServer/2.2.4": {
         "type": "package",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Relational": "2.2.3",
+          "Microsoft.EntityFrameworkCore.Relational": "2.2.4",
           "System.Data.SqlClient": "4.6.0"
         },
         "compile": {
@@ -1843,10 +1857,10 @@
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.SqlServer.dll": {}
         }
       },
-      "Microsoft.EntityFrameworkCore.Tools/2.2.3": {
+      "Microsoft.EntityFrameworkCore.Tools/2.2.4": {
         "type": "package",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Design": "2.2.3"
+          "Microsoft.EntityFrameworkCore.Design": "2.2.4"
         },
         "compile": {
           "lib/netstandard2.0/_._": {}
@@ -2804,7 +2818,7 @@
           }
         }
       },
-      "MimeKit/2.1.3": {
+      "MimeKit/2.1.4": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.1",
@@ -2825,10 +2839,11 @@
           "lib/netstandard2.0/MimeKit.dll": {}
         }
       },
-      "MySql.Data/8.0.15": {
+      "MySql.Data/8.0.16": {
         "type": "package",
         "dependencies": {
-          "Google.Protobuf": "3.5.1",
+          "BouncyCastle.NetCore": "1.8.3",
+          "Google.Protobuf": "3.6.1",
           "System.Configuration.ConfigurationManager": "4.4.1",
           "System.Security.Permissions": "4.4.1",
           "System.Text.Encoding.CodePages": "4.4.0"
@@ -2840,11 +2855,11 @@
           "lib/netcoreapp2.0/MySql.Data.dll": {}
         }
       },
-      "MySql.Data.EntityFrameworkCore/8.0.15": {
+      "MySql.Data.EntityFrameworkCore/8.0.16": {
         "type": "package",
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Relational": "2.1.2",
-          "MySql.Data": "8.0.15"
+          "MySql.Data": "8.0.16"
         },
         "compile": {
           "lib/netstandard2.0/MySql.Data.EntityFrameworkCore.dll": {}
@@ -3150,6 +3165,92 @@
             "assetType": "native",
             "rid": "win-x86"
           }
+        }
+      },
+      "Serilog/2.5.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.1",
+          "System.Collections": "4.0.11",
+          "System.Collections.NonGeneric": "4.0.1",
+          "System.Dynamic.Runtime": "4.0.11",
+          "System.Globalization": "4.0.11",
+          "System.Linq": "4.1.0",
+          "System.Reflection": "4.1.0",
+          "System.Reflection.Extensions": "4.0.1",
+          "System.Runtime": "4.1.0",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Text.RegularExpressions": "4.1.0",
+          "System.Threading": "4.0.11"
+        },
+        "compile": {
+          "lib/netstandard1.3/Serilog.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Serilog.dll": {}
+        }
+      },
+      "Serilog.AspNetCore/2.1.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "2.0.0",
+          "Microsoft.Extensions.DependencyInjection": "2.0.0",
+          "Microsoft.Extensions.Logging": "2.0.0",
+          "Serilog": "2.5.0",
+          "Serilog.Extensions.Logging": "2.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Serilog.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Serilog.AspNetCore.dll": {}
+        }
+      },
+      "Serilog.Extensions.Logging/2.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Logging": "2.0.0",
+          "Serilog": "2.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Serilog.Extensions.Logging.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Serilog.Extensions.Logging.dll": {}
+        }
+      },
+      "Serilog.Sinks.File/3.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Serilog": "2.3.0",
+          "System.IO": "4.1.0",
+          "System.IO.FileSystem": "4.0.1",
+          "System.IO.FileSystem.Primitives": "4.0.1",
+          "System.Text.Encoding.Extensions": "4.0.11",
+          "System.Threading": "4.0.11",
+          "System.Threading.Timer": "4.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/Serilog.Sinks.File.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Serilog.Sinks.File.dll": {}
+        }
+      },
+      "Serilog.Sinks.RollingFile/3.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Serilog.Sinks.File": "3.2.0",
+          "System.IO": "4.1.0",
+          "System.IO.FileSystem.Primitives": "4.0.1",
+          "System.Runtime.InteropServices": "4.1.0",
+          "System.Text.Encoding.Extensions": "4.0.11"
+        },
+        "compile": {
+          "lib/netstandard1.3/Serilog.Sinks.RollingFile.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Serilog.Sinks.RollingFile.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -4784,6 +4885,17 @@
           "lib/netstandard1.3/System.Threading.ThreadPool.dll": {}
         }
       },
+      "System.Threading.Timer/4.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "1.0.1",
+          "Microsoft.NETCore.Targets": "1.0.1",
+          "System.Runtime": "4.1.0"
+        },
+        "compile": {
+          "ref/netstandard1.2/System.Threading.Timer.dll": {}
+        }
+      },
       "System.ValueTuple/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -4940,14 +5052,15 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
         "dependencies": {
-          "MailKit": "2.1.3",
+          "MailKit": "2.1.4",
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Http.Extensions": "2.2.0",
+          "Microsoft.AspNetCore.Server.IIS": "2.2.2",
           "Microsoft.AspNetCore.Session": "2.2.0",
-          "Microsoft.EntityFrameworkCore.Design": "2.2.3",
-          "Microsoft.EntityFrameworkCore.Proxies": "2.2.3",
-          "Microsoft.EntityFrameworkCore.SqlServer": "2.2.3",
-          "MySql.Data.EntityFrameworkCore": "8.0.15"
+          "Microsoft.EntityFrameworkCore.Design": "2.2.4",
+          "Microsoft.EntityFrameworkCore.Proxies": "2.2.4",
+          "Microsoft.EntityFrameworkCore.SqlServer": "2.2.4",
+          "MySql.Data.EntityFrameworkCore": "8.0.16"
         },
         "compile": {
           "bin/placeholder/SSCISResources.dll": {}
@@ -4959,6 +5072,33 @@
     }
   },
   "libraries": {
+    "BouncyCastle.NetCore/1.8.3": {
+      "sha512": "jAy3uHN1U9DpoT/TgLqDTEhlccn/4doOVxhSmmNsnoSsGfHT9Lwr634ac9D0YFujAhNw61nWF4UIpHyzv0aQww==",
+      "type": "package",
+      "path": "bouncycastle.netcore/1.8.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "bouncycastle.netcore.1.8.3.nupkg.sha512",
+        "bouncycastle.netcore.nuspec",
+        "lib/Mono/BouncyCastle.Crypto.dll",
+        "lib/Mono/BouncyCastle.Crypto.xml",
+        "lib/MonoAndroid/BouncyCastle.Crypto.dll",
+        "lib/MonoAndroid/BouncyCastle.Crypto.xml",
+        "lib/MonoMac/BouncyCastle.Crypto.dll",
+        "lib/MonoMac/BouncyCastle.Crypto.xml",
+        "lib/MonoTouch/BouncyCastle.Crypto.dll",
+        "lib/MonoTouch/BouncyCastle.Crypto.xml",
+        "lib/net20/BouncyCastle.Crypto.dll",
+        "lib/net20/BouncyCastle.Crypto.xml",
+        "lib/netstandard1.3/BouncyCastle.Crypto.dll",
+        "lib/netstandard1.3/BouncyCastle.Crypto.xml",
+        "lib/netstandard2.0/BouncyCastle.Crypto.dll",
+        "lib/netstandard2.0/BouncyCastle.Crypto.xml",
+        "lib/xamarinios/BouncyCastle.Crypto.dll",
+        "lib/xamarinios/BouncyCastle.Crypto.xml"
+      ]
+    },
     "Castle.Core/4.2.1": {
       "sha512": "XSNA0Gc1Zu33L+8+/3Tqt+aFu8QWS8UenVHZ7RenIP5wJfhoLrA4PnNscpxReeo5aBq8PDoGnV8rNaOzIOUo/w==",
       "type": "package",
@@ -4982,14 +5122,14 @@
         "readme.txt"
       ]
     },
-    "Google.Protobuf/3.5.1": {
-      "sha512": "f2k1VNaB9bfvEsvARzzEL1TZiIpL33KKK3JMH7UANlPlJVptuvsk4qpBZEnz0pORWZOdUHlVwMQuUzFqjJYCxA==",
+    "Google.Protobuf/3.6.1": {
+      "sha512": "741fGeDQjixBJaU2j+0CbrmZXsNJkTn/hWbOh4fLVXndHsCclJmWznCPWrJmPoZKvajBvAz3e8ECJOUvRtwjNQ==",
       "type": "package",
-      "path": "google.protobuf/3.5.1",
+      "path": "google.protobuf/3.6.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "google.protobuf.3.5.1.nupkg.sha512",
+        "google.protobuf.3.6.1.nupkg.sha512",
         "google.protobuf.nuspec",
         "lib/net45/Google.Protobuf.dll",
         "lib/net45/Google.Protobuf.xml",
@@ -4997,10 +5137,10 @@
         "lib/netstandard1.0/Google.Protobuf.xml"
       ]
     },
-    "MailKit/2.1.3": {
-      "sha512": "KAPewFpCeiftNoU/HbKQ03O6daO81jCwICC569kGlYvC+pLNM6DeXiSx07sIUPA29q3DHHbEHz037NHsBLCPbw==",
+    "MailKit/2.1.4": {
+      "sha512": "kXbj5JCV58cGmhVQBpJ/qvVBqXksGwzGXu3Q2tIiQsGLaiQr3kfscMaW32JYudMBk8EZesnVR+1yv9slSye7KQ==",
       "type": "package",
-      "path": "mailkit/2.1.3",
+      "path": "mailkit/2.1.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5018,7 +5158,7 @@
         "lib/portable-win81+wpa81/MailKit.xml",
         "lib/xamarinios/MailKit.dll",
         "lib/xamarinios/MailKit.xml",
-        "mailkit.2.1.3.nupkg.sha512",
+        "mailkit.2.1.4.nupkg.sha512",
         "mailkit.nuspec"
       ]
     },
@@ -6100,17 +6240,17 @@
         "microsoft.aspnetcore.server.httpsys.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Server.IIS/2.2.0": {
-      "sha512": "C64q5Dh2BPAnlbKK9Ma566s0+lcBuQP34EaNP4RkalbikyvetFV5XYHPPwLcCerH/d2k1nPEWVCN8AorXzeahg==",
+    "Microsoft.AspNetCore.Server.IIS/2.2.2": {
+      "sha512": "hTiYkTGgHJerrmejw2IAFW1X5W26VCF2+Y+gSQ4hZLWhZkq4Yw3zkH8H6Qq8VN9V8DpM0dQMpphD9Y3DkErjVA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.server.iis/2.2.0",
+      "path": "microsoft.aspnetcore.server.iis/2.2.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "build/netstandard2.0/Microsoft.AspNetCore.Server.IIS.targets",
         "lib/netstandard2.0/Microsoft.AspNetCore.Server.IIS.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Server.IIS.xml",
-        "microsoft.aspnetcore.server.iis.2.2.0.nupkg.sha512",
+        "microsoft.aspnetcore.server.iis.2.2.2.nupkg.sha512",
         "microsoft.aspnetcore.server.iis.nuspec",
         "runtimes/win-x64/nativeassets/netcoreapp2.2/aspnetcorev2_inprocess.dll",
         "runtimes/win-x86/nativeassets/netcoreapp2.2/aspnetcorev2_inprocess.dll"
@@ -6476,48 +6616,48 @@
         "microsoft.dotnet.platformabstractions.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore/2.2.3": {
-      "sha512": "GUiOOYMUiaXK6G/RqgBgI2NsHJLKSFrHuOVnpXQrC7VgmFGG7sFyQmh/j5cMJT5XeGCymNY3wnDlewZ1GEFYJg==",
+    "Microsoft.EntityFrameworkCore/2.2.4": {
+      "sha512": "aQ0sAe2mOtSp3StjKT2wDA/BO3k8BLfpIXIG1MOlGytjQWQOvW3BzDPfgXOhxbSa7Bhdsx97aYzZUGD3DQAQjQ==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore/2.2.3",
+      "path": "microsoft.entityframeworkcore/2.2.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.dll",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.xml",
-        "microsoft.entityframeworkcore.2.2.3.nupkg.sha512",
+        "microsoft.entityframeworkcore.2.2.4.nupkg.sha512",
         "microsoft.entityframeworkcore.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.Abstractions/2.2.3": {
-      "sha512": "89dSjkZmLVnsbIoiQyMDdMBakTrgiY+1mfu4MRfWRX1ysSx+nGfcPPZ8QfRKLq+i7EIqylUNVJSHi7bHTwL9LQ==",
+    "Microsoft.EntityFrameworkCore.Abstractions/2.2.4": {
+      "sha512": "GjtIOANlpy7JcGK0Q169n52713hIHHfxUHq1+xoWlAZYSI0h/n2DrEWwCIsrnInU8FaLq4cIG7UgMTL0CnUUPw==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.abstractions/2.2.3",
+      "path": "microsoft.entityframeworkcore.abstractions/2.2.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.xml",
-        "microsoft.entityframeworkcore.abstractions.2.2.3.nupkg.sha512",
+        "microsoft.entityframeworkcore.abstractions.2.2.4.nupkg.sha512",
         "microsoft.entityframeworkcore.abstractions.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.Analyzers/2.2.3": {
-      "sha512": "+7DQd8xaq1kh2szcVkMJAN4/TvjFt5gK4fIsRHcPvZrc10p9Rhhitd44xGTGs9e0RRVijz0+OVI7jPvKaVfwAQ==",
+    "Microsoft.EntityFrameworkCore.Analyzers/2.2.4": {
+      "sha512": "cLJo6dikdFQd2j9cFHhC2M1rzUeYvJLR/m7cBcuKRI6ek5t5ZyGZ0hzEJwCQmKRDV4tAl5p+NIrfDjfqTK8POw==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.analyzers/2.2.3",
+      "path": "microsoft.entityframeworkcore.analyzers/2.2.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "analyzers/dotnet/cs/Microsoft.EntityFrameworkCore.Analyzers.dll",
-        "microsoft.entityframeworkcore.analyzers.2.2.3.nupkg.sha512",
+        "microsoft.entityframeworkcore.analyzers.2.2.4.nupkg.sha512",
         "microsoft.entityframeworkcore.analyzers.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.Design/2.2.3": {
-      "sha512": "EdKCRSAlVF0PLXl1vi5ojRh0jRhSDywPYN9+0UpKOBZ53Vpa+8Qyio6p9WMJNqp+LkXS5fRQshHuiljFTVGY/g==",
+    "Microsoft.EntityFrameworkCore.Design/2.2.4": {
+      "sha512": "4SfnD7wYxr+OzcPOZYlzPtKtL1cdXk+a8g4bKc8QcgaGhpvVOTK5ROTZaOe10tmvFXFEJVZSGtXpFAbgiDFtjg==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.design/2.2.3",
+      "path": "microsoft.entityframeworkcore.design/2.2.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6527,7 +6667,7 @@
         "lib/net461/Microsoft.EntityFrameworkCore.Design.xml",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Design.dll",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Design.xml",
-        "microsoft.entityframeworkcore.design.2.2.3.nupkg.sha512",
+        "microsoft.entityframeworkcore.design.2.2.4.nupkg.sha512",
         "microsoft.entityframeworkcore.design.nuspec"
       ]
     },
@@ -6544,55 +6684,55 @@
         "microsoft.entityframeworkcore.inmemory.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.Proxies/2.2.3": {
-      "sha512": "9EWlW1V7eR2brrdA+ezuwxyYsiYpZTjXFl6JuTbgmNg4HSG9PgWUhrDWM7FlYFzwXSckANYcJKemaiet2EmXIg==",
+    "Microsoft.EntityFrameworkCore.Proxies/2.2.4": {
+      "sha512": "pSE4PV4MVsMkdWdJu9M+PxeVtBLluqltmXOu6F8iTrJI5E71XSccVhejvLapKp1OVcpQUiTVFc3yWKpuMgDHlQ==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.proxies/2.2.3",
+      "path": "microsoft.entityframeworkcore.proxies/2.2.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Proxies.dll",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Proxies.xml",
-        "microsoft.entityframeworkcore.proxies.2.2.3.nupkg.sha512",
+        "microsoft.entityframeworkcore.proxies.2.2.4.nupkg.sha512",
         "microsoft.entityframeworkcore.proxies.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.Relational/2.2.3": {
-      "sha512": "gwB+FOVqI+lwTl9MCtH5iI6Zfes0JlCDBuxCQ3ngLMzSqFFzgLANmmgA/cl+D2WOZ01TXivpRSzNMrnDfOJljA==",
+    "Microsoft.EntityFrameworkCore.Relational/2.2.4": {
+      "sha512": "Ga+kJhoSBNYv8C2gQl2sB5bTBkWsLFn92CPjZA5ql/MyxJTWri6lf44/GSYEcOQj0tqF5HhMAaB1HxQMiIPBcQ==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.relational/2.2.3",
+      "path": "microsoft.entityframeworkcore.relational/2.2.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Relational.dll",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Relational.xml",
-        "microsoft.entityframeworkcore.relational.2.2.3.nupkg.sha512",
+        "microsoft.entityframeworkcore.relational.2.2.4.nupkg.sha512",
         "microsoft.entityframeworkcore.relational.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.SqlServer/2.2.3": {
-      "sha512": "O8eGpT3wDfMz1YHf0h5ph3eW+bkcoqaptqztcNxWyfZ76UJw4j8ohqj7leaDbuZh2W3HIK4O89N3A4a8pHNQ9g==",
+    "Microsoft.EntityFrameworkCore.SqlServer/2.2.4": {
+      "sha512": "e0rW3jJXunnwUCout+lQicDoyviO53qsuawZa/HZsfRoEF/bWGlGTJxUN0MPZVQkEd5Gx8ypdDSRbGHtrQp/SA==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.sqlserver/2.2.3",
+      "path": "microsoft.entityframeworkcore.sqlserver/2.2.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.SqlServer.dll",
         "lib/netstandard2.0/Microsoft.EntityFrameworkCore.SqlServer.xml",
-        "microsoft.entityframeworkcore.sqlserver.2.2.3.nupkg.sha512",
+        "microsoft.entityframeworkcore.sqlserver.2.2.4.nupkg.sha512",
         "microsoft.entityframeworkcore.sqlserver.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.Tools/2.2.3": {
-      "sha512": "wDJ0kTajnmdtLNqCpBlmMxEZT1+ETwWMjZKQNZIIKZ1WUvb16h35iGUucvSz8EF1QqIb8X/c9xg7usDJgykWhQ==",
+    "Microsoft.EntityFrameworkCore.Tools/2.2.4": {
+      "sha512": "9n1Mv6FrFmlVkkXVkO7U71GG42CfRjlKV0bca++UYjsmmtVVds4PhUjgVrHCh3ZTRI4jqBc5Y7trUvwdwXisPw==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.tools/2.2.3",
+      "path": "microsoft.entityframeworkcore.tools/2.2.4",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/_._",
-        "microsoft.entityframeworkcore.tools.2.2.3.nupkg.sha512",
+        "microsoft.entityframeworkcore.tools.2.2.4.nupkg.sha512",
         "microsoft.entityframeworkcore.tools.nuspec",
         "tools/EntityFrameworkCore.PowerShell2.psd1",
         "tools/EntityFrameworkCore.PowerShell2.psm1",
@@ -7849,10 +7989,10 @@
         "version.txt"
       ]
     },
-    "MimeKit/2.1.3": {
-      "sha512": "cUbGP7GvOOgeoRn3IPOL5I315J4GQfIPtQhIUWp5rdVTmvyzVZRbqC/WhoLrzbk3Xn350XI5iwwtLXKEfNYHKQ==",
+    "MimeKit/2.1.4": {
+      "sha512": "YmHOxOBDnsQG1NLRZBdX3/pzCt6SGCORe5GY/pT4F4BRridbFzB5iddi4wuoU/xKQEFH3dkEnI0+7tbsZ9sVmA==",
       "type": "package",
-      "path": "mimekit/2.1.3",
+      "path": "mimekit/2.1.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7876,14 +8016,14 @@
         "lib/xamarinios/BouncyCastle.dll",
         "lib/xamarinios/MimeKit.dll",
         "lib/xamarinios/MimeKit.xml",
-        "mimekit.2.1.3.nupkg.sha512",
+        "mimekit.2.1.4.nupkg.sha512",
         "mimekit.nuspec"
       ]
     },
-    "MySql.Data/8.0.15": {
-      "sha512": "PnjT2+TzlYUBF5cILcLMD1ux85P5iiRTF9PWx+Mel6/Z/rx+k39aWuA0mozfdgd+0TlJjGKKTyQZfKeYlRXTUA==",
+    "MySql.Data/8.0.16": {
+      "sha512": "2fdNJuQwwZRbQTycyHE61NgWChIWPxeRz6DsGXrVrVHsxEnDyWIb3r1qi4Vr1o1cWZHu4Z8dY8n9l2nGwJ3k5g==",
       "type": "package",
-      "path": "mysql.data/8.0.15",
+      "path": "mysql.data/8.0.16",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7895,14 +8035,14 @@
         "lib/netstandard1.6/MySql.Data.xml",
         "lib/netstandard2.0/MySql.Data.dll",
         "lib/netstandard2.0/MySql.Data.xml",
-        "mysql.data.8.0.15.nupkg.sha512",
+        "mysql.data.8.0.16.nupkg.sha512",
         "mysql.data.nuspec"
       ]
     },
-    "MySql.Data.EntityFrameworkCore/8.0.15": {
-      "sha512": "NjYJSbHmiEmxesaNAWQRk15roOX81bI2toPpBypYhHFIKXHxkIPgQH3lxV60efMlIyhSnzLqnIE5kmNsPWfzww==",
+    "MySql.Data.EntityFrameworkCore/8.0.16": {
+      "sha512": "9aZgFZAN5Tf9NDaZjM81Goy+nl59spt9Jn1Nhqd8/d6Kd8N/8IewKLnE9X5BIzkasqt5VKNQzjHcMx7tzWZjDg==",
       "type": "package",
-      "path": "mysql.data.entityframeworkcore/8.0.15",
+      "path": "mysql.data.entityframeworkcore/8.0.16",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7914,7 +8054,7 @@
         "lib/netstandard1.6/MySql.Data.EntityFrameworkCore.xml",
         "lib/netstandard2.0/MySql.Data.EntityFrameworkCore.dll",
         "lib/netstandard2.0/MySql.Data.EntityFrameworkCore.xml",
-        "mysql.data.entityframeworkcore.8.0.15.nupkg.sha512",
+        "mysql.data.entityframeworkcore.8.0.16.nupkg.sha512",
         "mysql.data.entityframeworkcore.nuspec"
       ]
     },
@@ -8434,6 +8574,89 @@
         "runtimes/win-x86/native/sni.dll",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "Serilog/2.5.0": {
+      "sha512": "JwwkgNYNFKT4kQZ3qBV3VqPgchUg1A6FnlFa9hgyanylwBhJ7eTFl3pgLVxijFEb+oHLImRcMaTsMzBt2AG0aQ==",
+      "type": "package",
+      "path": "serilog/2.5.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Serilog.dll",
+        "lib/net45/Serilog.xml",
+        "lib/net46/Serilog.dll",
+        "lib/net46/Serilog.xml",
+        "lib/netstandard1.0/Serilog.dll",
+        "lib/netstandard1.0/Serilog.xml",
+        "lib/netstandard1.3/Serilog.dll",
+        "lib/netstandard1.3/Serilog.xml",
+        "serilog.2.5.0.nupkg.sha512",
+        "serilog.nuspec"
+      ]
+    },
+    "Serilog.AspNetCore/2.1.1": {
+      "sha512": "euuzaDEF8RuTszbqZnYYOm15bGKm0ID3Vaj++sDhmxeL79a8yRemhv2Y8knjvqoOatIpN7Cqd6Jma0A+Pk+V7g==",
+      "type": "package",
+      "path": "serilog.aspnetcore/2.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Serilog.AspNetCore.dll",
+        "lib/netstandard2.0/Serilog.AspNetCore.xml",
+        "serilog.aspnetcore.2.1.1.nupkg.sha512",
+        "serilog.aspnetcore.nuspec"
+      ]
+    },
+    "Serilog.Extensions.Logging/2.0.0": {
+      "sha512": "JAh1vHmbiwDAjA9VmUQjAXvlGm+vDv8usarajlkx7Arm6Zai+CPY4naE4N9M3Eh520wY5GmIWpM+7zmfMbdTOw==",
+      "type": "package",
+      "path": "serilog.extensions.logging/2.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Serilog.Extensions.Logging.dll",
+        "lib/net45/Serilog.Extensions.Logging.xml",
+        "lib/net46/Serilog.Extensions.Logging.dll",
+        "lib/net46/Serilog.Extensions.Logging.xml",
+        "lib/net461/Serilog.Extensions.Logging.dll",
+        "lib/net461/Serilog.Extensions.Logging.xml",
+        "lib/netstandard1.3/Serilog.Extensions.Logging.dll",
+        "lib/netstandard1.3/Serilog.Extensions.Logging.xml",
+        "lib/netstandard2.0/Serilog.Extensions.Logging.dll",
+        "lib/netstandard2.0/Serilog.Extensions.Logging.xml",
+        "serilog.extensions.logging.2.0.0.nupkg.sha512",
+        "serilog.extensions.logging.nuspec"
+      ]
+    },
+    "Serilog.Sinks.File/3.2.0": {
+      "sha512": "VHbo68pMg5hwSWrzLEdZv5b/rYmIgHIRhd4d5rl8GnC5/a8Fr+RShT5kWyeJOXax1el6mNJ+dmHDOVgnNUQxaw==",
+      "type": "package",
+      "path": "serilog.sinks.file/3.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Serilog.Sinks.File.dll",
+        "lib/net45/Serilog.Sinks.File.xml",
+        "lib/netstandard1.3/Serilog.Sinks.File.dll",
+        "lib/netstandard1.3/Serilog.Sinks.File.xml",
+        "serilog.sinks.file.3.2.0.nupkg.sha512",
+        "serilog.sinks.file.nuspec"
+      ]
+    },
+    "Serilog.Sinks.RollingFile/3.3.0": {
+      "sha512": "2lT5X1r3GH4P0bRWJfhA7etGl8Q2Ipw9AACvtAHWRUSpYZ42NGVyHoVs2ALBZ/cAkkS+tA4jl80Zie144eLQPg==",
+      "type": "package",
+      "path": "serilog.sinks.rollingfile/3.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Serilog.Sinks.RollingFile.dll",
+        "lib/net45/Serilog.Sinks.RollingFile.xml",
+        "lib/netstandard1.3/Serilog.Sinks.RollingFile.dll",
+        "lib/netstandard1.3/Serilog.Sinks.RollingFile.xml",
+        "serilog.sinks.rollingfile.3.3.0.nupkg.sha512",
+        "serilog.sinks.rollingfile.nuspec"
       ]
     },
     "System.AppContext/4.3.0": {
@@ -13081,6 +13304,60 @@
         "system.threading.threadpool.nuspec"
       ]
     },
+    "System.Threading.Timer/4.0.1": {
+      "sha512": "saGfUV8uqVW6LeURiqxcGhZ24PzuRNaUBtbhVeuUAvky1naH395A/1nY0P2bWvrw/BreRtIB/EzTDkGBpqCwEw==",
+      "type": "package",
+      "path": "system.threading.timer/4.0.1",
+      "files": [
+        ".nupkg.metadata",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net451/_._",
+        "lib/portable-net451+win81+wpa81/_._",
+        "lib/win81/_._",
+        "lib/wpa81/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net451/_._",
+        "ref/netcore50/System.Threading.Timer.dll",
+        "ref/netcore50/System.Threading.Timer.xml",
+        "ref/netcore50/de/System.Threading.Timer.xml",
+        "ref/netcore50/es/System.Threading.Timer.xml",
+        "ref/netcore50/fr/System.Threading.Timer.xml",
+        "ref/netcore50/it/System.Threading.Timer.xml",
+        "ref/netcore50/ja/System.Threading.Timer.xml",
+        "ref/netcore50/ko/System.Threading.Timer.xml",
+        "ref/netcore50/ru/System.Threading.Timer.xml",
+        "ref/netcore50/zh-hans/System.Threading.Timer.xml",
+        "ref/netcore50/zh-hant/System.Threading.Timer.xml",
+        "ref/netstandard1.2/System.Threading.Timer.dll",
+        "ref/netstandard1.2/System.Threading.Timer.xml",
+        "ref/netstandard1.2/de/System.Threading.Timer.xml",
+        "ref/netstandard1.2/es/System.Threading.Timer.xml",
+        "ref/netstandard1.2/fr/System.Threading.Timer.xml",
+        "ref/netstandard1.2/it/System.Threading.Timer.xml",
+        "ref/netstandard1.2/ja/System.Threading.Timer.xml",
+        "ref/netstandard1.2/ko/System.Threading.Timer.xml",
+        "ref/netstandard1.2/ru/System.Threading.Timer.xml",
+        "ref/netstandard1.2/zh-hans/System.Threading.Timer.xml",
+        "ref/netstandard1.2/zh-hant/System.Threading.Timer.xml",
+        "ref/portable-net451+win81+wpa81/_._",
+        "ref/win81/_._",
+        "ref/wpa81/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "system.threading.timer.4.0.1.nupkg.sha512",
+        "system.threading.timer.nuspec"
+      ]
+    },
     "System.ValueTuple/4.3.0": {
       "sha512": "cNLEvBX3d6MMQRZe3SMFNukVbitDAEpVZO17qa0/2FHxZ7Y7PpFRpr6m2615XYM/tYYYf0B+WyHNujqIw8Luwg==",
       "type": "package",
@@ -13429,20 +13706,23 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
-      "MailKit >= 2.1.3",
+      "MailKit >= 2.1.4",
       "Microsoft.AspNetCore >= 2.2.0",
       "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.AspNetCore.Http.Extensions >= 2.2.0",
       "Microsoft.AspNetCore.Mvc.WebApiCompatShim >= 2.2.0",
+      "Microsoft.AspNetCore.Server.IIS >= 2.2.2",
       "Microsoft.AspNetCore.Session >= 2.2.0",
-      "Microsoft.EntityFrameworkCore.Design >= 2.2.3",
-      "Microsoft.EntityFrameworkCore.Proxies >= 2.2.3",
-      "Microsoft.EntityFrameworkCore.SqlServer >= 2.2.3",
-      "Microsoft.EntityFrameworkCore.Tools >= 2.2.3",
+      "Microsoft.EntityFrameworkCore.Design >= 2.2.4",
+      "Microsoft.EntityFrameworkCore.Proxies >= 2.2.4",
+      "Microsoft.EntityFrameworkCore.SqlServer >= 2.2.4",
+      "Microsoft.EntityFrameworkCore.Tools >= 2.2.4",
       "Microsoft.NETCore.App >= 2.2.0",
-      "MySql.Data.EntityFrameworkCore >= 8.0.15",
+      "MySql.Data.EntityFrameworkCore >= 8.0.16",
       "QRCoder >= 1.3.5",
-      "SSCISResources >= 1.0.0"
+      "SSCISResources >= 1.0.0",
+      "Serilog.AspNetCore >= 2.1.1",
+      "Serilog.Sinks.RollingFile >= 3.3.0"
     ]
   },
   "packageFolders": {
@@ -13492,7 +13772,7 @@
         "dependencies": {
           "MailKit": {
             "target": "Package",
-            "version": "[2.1.3, )"
+            "version": "[2.1.4, )"
           },
           "Microsoft.AspNetCore": {
             "target": "Package",
@@ -13512,27 +13792,31 @@
             "target": "Package",
             "version": "[2.2.0, )"
           },
+          "Microsoft.AspNetCore.Server.IIS": {
+            "target": "Package",
+            "version": "[2.2.2, )"
+          },
           "Microsoft.AspNetCore.Session": {
             "target": "Package",
             "version": "[2.2.0, )"
           },
           "Microsoft.EntityFrameworkCore.Design": {
             "target": "Package",
-            "version": "[2.2.3, )"
+            "version": "[2.2.4, )"
           },
           "Microsoft.EntityFrameworkCore.Proxies": {
             "target": "Package",
-            "version": "[2.2.3, )"
+            "version": "[2.2.4, )"
           },
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
-            "version": "[2.2.3, )"
+            "version": "[2.2.4, )"
           },
           "Microsoft.EntityFrameworkCore.Tools": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[2.2.3, )"
+            "version": "[2.2.4, )"
           },
           "Microsoft.NETCore.App": {
             "suppressParent": "All",
@@ -13542,11 +13826,19 @@
           },
           "MySql.Data.EntityFrameworkCore": {
             "target": "Package",
-            "version": "[8.0.15, )"
+            "version": "[8.0.16, )"
           },
           "QRCoder": {
             "target": "Package",
             "version": "[1.3.5, )"
+          },
+          "Serilog.AspNetCore": {
+            "target": "Package",
+            "version": "[2.1.1, )"
+          },
+          "Serilog.Sinks.RollingFile": {
+            "target": "Package",
+            "version": "[3.3.0, )"
           }
         },
         "imports": [

@@ -75,10 +75,10 @@ namespace ISSSC.Class
             var dbSession = db.SscisSession.Find(httpSession.GetInt32("sessionId"));
 
             //TODO hack
-            if (dbSession == null)
-            {
-                return false;
-            }
+            //if (dbSession == null)
+            //{
+            //    return false;
+            //}
 
             if (dbSession.Expiration < DateTime.Now)
             {
