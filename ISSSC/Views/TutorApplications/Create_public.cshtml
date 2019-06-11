@@ -3,7 +3,6 @@
     ViewBag.ActiveMenuItem = "menu-tutor";
 }
 
-<div class="body-content container-fluid text-center">
     <div class="row content">
         <div class="col-sm-2 sidenav">
         </div>
@@ -15,34 +14,18 @@
             <p>Máte-li zájem, vyplňte prosím formulář níže.</p>
             <div class="well">
                 <p>
-                    PRO ZOBRAZENÍ FORMULÁŘE SE PROSÍM PŘIHLASTE VPRAVO NAHOŘE
+                    PRO ZOBRAZENÍ FORMULÁŘE SE PROSÍM PŘIHLASTE
                 </p>
             </div>
             <p>Máte-li další dotazy, ozvěte se prosím Světlaně Tomiczkové na e-mail <a href="mailto:svetlana@kma.zcu.cz">svetlana@kma.zcu.cz</a>, případně přijďte osobně do UC 258.</p>
         </div>
 
-        @{if (ViewContext.HttpContext.Session.GetString("role") != null && (ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.User) || ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Tutor)))
-            {
-                <div class="col-sm-2 sidenav rozvrh">
-                    <div class="well">
-                        <p>
-                            USER - rozvrh extra lekcí na které se přihlásil
-                            <br />
-                            TUTOR - rozvrh lekcí co bude vyučovat (pravidelné a nepravidelné)
-                        </p>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="col-sm-2 sidenav">
-                </div>
-            }
-        }
+        <div class="col-sm-2 sidenav">
+        </div>
+
 
     </div>
 
-</div>
 
 
 
