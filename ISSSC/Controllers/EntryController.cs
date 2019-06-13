@@ -52,7 +52,7 @@ namespace ISSSC.Controllers
         /// SSO Authentification
         /// </summary>
         /// <returns>HomePage</returns>
-        [Route("Entry2")]
+        //[Route("Entry2")]
         public ActionResult Index()
         {
             if (HttpContext.Request.Headers["WEB_AUTH_USER"].Equals("")) return RedirectToAction("Index", "Home");
@@ -104,7 +104,7 @@ namespace ISSSC.Controllers
         /// </summary>
         /// <returns>HomePage</returns>
         ///
-        [Route("Entry")]
+        //[Route("Entry")]
         public ActionResult Info()
         {
             if (HttpContext.Request.Headers["WEB_AUTH_USER"].Equals("")) return RedirectToAction("Index", "Home");
