@@ -44,6 +44,7 @@ namespace ISSSC.Controllers
         /// </summary>
         private const string WEB_AUTH_USER = "X-webauth_proxy_user";
 
+
         private const string X_SECURE = "TESTAUTH"; //X-SECURE
 
 
@@ -52,10 +53,13 @@ namespace ISSSC.Controllers
         /// SSO Authentification
         /// </summary>
         /// <returns>HomePage</returns>
-        [Route("Entry2")]
         public ActionResult Index()
         {
-            if (HttpContext.Request.Headers["WEB_AUTH_USER"].Equals("")) return RedirectToAction("Index", "Home");
+            var headerValue = Request.Headers[WEB_AUTH_USER];
+            if (headerValue.Any() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             string username = Request.Headers[USERNAME_KEY];
             //stránku na redirect posílat jako parametr a jako parametr se mi to vrátí
             //string redirectUrl = Request.Headers[redirect];
@@ -63,7 +67,7 @@ namespace ISSSC.Controllers
             var count = db.SscisUser.Count(usr => usr.Login.Equals(username));
             if (count < 1)
             {
-                string email = Request.Headers[EMAIL_KEY];
+                string email = Request.Headers[EMAIL_KEY].ToString();
                 SscisUser user = new SscisUser();
                 user.Created = DateTime.Now;
                 user.Activated = DateTime.Now;
@@ -71,6 +75,10 @@ namespace ISSSC.Controllers
                 user.IsActive = true;
                 user.Email = email;
                 user.IdRoleNavigation = db.EnumRole.Where(r => r.Role.Equals(AuthorizationRoles.User)).Single();
+
+                //TODO může mi dát jméno, příjmení a studentské číslo?
+                user.Firstname = "xxx";
+                user.Lastname = "xxx";
                 db.SscisUser.Add(user);
                 db.SaveChanges();
             }
@@ -104,7 +112,6 @@ namespace ISSSC.Controllers
         /// </summary>
         /// <returns>HomePage</returns>
         ///
-        [Route("Entry")]
         public ActionResult Info()
         {
             if (HttpContext.Request.Headers["WEB_AUTH_USER"].Equals("")) return RedirectToAction("Index", "Home");
