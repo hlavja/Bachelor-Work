@@ -44,17 +44,22 @@ namespace ISSSC.Controllers
         /// </summary>
         private const string WEB_AUTH_USER = "X-webauth_proxy_user";
 
+        private const string X_SECURE = "TESTAUTH"; //X-SECURE
 
+
+        ///Zajistit na entry se dostat jenom s proxyauth.zcu.cz (147.228.4.80)
         /// <summary>
         /// SSO Authentification
         /// </summary>
         /// <returns>HomePage</returns>
+        [Route("Entry2")]
         public ActionResult Index()
         {
             if (HttpContext.Request.Headers["WEB_AUTH_USER"].Equals("")) return RedirectToAction("Index", "Home");
             string username = Request.Headers[USERNAME_KEY];
+            //stránku na redirect posílat jako parametr a jako parametr se mi to vrátí
             //string redirectUrl = Request.Headers[redirect];
-            
+
             var count = db.SscisUser.Count(usr => usr.Login.Equals(username));
             if (count < 1)
             {
@@ -98,6 +103,8 @@ namespace ISSSC.Controllers
         /// Info for testing purposes SSO authentification
         /// </summary>
         /// <returns>HomePage</returns>
+        ///
+        [Route("Entry")]
         public ActionResult Info()
         {
             if (HttpContext.Request.Headers["WEB_AUTH_USER"].Equals("")) return RedirectToAction("Index", "Home");
