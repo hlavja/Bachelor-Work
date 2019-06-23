@@ -73,8 +73,7 @@ namespace ISSSC.Controllers
         {
             if (HttpContext.Session.GetString("role") == null) return View("Create_public");
 
-            //int userID = (int) HttpContext.Session.GetInt32("userID");
-            int userID = 2;
+            int userID = (int) HttpContext.Session.GetInt32("userId");
             if (db.TutorApplication.Where(a => a.IdUser == userID && a.IsAccepted == null).Count() > 0)
             {
                 return RedirectToAction("ApplicationPending");
@@ -100,7 +99,7 @@ namespace ISSSC.Controllers
         /// <returns>Result of creation</returns>
         /// 
         [HttpPost]
-       // [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.User)]
         public ActionResult Create(MetaTutorApplication model)
         {
@@ -115,10 +114,10 @@ namespace ISSSC.Controllers
 
                 int countOfSubjects = int.Parse(Request.Form["subjects_count"]);
 
-                if (countOfSubjects < 1)
+               /* if (countOfSubjects < 1)
                 {
-                    return View(model.Application);
-                }
+                    return View(model);
+                }*/
 
                 string znamky = Request.Form["Degree"];
                 string predmety = HttpContext.Request.Form["SubjectID"];

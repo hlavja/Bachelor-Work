@@ -199,7 +199,7 @@ namespace ISSSC.Controllers
                             
                 emailMessage.Subject = "Žádost o extra lekci " + subjectCode + " v Student Support Centru";
                 emailMessage.Content = "Evidujeme novou žádost o extra lekci z předmětu, který můžeš vyučovat.\n" +
-                    "Pokud chceš lekci z " + subjectCode + " přijmout klikni na následující link: https://localhost:44386/ExtraLesson/Accept?id=" + newId;
+                    "Pokud chceš lekci z " + subjectCode + " přijmout, klikni na následující link: " + SSCHttpContext.AppBaseUrl +"/ExtraLesson/Accept?id=" + newId;
                 
                 _emailService.Send(emailMessage);
                 return RedirectToAction("HelpMe");
@@ -241,12 +241,27 @@ namespace ISSSC.Controllers
         {
             string redirectUrl = WebUtility.UrlDecode(redirectionUrl);
             bool webauth = BoolParser.Parse(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEB_AUTH_ON)).Single().ParamValue);
+            string testAuthParametr;
             //string redirectUrl = HttpContext.Request.Path.Value + HttpContext.Request.QueryString.Value;
-            
+
+            //string testAuthParametr = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEB_AUTH_URL)).Single().ParamValue.ToString() + "?redirect=" + redirectUrl;
+
             if (webauth)
             {
+
+                //return Redirect(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEB_AUTH_URL)).Single().ParamValue);
+
+                if (redirectionUrl != null)
+                {
+                    testAuthParametr = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEB_AUTH_URL)).Single().ParamValue.ToString() + "?redirect=" + redirectionUrl;
+                } else
+                {
+                    testAuthParametr = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEB_AUTH_URL)).Single().ParamValue.ToString();
+                }
                 
-                return Redirect(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEB_AUTH_URL)).Single().ParamValue);
+
+                return Redirect(testAuthParametr);
+                
             }
             ViewBag.Title = "Login";
             MetaLogin model = new MetaLogin

@@ -12,7 +12,7 @@
             <h2>Přihlášení</h2>
             <p>Příhlášení proběhlo úspěšně.</p>
             <p>Nedojde-li k automatickému přesměrování, klikněte zde: </p> <a href="http://ssc2.fav.zcu.cz/">Přesměrovat</a>
-            @Html.ActionLink("Přesměrovat", "StoreData", "Entry", new { sessionId = ViewBag.SessionId, userId = ViewBag.UserId, hash = ViewBag.Hash, role = ViewBag.Role, login = ViewBag.Login }, new { id = "red-link"})
+            @Html.ActionLink("Přesměrovat", "StoreData", "Entry", new { sessionId = ViewBag.SessionId, userId = ViewBag.UserId, hash = ViewBag.Hash, role = ViewBag.Role, login = ViewBag.Login, redirect = ViewBag.RedirectUrl }, new { id = "red-link"})
         </div>
         
         <div class="col-sm-2 sidenav">
@@ -21,7 +21,7 @@
 </div>
 
 <script>
-    window.location.href = 'http://ssc2.fav.zcu.cz/Entry/StoreData?sessionId=@ViewBag.SessionId&userId=@ViewBag.UserId&hash=@ViewBag.Hash&role=@ViewBag.Role&login=@ViewBag.Login';
+    window.location.href = 'http://ssc2.fav.zcu.cz/Entry/StoreData?sessionId=@ViewBag.SessionId&userId=@ViewBag.UserId&hash=@ViewBag.Hash&role=@ViewBag.Role&login=@ViewBag.Login&redirect=@ViewBag.RedirectUrl';
 </script>
 
 

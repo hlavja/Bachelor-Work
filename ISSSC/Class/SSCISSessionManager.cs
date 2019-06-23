@@ -74,7 +74,7 @@ namespace ISSSC.Class
         {
             var dbSession = db.SscisSession.Find(httpSession.GetInt32("sessionId"));
 
-            if (dbSession.Expiration < DateTime.Now)
+            if (dbSession == null || dbSession.Expiration < DateTime.Now)
             {
                 return false;
             }

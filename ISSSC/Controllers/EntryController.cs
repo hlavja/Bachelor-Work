@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http.Headers;
+using System.Net;
 
 namespace ISSSC.Controllers
 {
@@ -45,9 +46,18 @@ namespace ISSSC.Controllers
         private const string WEB_AUTH_USER = "X-webauth_proxy_user";
 
 
+        //jmeno
+        private const string FIRST_NAME = "SHIB_GIVENNAME";
+
+        //prijmeni
+        private const string SECOND_NAME = "SHIB_SN";
+
+
+
+
         private const string X_SECURE = "TESTAUTH"; //X-SECURE
 
-
+        //https://proxyauth.zcu.cz/testauth
         ///Zajistit na entry se dostat jenom s proxyauth.zcu.cz (147.228.4.80)
         /// <summary>
         /// SSO Authentification
@@ -61,6 +71,9 @@ namespace ISSSC.Controllers
                 return RedirectToAction("Index", "Home");
             }
             string username = Request.Headers[USERNAME_KEY];
+            string firstName = Request.Headers[FIRST_NAME];
+            string secondName = Request.Headers[SECOND_NAME];
+
             //stránku na redirect posílat jako parametr a jako parametr se mi to vrátí
             //string redirectUrl = Request.Headers[redirect];
 
@@ -75,10 +88,8 @@ namespace ISSSC.Controllers
                 user.IsActive = true;
                 user.Email = email;
                 user.IdRoleNavigation = db.EnumRole.Where(r => r.Role.Equals(AuthorizationRoles.User)).Single();
-
-                //TODO může mi dát jméno, příjmení a studentské číslo?
-                user.Firstname = "xxx";
-                user.Lastname = "xxx";
+                user.Firstname = firstName;
+                user.Lastname = secondName;
                 db.SscisUser.Add(user);
                 db.SaveChanges();
             }
@@ -88,6 +99,7 @@ namespace ISSSC.Controllers
             ViewBag.SessionId = sessionId;
             SscisSession session = db.SscisSession.Find(sessionId);
 
+            ViewBag.RedirectUrl = HttpContext.Request.Query["redirect"].ToString();
             ViewBag.UserId = session.IdUser;
             ViewBag.Hash = session.Hash;
             ViewBag.Role = session.IdUserNavigation.IdRoleNavigation.Role;
@@ -166,14 +178,22 @@ namespace ISSSC.Controllers
         /// <param name="role">User role code</param>
         /// <param name="login">User login</param>
         /// <returns>Redirection to Homepage</returns>
-        public ActionResult StoreData(int sessionId, int userId, string hash, string role, string login)
+        public ActionResult StoreData(int sessionId, int userId, string hash, string role, string login, string redirect)
         {
             HttpContext.Session.SetInt32("sessionId", sessionId);
             HttpContext.Session.SetString("role", role);
             HttpContext.Session.SetString("hash", hash);
             HttpContext.Session.SetString("login", login);
             HttpContext.Session.SetInt32("userId", userId);
-            return RedirectToAction("Index", "Home");
+
+            if (redirect != null)
+            {
+                return Redirect(redirect);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
     }
