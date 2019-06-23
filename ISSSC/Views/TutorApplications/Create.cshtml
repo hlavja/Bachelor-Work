@@ -30,7 +30,7 @@
                             <div class="row @string.Format("subject-row{0}",0)">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.ApplicationSubjects.ElementAt(0).IdSubject, SSCISResources.Resources.SUBJECT, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
+                                    <div class="col-md-5">
                                         @Html.DropDownList("SubjectId", null, htmlAttributes: new { @class = "form-control subject" })
                                     </div>
                                 </div>
