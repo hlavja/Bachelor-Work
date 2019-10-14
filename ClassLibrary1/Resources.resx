@@ -129,6 +129,9 @@
   <data name="ADD_SUBJECT" xml:space="preserve">
     <value>Přidat předmět</value>
   </data>
+  <data name="ADMIN" xml:space="preserve">
+    <value>ADMIN</value>
+  </data>
   <data name="APPLICANT" xml:space="preserve">
     <value>Žadatel</value>
   </data>
@@ -152,6 +155,9 @@
   </data>
   <data name="CANCELLED" xml:space="preserve">
     <value>Zrušeno</value>
+  </data>
+  <data name="COMMENT" xml:space="preserve">
+    <value>Komentář</value>
   </data>
   <data name="CONTENT" xml:space="preserve">
     <value>Obsah</value>
@@ -246,6 +252,9 @@
   <data name="NEWS" xml:space="preserve">
     <value>Novinky</value>
   </data>
+  <data name="RECURRENCE" xml:space="preserve">
+    <value>Počet opakování</value>
+  </data>
   <data name="ROLE" xml:space="preserve">
     <value>Role</value>
   </data>
@@ -277,7 +286,7 @@
     <value>Čas do</value>
   </data>
   <data name="TUTOR" xml:space="preserve">
-    <value>Tutor</value>
+    <value>TUTOR</value>
   </data>
   <data name="TUTOR_APPLICATION" xml:space="preserve">
     <value>Přihláška tutora</value>

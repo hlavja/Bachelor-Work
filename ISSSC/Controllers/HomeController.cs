@@ -161,6 +161,8 @@ namespace ISSSC.Controllers
                 model.Event.IsCancelled = false;
                 model.Event.IsExtraLesson = true;
                 model.Event.IdApplicantNavigation = Db.SscisUser.Find(userId);
+                string ahoj = model.Comment.ToString();
+                model.Event.CancelationComment = model.Comment.ToString();
 
                 Db.Event.Add(model.Event);
                 Db.SaveChanges();

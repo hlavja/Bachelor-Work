@@ -172,7 +172,7 @@ namespace ISSSC.Controllers
             }
             int? userID = (int)HttpContext.Session.GetInt32("userId");
 
-            TutorApplicationSubject subj = db.TutorApplicationSubject.Find(15);
+            //TutorApplicationSubject subj = db.TutorApplicationSubject.Find(15);
 
           
             tutorApplication.AcceptedDate = DateTime.Now;

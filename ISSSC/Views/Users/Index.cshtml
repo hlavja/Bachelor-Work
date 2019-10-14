@@ -58,7 +58,8 @@
                     </td>
                     <td>
                         @Html.ActionLink(SSCISResources.Resources.EDIT, "Edit", new { id = item.Id }) |
-                        @Html.ActionLink(SSCISResources.Resources.DETAIL, "Details", new { id = item.Id }) 
+                        @Html.ActionLink(SSCISResources.Resources.DETAIL, "Details", new { id = item.Id })
+                        @Html.ActionLink(SSCISResources.Resources.DELETE_USER, "Delete", new { id = item.Id })
                     </td>
                 </tr>
             }

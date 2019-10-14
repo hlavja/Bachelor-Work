@@ -34,7 +34,7 @@ namespace ISSSC.Class
             builder.Append("<tr>");
             builder.Append("<th>Čas od</th>");
             builder.Append("<th>Čas do</th>");
-            builder.Append("<th>Poznámka ke zrušení</th>");
+            builder.Append("<th>Poznámka</th>");
             builder.Append("<th>Předmět</th>");
             builder.Append("<th>Tutor</th>");
             if (showState)

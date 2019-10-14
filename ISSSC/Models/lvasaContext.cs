@@ -270,7 +270,6 @@ namespace ISSSC.Models
                 entity.HasOne(d => d.IdUserNavigation)
                     .WithMany(p => p.Participation)
                     .HasForeignKey(d => d.IdUser)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("participation_ibfk_2");
             });
 

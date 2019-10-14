@@ -117,7 +117,15 @@ namespace ISSSC.Controllers
                 subjectsIds.Add(app.IdSubject);
             }
             ViewBag.SubjectID = new SelectList(db.EnumSubject.Where(s => subjectsIds.Contains(s.Id)), "Id", "Code");
-            ViewBag.TutorID = new SelectList(db.SscisUser.Where(t => t.Id == userId), "Id", "Login");
+
+
+            if (db.SscisUser.Find(userId).IdRoleNavigation == db.EnumRole.Single(r => r.Role.Equals(SSCISResources.Resources.ADMIN)))
+            {
+                ViewBag.TutorID = new SelectList(db.SscisUser, "Id", "Login");
+            } else
+            {
+                ViewBag.TutorID = new SelectList(db.SscisUser.Where(t => t.Id == userId), "Id", "Login");
+            }
             return View();
         }
 
@@ -134,27 +142,48 @@ namespace ISSSC.Controllers
             model.Event = new Event();
             if (ModelState.IsValid && model.Date >= DateTime.Now)
             {
-                int userId = (int)HttpContext.Session.GetInt32("userId");
-                model.Event.IdTutorNavigation = db.SscisUser.Find(userId);
-                model.Event.IsCancelled = false;
-                model.Event.IsAccepted = false;
-                model.Event.IsExtraLesson = false;
-                model.Event.TimeFrom = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour, model.TimeFrom.Minute, 0);
-                //model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeTo.Hour, model.TimeTo.Minute, 0);
-             
-                if (!BoolParser.Parse(db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.STANDART_EVENT_LENGTH)).ParamValue))
+                //int userId = (int)HttpContext.Session.GetInt32("userId");
+
+                for (int i = 0; i < model.Recurrence; i++)
                 {
-                    int hour = Convert.ToInt32(db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.STANDART_EVENT_LENGTH)).Single().ParamValue);
-                    model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour + hour, model.TimeFrom.Minute, 0);
-                } else
-                {
-                    model.Event.TimeTo = model.Event.TimeFrom.AddHours(2);
+                    Event newEvent = new Event();
+                    newEvent.IdTutorNavigation = db.SscisUser.Find(model.TutorID);
+                    newEvent.IdTutor = model.TutorID;
+                    newEvent.IsCancelled = false;
+                    if (newEvent.IdTutorNavigation.IdRoleNavigation.Role.Equals(SSCISResources.Resources.ADMIN))
+                    {
+                        newEvent.IsAccepted = true;
+                    }
+                    else
+                    {
+                        newEvent.IsAccepted = false;
+                    }                   
+                    newEvent.IsExtraLesson = false;
+                    newEvent.TimeFrom = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour, model.TimeFrom.Minute, 0);
+                    //model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeTo.Hour, model.TimeTo.Minute, 0);
+
+                    if (!BoolParser.Parse(db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.STANDART_EVENT_LENGTH)).ParamValue))
+                    {
+                        int hour = Convert.ToInt32(db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.STANDART_EVENT_LENGTH)).Single().ParamValue);
+                        newEvent.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour + hour, model.TimeFrom.Minute, 0);
+                    }
+                    else
+                    {
+                        newEvent.TimeTo = model.Event.TimeFrom.AddHours(2);
+                    }
+
+                    newEvent.IdSubjectNavigation = db.EnumSubject.Find(model.SubjectID);
+                    newEvent.IdSubject = (int)model.SubjectID;
+                    newEvent.IdApplicantNavigation = null;
+                    newEvent.IdApplicant = null;
+
+                    int increase = i * 7;
+                    newEvent.TimeFrom = newEvent.TimeFrom.AddDays(increase);
+                    newEvent.TimeTo = newEvent.TimeTo.AddDays(increase);
+
+                    db.Event.Add(newEvent);
+                    db.SaveChanges();
                 }
-                model.Event.IdSubjectNavigation = db.EnumSubject.Find(model.SubjectID);
-                model.Event.IdApplicantNavigation = null;
-                model.Event.IdApplicant = null;
-                db.Event.Add(model.Event);
-                db.SaveChanges();
                 return RedirectToAction("TutorEvents");
             }
             return RedirectToAction("Create");

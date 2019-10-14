@@ -96,7 +96,7 @@ namespace SSCIS.Controllers
             {
                 return NotFound();
             }
-            ViewBag.IdRole = new SelectList(db.EnumRole.ToList(), "Id", "Role");
+            ViewBag.IdRole = new SelectList(db.EnumRole, "Id", "Role", sSCISUser.IdRole);
             ViewBag.ActivatedByID = new SelectList(db.SscisUser, "Id", "Login", sSCISUser.IsActivatedBy);
             return View(sSCISUser);
         }
@@ -109,11 +109,44 @@ namespace SSCIS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
-        public ActionResult Edit([Bind("Id","Login","Firstname","Lastname","IdRole","StudentNumber","Email")] SscisUser sSCISUser)
+        public ActionResult Edit([Bind("Id", "Login", "Firstname", "Lastname", "IdRole", "StudentNumber", "Email")] SscisUser sSCISUser)
         {
             if (ModelState.IsValid)
             {
                 sSCISUser.IdRoleNavigation = db.EnumRole.Find(sSCISUser.IdRole);
+                if (sSCISUser.IdRoleNavigation.Role.Equals("USER"))
+                {
+                    List<Approval> userApproval = db.Approval.Where(a => a.IdTutor == sSCISUser.Id).ToList();
+                    foreach (Approval approval in userApproval)
+                    {
+                        db.Approval.Remove(approval);
+                    }
+
+                    List<Event> userEvent = db.Event.Where(a => a.IdTutor == sSCISUser.Id).ToList();
+                    foreach (Event sscisEvent in userEvent)
+                    {
+                        int authorID = (int)HttpContext.Session.GetInt32("userId");
+                        SscisUser currentLoggedUser = db.SscisUser.Find((int)authorID);
+                        sscisEvent.IdTutorNavigation = currentLoggedUser;
+                        sscisEvent.CancelationComment = "Tutor fired!";
+                        sscisEvent.IsCancelled = true;
+                    }
+                }
+
+                if (sSCISUser.IdRoleNavigation.Role.Equals("ADMIN"))
+                {
+                    List<EnumSubject> subjects = db.EnumSubject.Where(s => s.IdParent == null && s.Lesson == false).ToList();
+                    foreach (EnumSubject subject in subjects)
+                    {
+                        Approval newApproval = new Approval();
+                        newApproval.IdSubject = subject.Id;
+                        newApproval.IdSubjectNavigation = subject;
+                        newApproval.IdTutor = sSCISUser.Id;
+                        newApproval.IdTutorNavigation = sSCISUser;
+                        db.Approval.Add(newApproval);
+                    }
+                }
+
                 db.Entry(sSCISUser).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -155,11 +188,57 @@ namespace SSCIS.Controllers
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public ActionResult DeleteConfirmed(int id)
         {
-            db.Approval.RemoveRange(db.Approval.Where(a => a.IdTutor == id));
+            int authorID = (int)HttpContext.Session.GetInt32("userId");
+            SscisUser currentLoggedUser = db.SscisUser.Find((int)authorID);
             SscisUser sSCISUser = db.SscisUser.Find(id);
+
             try
             {
                 db.SscisSession.RemoveRange(db.SscisSession.Where(s => s.IdUser == id));
+                db.Approval.RemoveRange(db.Approval.Where(s => s.IdTutor == id));
+
+                List<SscisContent> userContent = db.SscisContent.Where(a => a.IdAuthor == id || a.IdEditedBy == id).ToList();
+                foreach (SscisContent content in userContent)
+                {
+                    if (content.IdAuthor == id)
+                    {
+                        content.IdAuthorNavigation = currentLoggedUser;
+                    }
+                    if (content.IdEditedBy == id)
+                    {
+                        content.IdEditedByNavigation = currentLoggedUser;
+                    }
+                }
+
+                List<Participation> userParticipation = db.Participation.Where(a => a.IdUser == id).ToList();
+                foreach (Participation participation in userParticipation)
+                {
+                    participation.IdUserNavigation = null;
+                }
+
+                List<Event> userEvent = db.Event.Where(a => a.IdTutor == id || a.IdApplicant == id).ToList();
+                foreach (Event sscisEvent in userEvent)
+                {
+                    if (sscisEvent.IdTutor == id)
+                    {
+                        sscisEvent.IdTutorNavigation = currentLoggedUser;
+                        sscisEvent.CancelationComment = "Tutor fired!";
+                    }
+                    if (sscisEvent.IdApplicant == id)
+                    {
+                        sscisEvent.CancelationComment = "ToS violation!";
+                        sscisEvent.IdApplicantNavigation = null;
+                    }
+                    sscisEvent.IsCancelled = true;
+                }
+
+                List<TutorApplication> userAplication = db.TutorApplication.Where(a => a.IdUser == id).ToList();
+                foreach (TutorApplication tutorApplication in userAplication)
+                {
+                    db.TutorApplicationSubject.RemoveRange(db.TutorApplicationSubject.Where(a => a.IdApplication == tutorApplication.Id));
+                    db.TutorApplication.Remove(tutorApplication);
+                }
+
                 db.SscisUser.Remove(sSCISUser);
                 db.SaveChanges();
                 return RedirectToAction("Index");

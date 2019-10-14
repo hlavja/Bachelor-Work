@@ -19,7 +19,7 @@ namespace SSCISResources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -97,6 +97,15 @@ namespace SSCISResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ADMIN.
+        /// </summary>
+        public static string ADMIN {
+            get {
+                return ResourceManager.GetString("ADMIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Žadatel.
         /// </summary>
         public static string APPLICANT {
@@ -165,6 +174,15 @@ namespace SSCISResources {
         public static string CANCELLED {
             get {
                 return ResourceManager.GetString("CANCELLED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Komentář.
+        /// </summary>
+        public static string COMMENT {
+            get {
+                return ResourceManager.GetString("COMMENT", resourceCulture);
             }
         }
         
@@ -448,6 +466,15 @@ namespace SSCISResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Počet opakování.
+        /// </summary>
+        public static string RECURRENCE {
+            get {
+                return ResourceManager.GetString("RECURRENCE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Role.
         /// </summary>
         public static string ROLE {
@@ -538,7 +565,7 @@ namespace SSCISResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tutor.
+        ///   Looks up a localized string similar to TUTOR.
         /// </summary>
         public static string TUTOR {
             get {

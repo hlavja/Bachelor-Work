@@ -22,5 +22,11 @@ namespace ISSSC.Models.Meta
         public DateTime TimeTo { get; set; }
 
         public int? SubjectID { get; set; }
+
+        public string Comment { get; set; }
+
+        public int Recurrence { get; set; }
+
+        public int? TutorID { get; set; }
     }
 }
