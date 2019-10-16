@@ -14,5 +14,9 @@ namespace ISSSC.Class
         public const string SESSION_LENGTH = "SESSION_LENGTH";
         public const string STANDART_EVENT_LENGTH = "STANDART_EVENT_LENGTH";
         public const string EXTRA_EVENT_LENGTH = "EXTRA_EVENT_LENGTH";
+        public const string INDEX_HTML = "INDEX_HTML_TEXT";
+        public const string CHCI_POMAHAT_HTML = "CHCI_POMAHAT_HTML_TEXT";
+        public const string POTREBUJI_POMOC_HTML = "POTREBUJI_POMOC_HTML_TEXT";
+        public const string KONTAKT_HTML = "KONTAKT_HTML_TEXT";
     }
 }

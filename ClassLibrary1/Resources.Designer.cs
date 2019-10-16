@@ -178,6 +178,15 @@ namespace SSCISResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CHCI_POMAHAT_HTML_TEXT.
+        /// </summary>
+        public static string CHCI_POMAHAT_HTML {
+            get {
+                return ResourceManager.GetString("CHCI_POMAHAT_HTML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Komentář.
         /// </summary>
         public static string COMMENT {
@@ -421,6 +430,24 @@ namespace SSCISResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to INDEX_HTML_TEXT.
+        /// </summary>
+        public static string INDEX_HTML {
+            get {
+                return ResourceManager.GetString("INDEX_HTML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KONTAKT_HTML_TEXT.
+        /// </summary>
+        public static string KONTAKT_HTML {
+            get {
+                return ResourceManager.GetString("KONTAKT_HTML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Příjmení.
         /// </summary>
         public static string LASTNAME {
@@ -462,6 +489,15 @@ namespace SSCISResources {
         public static string NEWS {
             get {
                 return ResourceManager.GetString("NEWS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POTREBUJI_POMOC_HTML_TEXT.
+        /// </summary>
+        public static string POTREBUJI_POMOC_HTML {
+            get {
+                return ResourceManager.GetString("POTREBUJI_POMOC_HTML", resourceCulture);
             }
         }
         

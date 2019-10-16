@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<ISSSC.Models.SscisParam>
+@using System.Net;
 
 @{
     ViewBag.Title = "Index";
@@ -35,7 +36,18 @@
                                 @Html.DisplayFor(modelItem => item.ParamKey)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.ParamValue)
+                                @if (item.ParamKey.Contains("HTML"))
+                                {
+                                    item.ParamValue = WebUtility.HtmlDecode(item.ParamValue);
+                                }
+                                @if (item.ParamValue.Length > 100)
+                                {
+                                    @item.ParamValue.Substring(0, 100)
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.ParamValue)
+                                }
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Description)

@@ -105,6 +105,10 @@ namespace ISSSC.Controllers
             {
                 return NotFound();
             }
+            if (sSCISParam.ParamKey.Contains("HTML"))
+            {
+                sSCISParam.ParamValue = WebUtility.HtmlDecode(sSCISParam.ParamValue);
+            }
             return View(sSCISParam);
         }
 
@@ -120,6 +124,11 @@ namespace ISSSC.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (sSCISParam.ParamKey.Contains("HTML"))
+                {
+                    sSCISParam.ParamValue = WebUtility.HtmlEncode(sSCISParam.ParamValue);
+                }
+               
                 db.Entry(sSCISParam).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -156,6 +156,9 @@
   <data name="CANCELLED" xml:space="preserve">
     <value>Zrušeno</value>
   </data>
+  <data name="CHCI_POMAHAT_HTML" xml:space="preserve">
+    <value>CHCI_POMAHAT_HTML_TEXT</value>
+  </data>
   <data name="COMMENT" xml:space="preserve">
     <value>Komentář</value>
   </data>
@@ -237,6 +240,12 @@
   <data name="HOME" xml:space="preserve">
     <value>Domů</value>
   </data>
+  <data name="INDEX_HTML" xml:space="preserve">
+    <value>INDEX_HTML_TEXT</value>
+  </data>
+  <data name="KONTAKT_HTML" xml:space="preserve">
+    <value>KONTAKT_HTML_TEXT</value>
+  </data>
   <data name="LASTNAME" xml:space="preserve">
     <value>Příjmení</value>
   </data>
@@ -251,6 +260,9 @@
   </data>
   <data name="NEWS" xml:space="preserve">
     <value>Novinky</value>
+  </data>
+  <data name="POTREBUJI_POMOC_HTML" xml:space="preserve">
+    <value>POTREBUJI_POMOC_HTML_TEXT</value>
   </data>
   <data name="RECURRENCE" xml:space="preserve">
     <value>Počet opakování</value>

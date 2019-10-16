@@ -70,7 +70,8 @@ namespace ISSSC.Controllers
                 ViewBag.RenderAttendance = personalTimetable.RenderAttendance(Db, userId);
             }
 
-
+            string text = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.INDEX_HTML)).Single().ParamValue;
+            ViewBag.TextIndex = WebUtility.HtmlDecode(text);
             ViewBag.PublicTimeTable = timeTableRenderer.RenderPublic(Db);
             ViewBag.PersonalTimeTable = personalTimetable.RenderEvents(Db, userId);
 
@@ -96,8 +97,8 @@ namespace ISSSC.Controllers
             builder.Append(Db.SscisParam.Where(p => p.ParamKey.Equals("MAP_TOKEN")).Single().ParamValue);
             builder.Append("&callback=myMap");
 
-
-
+            string text = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.KONTAKT_HTML)).Single().ParamValue;
+            ViewBag.Text = WebUtility.HtmlDecode(text);
             ViewBag.MapToken = builder.ToString();
             ViewBag.Title = "Contact";
             return View();
@@ -119,6 +120,9 @@ namespace ISSSC.Controllers
             {
                 userId = (int)HttpContext.Session.GetInt32("userId"); ;
             }
+
+            string text = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.POTREBUJI_POMOC_HTML)).Single().ParamValue;
+            ViewBag.TextHelpMe = WebUtility.HtmlDecode(text);
 
             ViewBag.Title = "Potřebuji pomoc";
             ViewBag.PersonalTimeTable = personalTimetable.RenderEvents(Db, userId);
@@ -161,7 +165,7 @@ namespace ISSSC.Controllers
                 model.Event.IsCancelled = false;
                 model.Event.IsExtraLesson = true;
                 model.Event.IdApplicantNavigation = Db.SscisUser.Find(userId);
-                string ahoj = model.Comment.ToString();
+                string comment = model.Comment.ToString();
                 model.Event.CancelationComment = model.Comment.ToString();
 
                 Db.Event.Add(model.Event);
@@ -200,7 +204,8 @@ namespace ISSSC.Controllers
                 emailMessage.ToAddresses = listTo;
                             
                 emailMessage.Subject = "Žádost o extra lekci " + subjectCode + " v Student Support Centru";
-                emailMessage.Content = "Evidujeme novou žádost o extra lekci z předmětu, který můžeš vyučovat.\n" +
+                emailMessage.Content = "Evidujeme novou žádost o extra lekci z předmětu, který můžeš vyučovat.\n"+
+                    "Studen si přeje pomoci s: " + comment + "\n"+
                     "Pokud chceš lekci z " + subjectCode + " přijmout, klikni na následující link: " + SSCHttpContext.AppBaseUrl +"/ExtraLesson/Accept?id=" + newId;
                 
                 _emailService.Send(emailMessage);
