@@ -262,15 +262,16 @@ namespace ISSSC.Controllers
 
             if (webauth)
             {
+                string webAuth = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHURL)).Single().ParamValue.ToString();
 
                 //return Redirect(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHURL)).Single().ParamValue);
 
                 if (redirectionUrl != null)
                 {
-                    testAuthParametr = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHURL)).Single().ParamValue.ToString() + "?redirect=" + redirectionUrl;
+                    testAuthParametr = webAuth + "?redirect=" + WebUtility.UrlEncode(redirectionUrl);
                 } else
                 {
-                    testAuthParametr = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHURL)).Single().ParamValue.ToString();
+                    testAuthParametr = webAuth;
                 }
                 
 
