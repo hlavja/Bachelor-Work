@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ISSSC.Class;
+using ISSSC.Models;
 using MailKit.Net.Smtp;
 using MimeKit;
 using MimeKit.Text;
@@ -18,8 +19,11 @@ namespace ISSSC.Controllers
     {
         private readonly IEmailConfiguration _emailConfiguration;
 
-        public EmailService(IEmailConfiguration emailConfiguration)
+        public SscisContext Db { get; set; }
+
+        public EmailService(SscisContext context, IEmailConfiguration emailConfiguration)
         {
+            Db = context;
             _emailConfiguration = emailConfiguration;
         }
 
@@ -39,13 +43,26 @@ namespace ISSSC.Controllers
             //Be careful that the SmtpClient class is the one from Mailkit not the framework!
             using (var emailClient = new SmtpClient())
             {
-                //The last parameter here is to use SSL (Which you should!)
-                emailClient.Connect("smtp.zcu.cz", _emailConfiguration.SmtpPort, true);
+                string smtp = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.SMTP, StringComparison.OrdinalIgnoreCase)).Single().ParamValue;
+                if (string.IsNullOrEmpty(smtp))
+                {
+                    //The last parameter here is to use SSL (Which you should!)
+                    emailClient.Connect(_emailConfiguration.SmtpServer, _emailConfiguration.SmtpPort, true);
 
-                //Remove any OAuth functionality as we won't be using it. 
-                emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
+                    //Remove any OAuth functionality as we won't be using it. 
+                    emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
 
-                //emailClient.Authenticate(_emailConfiguration.SmtpUsername, _emailConfiguration.SmtpPassword);
+                    emailClient.Authenticate(_emailConfiguration.SmtpUsername, _emailConfiguration.SmtpPassword);
+                }
+                else
+                {
+                    //The last parameter here is to use SSL (Which you should!)
+                    emailClient.Connect(smtp, 465, true);
+
+                    //Remove any OAuth functionality as we won't be using it. 
+                    emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
+                }
+
 
                 await emailClient.SendAsync(message);
 
