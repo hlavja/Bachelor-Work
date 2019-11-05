@@ -58,7 +58,7 @@ namespace ISSSC.Controllers
         private const string X_SECURE = "TESTAUTH"; //X-SECURE
 
         //https://proxyauth.zcu.cz/testauth
-        ///Zajistit na entry se dostat jenom s proxyauth.zcu.cz (147.228.4.80)
+        ///Zajistit na entry se dostat jenom z proxyauth.zcu.cz (147.228.4.80)
         /// <summary>
         /// SSO Authentification
         /// </summary>
@@ -68,7 +68,7 @@ namespace ISSSC.Controllers
             var headerValue = Request.Headers[WEB_AUTH_USER];
             if (headerValue.Any() == false)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Info", "Entry");
             }
             string username = Request.Headers[USERNAME_KEY];
             string firstName = Request.Headers[FIRST_NAME];
@@ -77,7 +77,7 @@ namespace ISSSC.Controllers
             //stránku na redirect posílat jako parametr a jako parametr se mi to vrátí
             //string redirectUrl = Request.Headers[redirect];
 
-            var count = db.SscisUser.Count(usr => usr.Login.Equals(username));
+            var count = db.SscisUser.Count(usr => usr.Login.Equals(username, StringComparison.OrdinalIgnoreCase));
             if (count < 1)
             {
                 string email = Request.Headers[EMAIL_KEY].ToString();
@@ -87,7 +87,7 @@ namespace ISSSC.Controllers
                 user.Login = username;
                 user.IsActive = true;
                 user.Email = email;
-                user.IdRoleNavigation = db.EnumRole.Where(r => r.Role.Equals(AuthorizationRoles.User)).Single();
+                user.IdRoleNavigation = db.EnumRole.Where(r => r.Role.Equals(AuthorizationRoles.User, StringComparison.OrdinalIgnoreCase)).Single();
                 user.Firstname = firstName;
                 user.Lastname = secondName;
                 db.SscisUser.Add(user);
@@ -126,9 +126,9 @@ namespace ISSSC.Controllers
         ///
         public ActionResult Info()
         {
-            if (HttpContext.Request.Headers["WEB_AUTH_USER"].Equals("")) return RedirectToAction("Index", "Home");
+            if (HttpContext.Request.Headers[WEB_AUTH_USER].Equals("")) return RedirectToAction("Index", "Home");
             string username = Request.Headers[USERNAME_KEY];
-            var count = db.SscisUser.Count(usr => usr.Login.Equals(username));
+            var count = db.SscisUser.Count(usr => usr.Login.Equals(username, StringComparison.OrdinalIgnoreCase));
             if (count < 1)
             {
                 //string email = Request.Headers[EMAIL_KEY];
@@ -138,7 +138,7 @@ namespace ISSSC.Controllers
                 user.Login = username;
                 user.IsActive = true;
                 //user.Email = email; //TODO dodat do db
-                user.IdRoleNavigation = db.EnumRole.Where(r => r.Role.Equals(AuthorizationRoles.User)).Single();
+                user.IdRoleNavigation = db.EnumRole.Where(r => r.Role.Equals(AuthorizationRoles.User, StringComparison.OrdinalIgnoreCase)).Single();
                 db.SscisUser.Add(user);
                 db.SaveChanges();
             }

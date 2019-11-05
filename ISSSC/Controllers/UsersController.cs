@@ -11,6 +11,7 @@ using ISSSC.Attributes;
 using ISSSC.Class;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ISSSC.Models.Meta;
 
 namespace SSCIS.Controllers
 {
@@ -92,13 +93,44 @@ namespace SSCIS.Controllers
                 return new StatusCodeResult((int)HttpStatusCode.BadRequest);
             }
             SscisUser sSCISUser = db.SscisUser.Find(id);
+            
             if (sSCISUser == null)
             {
                 return NotFound();
             }
+
             ViewBag.IdRole = new SelectList(db.EnumRole, "Id", "Role", sSCISUser.IdRole);
             ViewBag.ActivatedByID = new SelectList(db.SscisUser, "Id", "Login", sSCISUser.IsActivatedBy);
-            return View(sSCISUser);
+
+            List<Approval> approvals = db.Approval.Where(a => a.IdTutor == sSCISUser.Id).ToList();
+            List<EnumSubject> subjects = db.EnumSubject.Where(s => s.IdParent == null && s.Lesson == false).ToList();
+
+            EditUser editUser = new EditUser();
+            editUser.User = sSCISUser;
+            editUser.Roles = db.EnumRole.ToList();
+            List<MetaApproval> metaApprovals = new List<MetaApproval>();
+            foreach (EnumSubject enumSubject in subjects)
+            {
+                MetaApproval metaApproval = new MetaApproval();
+                foreach (Approval approval in approvals)
+                {
+                    if (approval.IdSubject == enumSubject.Id)
+                    {
+                        metaApproval.EnumSubject = enumSubject;
+                        metaApproval.Approved = true;
+                    }
+                }
+                if (metaApproval.EnumSubject == null)
+                {
+                    metaApproval.EnumSubject = enumSubject;
+                    metaApproval.Approved = false;
+                }
+                metaApprovals.Add(metaApproval);
+            }
+            editUser.Approvals = metaApprovals;
+
+            return View(editUser);
+
         }
 
         /// <summary>
@@ -109,20 +141,21 @@ namespace SSCIS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
-        public ActionResult Edit([Bind("Id", "Login", "Firstname", "Lastname", "IdRole", "StudentNumber", "Email")] SscisUser sSCISUser)
+        public ActionResult Edit(EditUser editUser)
         {
             if (ModelState.IsValid)
             {
-                sSCISUser.IdRoleNavigation = db.EnumRole.Find(sSCISUser.IdRole);
-                if (sSCISUser.IdRoleNavigation.Role.Equals("USER"))
+                editUser.User.IdRoleNavigation = db.EnumRole.Find(editUser.User.IdRole);
+                db.Entry(editUser.User).State = EntityState.Modified;
+                if (editUser.User.IdRoleNavigation.Role.Equals("USER"))
                 {
-                    List<Approval> userApproval = db.Approval.Where(a => a.IdTutor == sSCISUser.Id).ToList();
+                    List<Approval> userApproval = db.Approval.Where(a => a.IdTutor == editUser.User.Id).ToList();
                     foreach (Approval approval in userApproval)
                     {
                         db.Approval.Remove(approval);
                     }
 
-                    List<Event> userEvent = db.Event.Where(a => a.IdTutor == sSCISUser.Id).ToList();
+                    List<Event> userEvent = db.Event.Where(a => a.IdTutor == editUser.User.Id).ToList();
                     foreach (Event sscisEvent in userEvent)
                     {
                         int authorID = (int)HttpContext.Session.GetInt32("userId");
@@ -132,29 +165,62 @@ namespace SSCIS.Controllers
                         sscisEvent.IsCancelled = true;
                     }
                 }
-
-                if (sSCISUser.IdRoleNavigation.Role.Equals("ADMIN"))
+                else if (editUser.User.IdRoleNavigation.Role.Equals("ADMIN"))
                 {
+                    List<Approval> userApproval = db.Approval.Where(a => a.IdTutor == editUser.User.Id).ToList();
+                    foreach (Approval approval in userApproval)
+                    {
+                        db.Approval.Remove(approval);
+                    }
                     List<EnumSubject> subjects = db.EnumSubject.Where(s => s.IdParent == null && s.Lesson == false).ToList();
                     foreach (EnumSubject subject in subjects)
                     {
                         Approval newApproval = new Approval();
                         newApproval.IdSubject = subject.Id;
-                        newApproval.IdSubjectNavigation = subject;
-                        newApproval.IdTutor = sSCISUser.Id;
-                        newApproval.IdTutorNavigation = sSCISUser;
+                        newApproval.IdSubjectNavigation = db.EnumSubject.Find(subject.Id);
+                        newApproval.IdTutor = editUser.User.Id;
+                        newApproval.IdTutorNavigation = db.SscisUser.Find(editUser.User.Id);
                         db.Approval.Add(newApproval);
+                        db.SaveChanges();
                     }
                 }
-
-                db.Entry(sSCISUser).State = EntityState.Modified;
+                else
+                {
+                    foreach (MetaApproval app in editUser.Approvals)
+                    {
+                        if (app.Approved == true)
+                        {
+                            List<Approval> tmp = db.Approval.Where(a => a.IdTutor == editUser.User.Id && a.IdSubject == app.EnumSubject.Id).ToList();
+                            if (tmp.Count == 0)
+                            {
+                                Approval newApproval = new Approval();
+                                newApproval.IdSubject = app.EnumSubject.Id;
+                                newApproval.IdSubjectNavigation = db.EnumSubject.Find(app.EnumSubject.Id);
+                                newApproval.IdTutor = editUser.User.Id;
+                                newApproval.IdTutorNavigation = db.SscisUser.Find(editUser.User.Id);
+                                db.Approval.Add(newApproval);
+                                db.SaveChanges();
+                            }
+                        }
+                        else
+                        {
+                            List<Approval> tmp = db.Approval.Where(a => a.IdTutor == editUser.User.Id && a.IdSubject == app.EnumSubject.Id).ToList();
+                            foreach (Approval app2 in tmp)
+                            {
+                                db.Approval.Remove(app2);
+                            }
+                        }
+                    }
+                }
+                editUser.Approvals = null;
+                db.Entry(editUser.User).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.RoleID = new SelectList(db.EnumRole, "Id", "Role", sSCISUser.IdRole);
+            ViewBag.RoleID = new SelectList(db.EnumRole, "Id", "Role", editUser.User.IdRole);
             //ViewBag.RoleID = new SelectList(db.EnumRole.ToList(), "Id", "Role");
-            ViewBag.ActivatedByID = new SelectList(db.SscisUser, "Id", "Login", sSCISUser.IsActivatedBy);
-            return View(sSCISUser);
+            ViewBag.ActivatedByID = new SelectList(db.SscisUser, "Id", "Login", editUser.User.IsActivatedBy);
+            return View(editUser.User);
         }
 
         /// <summary>

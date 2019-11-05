@@ -71,7 +71,7 @@ namespace ISSSC.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            string text = db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.CHCI_POMAHAT_HTML)).Single().ParamValue;
+            string text = db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.CHCIPOMAHATHTML)).Single().ParamValue;
             ViewBag.TextHelp = WebUtility.HtmlDecode(text);
             if (HttpContext.Session.GetString("role") == null) return View("Create_public");
 
@@ -81,7 +81,7 @@ namespace ISSSC.Controllers
                 return RedirectToAction("ApplicationPending");
             }
 
-            int countOfSubjects = int.Parse(db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.MAX_SUBJECTS_COUNT)).Single().ParamValue);
+            int countOfSubjects = int.Parse(db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.MAXSUBJECTSCOUNT)).Single().ParamValue);
 
             MetaTutorApplication model = new MetaTutorApplication(countOfSubjects);
 

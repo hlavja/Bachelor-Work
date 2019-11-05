@@ -1,85 +1,108 @@
-﻿@model ISSSC.Models.SscisUser
+﻿@model ISSSC.Models.Meta.EditUser
+@using ISSSC.Models.Meta;
 
 @{
     ViewBag.Title = SSCISResources.Resources.EDIT;
     ViewBag.ActiveMenuItem = "menu-users";
 }
 
-    <div class="row content">
-        <div class="col-sm-2 sidenav">
-        </div>
-        <div class="col-sm-8 text-left">
-            <h2>Upravit</h2>
+<div class="row content">
+    <div class="col-sm-2 sidenav">
+    </div>
+    <div class="col-sm-8 text-left">
+        <h2>Upravit</h2>
 
-            @using (Html.BeginForm())
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>SSCISUser</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.User.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Login, SSCISResources.Resources.LOGIN, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.Login, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User.Login, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Firstname, SSCISResources.Resources.NAME, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.Firstname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User.Firstname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Lastname, SSCISResources.Resources.LASTNAME, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.Lastname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User.Lastname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.IdRole, SSCISResources.Resources.ROLE, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.User.IdRole, new SelectList(Model.Roles, "Id", "Role", Model.User.IdRole), htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.StudentNumber, SSCISResources.Resources.STUDENT_NUMBER, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.StudentNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User.StudentNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Email, SSCISResources.Resources.EMAIL, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @for (int i = 0; i < Model.Approvals.Count; i++)
             {
-                @Html.AntiForgeryToken()
 
-            <div class="form-horizontal">
-                <h4>SSCISUser</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.Approvals[i].EnumSubject.Id)
+                @Html.HiddenFor(model => model.Approvals[i].EnumSubject.Name)
+                @Html.HiddenFor(model => model.Approvals[i].EnumSubject.Code)
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Login, SSCISResources.Resources.LOGIN, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Approvals[i].Approved, Model.Approvals[i].EnumSubject.Code, htmlAttributes: new { @class = "control-label col-md-2" })
+                if (Model.Approvals[i].Approved == true)
+                {
+                    <div class="col-md-1">
+                        @Html.CheckBoxFor(model => model.Approvals[i].Approved, new { @class = "form-control", @checked = "checked" })
                     </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Firstname, SSCISResources.Resources.NAME, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "text-danger" })
+                }
+                else
+                {
+                    <div class="col-md-1">
+                        @Html.CheckBoxFor(model => model.Approvals[i].Approved, new { @class = "form-control" })
                     </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Lastname, SSCISResources.Resources.LASTNAME, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Lastname, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.IdRole, SSCISResources.Resources.ROLE, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("IdRole", null, htmlAttributes: new { @class = "form-control" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.StudentNumber, SSCISResources.Resources.STUDENT_NUMBER, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.StudentNumber, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.StudentNumber, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Email, SSCISResources.Resources.EMAIL, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="@SSCISResources.Resources.SAVE" class="btn btn-default" />
-                    </div>
-                </div>
-            </div>
+                }
             }
-
-            <div>
-                @Html.ActionLink(SSCISResources.Resources.BACK, "Index")
-            </div>
         </div>
-        <div class="col-sm-2 sidenav">
-
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="@SSCISResources.Resources.SAVE" class="btn btn-default" />
+            </div>
         </div>
     </div>
+        }
+
+        <div>
+            @Html.ActionLink(SSCISResources.Resources.BACK, "Index")
+        </div>
+    </div>
+    <div class="col-sm-2 sidenav">
+
+    </div>
+</div>

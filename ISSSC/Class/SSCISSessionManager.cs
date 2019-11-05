@@ -31,14 +31,14 @@ namespace ISSSC.Class
             var session = new SscisSession
             {
                 SessionStart = DateTime.Now,
-                Expiration = DateTime.Now.AddSeconds(long.Parse(db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.SESSION_LENGTH)).ParamValue)),
+                Expiration = DateTime.Now.AddSeconds(long.Parse(db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.SESSIONLENGTH)).ParamValue)),
                 Hash = hashgenerator.GenerateHash()
             };
             db.SscisSession.Add(session);
             session.IdUserNavigation = db.SscisUser.Single(u => u.Login.Equals(login));
             db.SaveChanges();
 
-            if (!BoolParser.Parse(db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.WEB_AUTH_ON)).ParamValue))
+            if (!BoolParser.Parse(db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHON)).ParamValue))
             {
                 httpSession.Session.SetInt32("sessionId", (int) session.Id);
                 httpSession.Session.SetString("role", session.IdUserNavigation.IdRoleNavigation.Role);

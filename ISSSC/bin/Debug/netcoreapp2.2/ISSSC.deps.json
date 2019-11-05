@@ -25,6 +25,7 @@
       "ISSSC/1.0.0": {
         "dependencies": {
           "MailKit": "2.2.0",
+          "Microsoft.AspNet.Mvc": "5.2.7",
           "Microsoft.AspNetCore": "2.2.0",
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Http.Extensions": "2.2.0",
@@ -32,6 +33,7 @@
           "Microsoft.AspNetCore.Mvc.WebApiCompatShim": "2.2.0",
           "Microsoft.AspNetCore.Server.IIS": "2.2.2",
           "Microsoft.AspNetCore.Session": "2.2.0",
+          "Microsoft.CodeAnalysis.FxCopAnalyzers": "2.9.7",
           "Microsoft.EntityFrameworkCore.Design": "2.2.4",
           "Microsoft.EntityFrameworkCore.Proxies": "2.2.4",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.2.4",
@@ -111,6 +113,62 @@
           "lib/netstandard2.0/MailKit.dll": {}
         }
       },
+      "Microsoft.AspNet.Mvc/5.2.7": {
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "3.2.7",
+          "Microsoft.AspNet.WebPages": "3.2.7"
+        },
+        "runtime": {
+          "lib/net45/System.Web.Mvc.dll": {
+            "assemblyVersion": "5.2.7.0",
+            "fileVersion": "5.2.61128.0"
+          }
+        },
+        "compile": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Razor/3.2.7": {
+        "runtime": {
+          "lib/net45/System.Web.Razor.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.61128.0"
+          }
+        },
+        "compile": {
+          "lib/net45/System.Web.Razor.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebPages/3.2.7": {
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "3.2.7",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "runtime": {
+          "lib/net45/System.Web.Helpers.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.61128.0"
+          },
+          "lib/net45/System.Web.WebPages.Deployment.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.61128.0"
+          },
+          "lib/net45/System.Web.WebPages.Razor.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.61128.0"
+          },
+          "lib/net45/System.Web.WebPages.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.61128.0"
+          }
+        },
+        "compile": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Mvc.WebApiCompatShim/2.2.0": {
         "dependencies": {
           "Microsoft.AspNet.WebApi.Client": "5.2.6",
@@ -158,6 +216,16 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Server.IIS.dll": {}
         }
       },
+      "Microsoft.CodeAnalysis.FxCopAnalyzers/2.9.7": {
+        "dependencies": {
+          "Microsoft.CodeAnalysis.VersionCheckAnalyzer": "2.9.7",
+          "Microsoft.CodeQuality.Analyzers": "2.9.7",
+          "Microsoft.NetCore.Analyzers": "2.9.7",
+          "Microsoft.NetFramework.Analyzers": "2.9.7"
+        }
+      },
+      "Microsoft.CodeAnalysis.VersionCheckAnalyzer/2.9.7": {},
+      "Microsoft.CodeQuality.Analyzers/2.9.7": {},
       "Microsoft.EntityFrameworkCore/2.2.4": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Abstractions": "2.2.4",
@@ -255,6 +323,19 @@
       "Microsoft.EntityFrameworkCore.Tools/2.2.4": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Design": "2.2.4"
+        }
+      },
+      "Microsoft.NetCore.Analyzers/2.9.7": {},
+      "Microsoft.NetFramework.Analyzers/2.9.7": {},
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.20105.407"
+          }
+        },
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
         }
       },
       "Microsoft.Win32.Primitives/4.3.0": {
@@ -3783,6 +3864,27 @@
       "path": "mailkit/2.2.0",
       "hashPath": "mailkit.2.2.0.nupkg.sha512"
     },
+    "Microsoft.AspNet.Mvc/5.2.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-m3hUsn48k6Qb5El9A8naTwGTLCdSQKGSpGweqIfiVKltGJzAJJxuXvhhaQQtLCGg3i5V88iGjz0JG72/tlFKlg==",
+      "path": "microsoft.aspnet.mvc/5.2.7",
+      "hashPath": "microsoft.aspnet.mvc.5.2.7.nupkg.sha512"
+    },
+    "Microsoft.AspNet.Razor/3.2.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BpWEZ+Ys7g9VAkbAfpG5jr5A1fKcmadCCXv3fYfps5YfTVABJIGV4uc9yvmXKxsNsjL+BzDld2gs+xtgT2gg1g==",
+      "path": "microsoft.aspnet.razor/3.2.7",
+      "hashPath": "microsoft.aspnet.razor.3.2.7.nupkg.sha512"
+    },
+    "Microsoft.AspNet.WebPages/3.2.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2jwZFB7PvY+tbdz0ZP4iEo7gMrJxkCQUzoGLh6swUc6ZXl6DoKyDslmGcC/j9PFmJXCRMVIqtRorlPSMU2DuRA==",
+      "path": "microsoft.aspnet.webpages/3.2.7",
+      "hashPath": "microsoft.aspnet.webpages.3.2.7.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Mvc.WebApiCompatShim/2.2.0": {
       "type": "package",
       "serviceable": true,
@@ -3796,6 +3898,27 @@
       "sha512": "sha512-hTiYkTGgHJerrmejw2IAFW1X5W26VCF2+Y+gSQ4hZLWhZkq4Yw3zkH8H6Qq8VN9V8DpM0dQMpphD9Y3DkErjVA==",
       "path": "microsoft.aspnetcore.server.iis/2.2.2",
       "hashPath": "microsoft.aspnetcore.server.iis.2.2.2.nupkg.sha512"
+    },
+    "Microsoft.CodeAnalysis.FxCopAnalyzers/2.9.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/WbA9NXJmd7LW4ERe1v9YVRlpp0nnEMV5ne0ydnKT3/RMLzTt9AZjghuL6u3eSclyhcSI/mW/B4uPv2cAr4PXg==",
+      "path": "microsoft.codeanalysis.fxcopanalyzers/2.9.7",
+      "hashPath": "microsoft.codeanalysis.fxcopanalyzers.2.9.7.nupkg.sha512"
+    },
+    "Microsoft.CodeAnalysis.VersionCheckAnalyzer/2.9.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ePzHjOnn2EJCYubovr+lVPfkOx7yXjF9pNzE2TSZgAAC4zE4fNAL2HU/f+AoJWP0oQH1hohkApwfZPS+I82ynQ==",
+      "path": "microsoft.codeanalysis.versioncheckanalyzer/2.9.7",
+      "hashPath": "microsoft.codeanalysis.versioncheckanalyzer.2.9.7.nupkg.sha512"
+    },
+    "Microsoft.CodeQuality.Analyzers/2.9.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gl+jYeGvFxET/FUL/gNMKMxb3/p3NKUofBpGS+wYna8Jphbm2Tx6DDZaqPcpcNpabZKzPAvezzmtW7EILTbZtA==",
+      "path": "microsoft.codequality.analyzers/2.9.7",
+      "hashPath": "microsoft.codequality.analyzers.2.9.7.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore/2.2.4": {
       "type": "package",
@@ -3852,6 +3975,27 @@
       "sha512": "sha512-9n1Mv6FrFmlVkkXVkO7U71GG42CfRjlKV0bca++UYjsmmtVVds4PhUjgVrHCh3ZTRI4jqBc5Y7trUvwdwXisPw==",
       "path": "microsoft.entityframeworkcore.tools/2.2.4",
       "hashPath": "microsoft.entityframeworkcore.tools.2.2.4.nupkg.sha512"
+    },
+    "Microsoft.NetCore.Analyzers/2.9.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NYQOi5n+36rVuh+Yh6UabkzH5lNaji+OIArnzbY1jUp+u2CL9A7DatJGrh7u/VOZJICVFR3UgVKobm0CLbIcRg==",
+      "path": "microsoft.netcore.analyzers/2.9.7",
+      "hashPath": "microsoft.netcore.analyzers.2.9.7.nupkg.sha512"
+    },
+    "Microsoft.NetFramework.Analyzers/2.9.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sC+Vt/m60axfe0jr8K3iXMXSwNhCp8jMJyn8gRMo9HDg2Nr7PpVGcNxqIt1rRbRiE6Lwqp8lo8AlFekHxvUCOg==",
+      "path": "microsoft.netframework.analyzers/2.9.7",
+      "hashPath": "microsoft.netframework.analyzers.2.9.7.nupkg.sha512"
+    },
+    "Microsoft.Web.Infrastructure/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FNmvLn5m2LTU/Rs2KWVo0SIIh9Ek+U0ojex7xeDaSHw/zgEP77A8vY5cVWgUtBGS8MJfDGNn8rpXJWEIQaPwTg==",
+      "path": "microsoft.web.infrastructure/1.0.0",
+      "hashPath": "microsoft.web.infrastructure.1.0.0.nupkg.sha512"
     },
     "Microsoft.Win32.Primitives/4.3.0": {
       "type": "package",

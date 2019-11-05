@@ -70,7 +70,7 @@ namespace ISSSC.Controllers
                 ViewBag.RenderAttendance = personalTimetable.RenderAttendance(Db, userId);
             }
 
-            string text = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.INDEX_HTML)).Single().ParamValue;
+            string text = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.INDEXHTML, StringComparison.OrdinalIgnoreCase)).Single().ParamValue;
             ViewBag.TextIndex = WebUtility.HtmlDecode(text);
             ViewBag.PublicTimeTable = timeTableRenderer.RenderPublic(Db);
             ViewBag.PersonalTimeTable = personalTimetable.RenderEvents(Db, userId);
@@ -94,10 +94,10 @@ namespace ISSSC.Controllers
         {
             StringBuilder builder = new StringBuilder();
             builder.Append("https://maps.googleapis.com/maps/api/js?key=");
-            builder.Append(Db.SscisParam.Where(p => p.ParamKey.Equals("MAP_TOKEN")).Single().ParamValue);
+            builder.Append(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.MAPTOKEN, StringComparison.OrdinalIgnoreCase)).Single().ParamValue);
             builder.Append("&callback=myMap");
 
-            string text = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.KONTAKT_HTML)).Single().ParamValue;
+            string text = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.KONTAKTHTML, StringComparison.OrdinalIgnoreCase)).Single().ParamValue;
             ViewBag.Text = WebUtility.HtmlDecode(text);
             ViewBag.MapToken = builder.ToString();
             ViewBag.Title = "Contact";
@@ -121,7 +121,7 @@ namespace ISSSC.Controllers
                 userId = (int)HttpContext.Session.GetInt32("userId"); ;
             }
 
-            string text = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.POTREBUJI_POMOC_HTML)).Single().ParamValue;
+            string text = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.POTREBUJIPOMOCHTML, StringComparison.OrdinalIgnoreCase)).Single().ParamValue;
             ViewBag.TextHelpMe = WebUtility.HtmlDecode(text);
 
             ViewBag.Title = "Potřebuji pomoc";
@@ -142,15 +142,18 @@ namespace ISSSC.Controllers
         [SSCISAuthorize(AccessLevels =new[] { AuthorizationRoles.User, AuthorizationRoles.Tutor })]
         public ActionResult HelpMe(MetaEvent model)
         {
-            model.Event = new Event();
+            if(model != null)
+            {
+                model.Event = new Event();
+            
             if (ModelState.IsValid)
             {
                 int userId = (int)HttpContext.Session.GetInt32("userId");
 
                 model.Event.TimeFrom = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour, model.TimeFrom.Minute, 0);
-                if (!BoolParser.Parse(Db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.EXTRA_EVENT_LENGTH)).ParamValue))
+                if (!BoolParser.Parse(Db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.EXTRAEVENTLENGTH, StringComparison.OrdinalIgnoreCase)).ParamValue))
                 {
-                    int hour = Convert.ToInt32(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.EXTRA_EVENT_LENGTH)).Single().ParamValue);
+                    int hour = Convert.ToInt32(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.EXTRAEVENTLENGTH, StringComparison.OrdinalIgnoreCase)).Single().ParamValue);
                     model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour + hour, model.TimeFrom.Minute, 0);
                 }
                 else
@@ -176,7 +179,7 @@ namespace ISSSC.Controllers
                 EmailMessage emailMessage = new EmailMessage();
 
                 EmailAddress emailFrom = new EmailAddress();
-                emailFrom.Address = "studentsuportcentre@gmail.com";
+                emailFrom.Address = "studentsuportcentre@kiv.zcu.cz";
                 emailFrom.Name = "Student Suport Centre";
 
                 List<EmailAddress> listFrom = new List<EmailAddress>();
@@ -206,10 +209,14 @@ namespace ISSSC.Controllers
                 emailMessage.Subject = "Žádost o extra lekci " + subjectCode + " v Student Support Centru";
                 emailMessage.Content = "Evidujeme novou žádost o extra lekci z předmětu, který můžeš vyučovat.\n"+
                     "Studen si přeje pomoci s: " + comment + "\n"+
-                    "Pokud chceš lekci z " + subjectCode + " přijmout, klikni na následující link: " + SSCHttpContext.AppBaseUrl +"/ExtraLesson/Accept?id=" + newId;
+                    "Pokud chceš lekci z " + subjectCode + " přijmout, klikni na následující link: " + SSCHttpContext.AppBaseUrl +"/ExtraLesson/Accept?id=" + newId +
+                    "\n\n" +
+                    "Na tento email neodpovídejte, je generován automaticky. Pro komunikaci použijte některý z kontaktů níže:\n" +
+                    "Libor Váša: lvasa@kiv.zcu.cz";
                 
                 _emailService.Send(emailMessage);
                 return RedirectToAction("HelpMe");
+            }
             }
             return RedirectToAction("HelpMe");
         }
@@ -247,23 +254,23 @@ namespace ISSSC.Controllers
         public ActionResult Login(string validationMessage = null, string redirectionUrl = null)
         {
             string redirectUrl = WebUtility.UrlDecode(redirectionUrl);
-            bool webauth = BoolParser.Parse(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEB_AUTH_ON)).Single().ParamValue);
+            bool webauth = BoolParser.Parse(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHON, StringComparison.OrdinalIgnoreCase)).Single().ParamValue);
             string testAuthParametr;
             //string redirectUrl = HttpContext.Request.Path.Value + HttpContext.Request.QueryString.Value;
 
-            //string testAuthParametr = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEB_AUTH_URL)).Single().ParamValue.ToString() + "?redirect=" + redirectUrl;
+            //string testAuthParametr = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHURL)).Single().ParamValue.ToString() + "?redirect=" + redirectUrl;
 
             if (webauth)
             {
 
-                //return Redirect(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEB_AUTH_URL)).Single().ParamValue);
+                //return Redirect(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHURL)).Single().ParamValue);
 
                 if (redirectionUrl != null)
                 {
-                    testAuthParametr = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEB_AUTH_URL)).Single().ParamValue.ToString() + "?redirect=" + redirectionUrl;
+                    testAuthParametr = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHURL)).Single().ParamValue.ToString() + "?redirect=" + redirectionUrl;
                 } else
                 {
-                    testAuthParametr = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEB_AUTH_URL)).Single().ParamValue.ToString();
+                    testAuthParametr = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHURL)).Single().ParamValue.ToString();
                 }
                 
 
@@ -287,7 +294,7 @@ namespace ISSSC.Controllers
         [HttpPost]
         public ActionResult Login(MetaLogin model)
         {
-            var count = Db.SscisUser.Count(usr => usr.Login.Equals(model.Login));
+            var count = Db.SscisUser.Count(usr => usr.Login.Equals(model.Login, StringComparison.OrdinalIgnoreCase));
             if (count == 1)
             {
                 new SSCISSessionManager().SessionStart(model.Login, HttpContext);
@@ -342,7 +349,7 @@ namespace ISSSC.Controllers
         [HttpGet]
         public ActionResult Version()
         {
-            string version = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.VERSION)).Single().ParamValue;
+            string version = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.VERSION, StringComparison.OrdinalIgnoreCase)).Single().ParamValue;
             return Content(version);
         }
     }

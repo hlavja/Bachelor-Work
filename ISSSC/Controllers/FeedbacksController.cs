@@ -208,7 +208,7 @@ namespace SSCIS.Controllers
                     statistics.MechLessons++;
                 }
 
-                int standartLessonLength = int.Parse(db.SscisParam.Where(p => p.ParamKey == SSCISParameters.STANDART_EVENT_LENGTH).Single().ParamValue);
+                int standartLessonLength = int.Parse(db.SscisParam.Where(p => p.ParamKey == SSCISParameters.STANDARTEVENTLENGTH).Single().ParamValue);
                 if(standartLessonLength == 0)
                 {
                     standartLessonLength = 2;
@@ -303,7 +303,7 @@ namespace SSCIS.Controllers
                                 storedTutor.MechLessons++;
                             }
 
-                            int standartLessonLength = int.Parse(db.SscisParam.Where(p => p.ParamKey == SSCISParameters.STANDART_EVENT_LENGTH).Single().ParamValue);
+                            int standartLessonLength = int.Parse(db.SscisParam.Where(p => p.ParamKey == SSCISParameters.STANDARTEVENTLENGTH).Single().ParamValue);
                             if (standartLessonLength == 0)
                             {
                                 standartLessonLength = 2;
@@ -377,7 +377,7 @@ namespace SSCIS.Controllers
                             storedTutor.MechLessons++;
                         }
 
-                        int standartLessonLength = int.Parse(db.SscisParam.Where(p => p.ParamKey == SSCISParameters.STANDART_EVENT_LENGTH).Single().ParamValue);
+                        int standartLessonLength = int.Parse(db.SscisParam.Where(p => p.ParamKey == SSCISParameters.STANDARTEVENTLENGTH).Single().ParamValue);
                         if (standartLessonLength == 0)
                         {
                             standartLessonLength = 2;

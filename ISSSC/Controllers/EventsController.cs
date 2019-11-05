@@ -116,14 +116,15 @@ namespace ISSSC.Controllers
             {
                 subjectsIds.Add(app.IdSubject);
             }
-            ViewBag.SubjectID = new SelectList(db.EnumSubject.Where(s => subjectsIds.Contains(s.Id)), "Id", "Code");
 
 
             if (db.SscisUser.Find(userId).IdRoleNavigation == db.EnumRole.Single(r => r.Role.Equals(SSCISResources.Resources.ADMIN)))
             {
+                ViewBag.SubjectID = new SelectList(db.EnumSubject.Where(s => s.IdParent == null && s.Lesson == false), "Id", "Code");
                 ViewBag.TutorID = new SelectList(db.SscisUser, "Id", "Login");
             } else
             {
+                ViewBag.SubjectID = new SelectList(db.EnumSubject.Where(s => subjectsIds.Contains(s.Id)), "Id", "Code");
                 ViewBag.TutorID = new SelectList(db.SscisUser.Where(t => t.Id == userId), "Id", "Login");
             }
             return View();
@@ -162,9 +163,9 @@ namespace ISSSC.Controllers
                     newEvent.TimeFrom = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour, model.TimeFrom.Minute, 0);
                     //model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeTo.Hour, model.TimeTo.Minute, 0);
 
-                    if (!BoolParser.Parse(db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.STANDART_EVENT_LENGTH)).ParamValue))
+                    if (!BoolParser.Parse(db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.STANDARTEVENTLENGTH)).ParamValue))
                     {
-                        int hour = Convert.ToInt32(db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.STANDART_EVENT_LENGTH)).Single().ParamValue);
+                        int hour = Convert.ToInt32(db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.STANDARTEVENTLENGTH)).Single().ParamValue);
                         newEvent.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour + hour, model.TimeFrom.Minute, 0);
                     }
                     else
