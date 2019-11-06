@@ -10,6 +10,7 @@ namespace ISSSC.Class
     /// </summary>
     public class SSCISSessionManager
     {
+        public const string ADMIN = "admin";
         public SscisContext db { get; set; }
         
         private readonly SessionHashGenerator hashgenerator = new SessionHashGenerator();
@@ -38,7 +39,7 @@ namespace ISSSC.Class
             session.IdUserNavigation = db.SscisUser.Single(u => u.Login.Equals(login));
             db.SaveChanges();
 
-            if (!BoolParser.Parse(db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHON)).ParamValue))
+            if (!BoolParser.Parse(db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHON)).ParamValue) || login.Equals(ADMIN))
             {
                 httpSession.Session.SetInt32("sessionId", (int) session.Id);
                 httpSession.Session.SetString("role", session.IdUserNavigation.IdRoleNavigation.Role);

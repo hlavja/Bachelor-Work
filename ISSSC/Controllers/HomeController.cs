@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Net;
 using System.Text;
+using System.Security.Cryptography;
 
 namespace ISSSC.Controllers
 {
@@ -208,7 +209,7 @@ namespace ISSSC.Controllers
                             
                 emailMessage.Subject = "Žádost o extra lekci " + subjectCode + " v Student Support Centru";
                 emailMessage.Content = "Evidujeme novou žádost o extra lekci z předmětu, který můžeš vyučovat.\n"+
-                    "Studen si přeje pomoci s: " + comment + "\n"+
+                    "Studen si přeje pomoci s: " + comment + "\n\n" +
                     "Pokud chceš lekci z " + subjectCode + " přijmout, klikni na následující link: " + SSCHttpContext.AppBaseUrl +"/ExtraLesson/Accept?id=" + newId +
                     "\n\n" +
                     "Na tento email neodpovídejte, je generován automaticky. Pro komunikaci použijte některý z kontaktů níže:\n" +
@@ -256,15 +257,10 @@ namespace ISSSC.Controllers
             string redirectUrl = WebUtility.UrlDecode(redirectionUrl);
             bool webauth = BoolParser.Parse(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHON, StringComparison.OrdinalIgnoreCase)).Single().ParamValue);
             string testAuthParametr;
-            //string redirectUrl = HttpContext.Request.Path.Value + HttpContext.Request.QueryString.Value;
-
-            //string testAuthParametr = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHURL)).Single().ParamValue.ToString() + "?redirect=" + redirectUrl;
 
             if (webauth)
             {
                 string webAuth = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHURL)).Single().ParamValue.ToString();
-
-                //return Redirect(Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.WEBAUTHURL)).Single().ParamValue);
 
                 if (redirectionUrl != null)
                 {
@@ -352,6 +348,97 @@ namespace ISSSC.Controllers
         {
             string version = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.VERSION, StringComparison.OrdinalIgnoreCase)).Single().ParamValue;
             return Content(version);
+        }
+
+
+        /// <summary>
+        /// Login UC
+        /// </summary>
+        /// <param name="validationMessage">validation message</param>
+        /// <returns>View with login form</returns>
+        [HttpGet]
+        [Route("AdminLogin")]
+        public ActionResult AdminLogin(string validationMessage = null, string redirectionUrl = null)
+        {
+            SscisParam pass = Db.SscisParam.SingleOrDefault(p => p.ParamKey.Equals(SSCISParameters.ADMINPASSWORD, StringComparison.OrdinalIgnoreCase));
+            if (pass == null)
+            {
+                //Create the salt value with a cryptographic PRNG
+                byte[] salt;
+                new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+                //Create the Rfc2898DeriveBytes and get the hash value:
+                var pbkdf2 = new Rfc2898DeriveBytes("admin", salt, 10000);
+                byte[] hash = pbkdf2.GetBytes(20);
+                //Combine the salt and password bytes for later use:
+                byte[] hashBytes = new byte[36];
+                Array.Copy(salt, 0, hashBytes, 0, 16);
+                Array.Copy(hash, 0, hashBytes, 16, 20);
+                //Save to DB
+                string savedPasswordHash = Convert.ToBase64String(hashBytes);
+                SscisParam password = new SscisParam();
+                password.Description = "Admin password!";
+                password.ParamKey = SSCISParameters.ADMINPASSWORD;
+                password.ParamValue = savedPasswordHash;
+                Db.SscisParam.Add(password);
+                Db.SaveChanges();
+            }
+
+            string redirectUrl = WebUtility.UrlDecode(redirectionUrl);
+            ViewBag.Title = "Login";
+            MetaLogin model = new MetaLogin
+            {
+                ValidationMessage = validationMessage,
+                RedirectionUrl = redirectionUrl
+            };
+            return View(model);
+        }
+
+        /// <summary>
+        /// Login process
+        /// </summary>
+        /// <param name="model">Data from login view</param>
+        /// <returns>Redirection</returns>
+        [HttpPost]
+        [Route("AdminLogin")]
+        public ActionResult AdminLogin(MetaLogin model)
+        {
+            string password = "";
+            /* Fetch the stored value */
+            string savedPasswordHash = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.ADMINPASSWORD, StringComparison.OrdinalIgnoreCase)).Single().ParamValue;
+            /* Extract the bytes */
+            byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
+            /* Get the salt */
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+            /* Compute the hash on the password the user entered */
+            if(model != null && !string.IsNullOrEmpty(model.Password))
+            {
+                password = model.Password;
+            }
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            
+            /* Compare the results */
+            for (int i = 0; i < 20; i++)
+            {
+                if (hashBytes[i + 16] != hash[i])
+                {
+                    return AdminLogin("Invalid login");
+                    throw new UnauthorizedAccessException();
+                }
+            }
+
+            var count = Db.SscisUser.Count(usr => usr.Login.Equals(model.Login, StringComparison.OrdinalIgnoreCase));
+            if (count == 1)
+            {
+                new SSCISSessionManager().SessionStart(model.Login, HttpContext);
+                if (model.RedirectionUrl != null)
+                {
+                    return Redirect(model.RedirectionUrl);
+                }
+                return RedirectToAction("Index");
+            }
+            return AdminLogin("Invalid login");
         }
     }
 }

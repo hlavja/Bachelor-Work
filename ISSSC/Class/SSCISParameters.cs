@@ -20,5 +20,6 @@ namespace ISSSC.Class
         public const string KONTAKTHTML = "KONTAKT_HTML_TEXT";
         public const string SMTP = "SMTP";
         public const string MAPTOKEN = "MAP_TOKEN";
+        public const string ADMINPASSWORD = "ADMIN_PASSWORD";
     }
 }
