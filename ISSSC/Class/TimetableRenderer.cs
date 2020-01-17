@@ -103,7 +103,14 @@ namespace ISSSC.Class
             DateTime start = _startOfWeek(now, DayOfWeek.Monday);
             DateTime end = start.AddDays(7);
 
-            DateTime endTime = now.AddDays(7);
+            int month = 1;
+            int dbMonth = Convert.ToInt32(db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.TIMETABLEMONTHRANGE)).Single().ParamValue);
+            if (dbMonth > month)
+            {
+                month = dbMonth;
+            }
+
+            DateTime endTime = now.AddMonths(month);
 
             List<Event> events = db.Event.Where(e => e.TimeFrom >= now && e.TimeFrom <= endTime && e.IsAccepted != null && e.IsAccepted.Value).OrderBy(e => e.TimeFrom).ToList();
             return Render(events, "public-timetable");
@@ -119,11 +126,7 @@ namespace ISSSC.Class
         public HtmlString RenderTutor(SscisContext db, int tutorId, int weeks = 0)
         {
             DateTime now = DateTime.Now;
-            now.AddDays(7 * weeks);
-            DateTime start = _startOfWeek(now, DayOfWeek.Monday);
-            DateTime end = start.AddDays(7);
-
-            List<Event> events = db.Event.Where(e => e.TimeFrom >= start /*&& e.TimeFrom <= end*/ && e.IdTutor == tutorId).OrderBy(e => e.TimeFrom).ToList();
+            List<Event> events = db.Event.Where(e => e.TimeFrom >= now /*&& e.TimeFrom <= end*/ && e.IdTutor == tutorId).OrderBy(e => e.TimeFrom).ToList();
             return Render(events, "tutor-timetable", true);
         }
 

@@ -2,79 +2,66 @@
 
 @{
     ViewBag.Title = SSCISResources.Resources.DELETE;
+    ViewBag.ActiveMenuItem = "menu-eventlist";
 }
 
-<h2>@SSCISResources.Resources.DELETE</h2>
+<div class="row content">
+    <div class="col-sm-2 sidenav">
+    </div>
+    <div class="col-sm-8 text-left">
+        <h2>@SSCISResources.Resources.DELETE</h2>
 
-<h3>@SSCISResources.Resources.EVENT_DELETE_CONFIRMATION</h3>
-<div>
-    <h4>@SSCISResources.Resources.EVENT</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @SSCISResources.Resources.TIME_FROM
-        </dt>
+        <h3>@SSCISResources.Resources.EVENT_DELETE_CONFIRMATION</h3>
+        <div>
+            <h4>@SSCISResources.Resources.EVENT</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @SSCISResources.Resources.TIME_FROM
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TimeFrom)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.TimeFrom)
+                </dd>
 
-        <dt>
-            @SSCISResources.Resources.TIME_TO
-        </dt>
+                <dt>
+                    @SSCISResources.Resources.TIME_TO
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TimeTo)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.TimeTo)
+                </dd>
 
-        <dt>
-            @SSCISResources.Resources.ACCEPTED
-        </dt>
+                <dt>
+                    @SSCISResources.Resources.SUBJECT
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsAccepted)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.IdSubjectNavigation.Code)
+                </dd>
 
-        <dt>
-            @SSCISResources.Resources.CANCELLED
-        </dt>
+                <dt>
+                    @SSCISResources.Resources.TUTOR
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsCancelled)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.IdTutorNavigation.Login)
+                </dd>
 
-        <dt>
-            @SSCISResources.Resources.CANCELLATION_COMMENT
-        </dt>
+            </dl>
 
-        <dd>
-            @Html.DisplayFor(model => model.CancelationComment)
-        </dd>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-        <dt>
-            @SSCISResources.Resources.SUBJECT
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdSubjectNavigation.Code)
-        </dd>
-
-        <dt>
-            @SSCISResources.Resources.TUTOR
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdTutorNavigation.Login)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="@SSCISResources.Resources.DELETE" class="btn btn-default" /> |
-            @Html.ActionLink(SSCISResources.Resources.BACK, "Index")
+                <div class="form-actions no-color">
+                    <input type="submit" value="@SSCISResources.Resources.DELETE" class="btn btn-default" /> |
+                    @Html.ActionLink(SSCISResources.Resources.BACK, "Index")
+                </div>
+            }
         </div>
-    }
+    </div>
+    <div class="col-sm-2 sidenav">
+
+    </div>
 </div>

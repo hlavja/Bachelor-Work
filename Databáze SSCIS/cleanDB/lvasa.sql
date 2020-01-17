@@ -181,7 +181,9 @@ INSERT INTO `sscis_param` (`ID`, `PARAM_KEY`, `PARAM_VALUE`, `DESCRIPTION`) VALU
 (13, 'POTREBUJI_POMOC_HTML_TEXT', '&lt;p&gt;             K dispozici budou pokažd&#233; dva tutoři (studenti vyšš&#237;ho ročn&#237;ku FAV) a jeden pedagog z katedry zaštiťuj&#237;c&#237; př&#237;slušnou oblast (podrobn&#253; rozpis). Diskutovat je možn&#233; jak&#225;koli t&#233;mata z n&#225;sleduj&#237;c&#237;ch předmětů:              &lt;ul&gt;                 &lt;li&gt;&lt;strong&gt;matematika&lt;/strong&gt; - KKMA/M1, KMA/M2, KMA/MA1, KMA/MA1, KMA/M1S, KMA/M2S, KMA/MA1E, KMA/M2E, KMA/ZM1, KMA/ZM2 (po dohodě tak&#233; KMA/LAA)&lt;/li&gt;                  &lt;li&gt;&lt;strong&gt;programov&#225;n&#237;&lt;/strong&gt; - KIV/PPA1, KIV/PPA2 a KIV/UPG&lt;/li&gt;                  &lt;li&gt;&lt;strong&gt;mechanika&lt;/strong&gt;&lt;/li&gt;             &lt;/ul&gt;              Pomoc/konzultace je poskytov&#225;na bezplatně, &#250;čast je interně evidov&#225;na pro potřeby support centra, evidence však nen&#237; poskytov&#225;na vyučuj&#237;c&#237;m předmětů a nem&#225; ž&#225;dn&#253; vliv na hodnocen&#237; v dan&#253;ch předmětech.         &lt;/p&gt;', 'Upravitelný text na stránce potřebuji pomoc ve střední části webu.'),
 (14, 'KONTAKT_HTML_TEXT', '&lt;p&gt;\r\n&lt;strong&gt;M&#225;te dotazy? Kontaktujte n&#225;s:&lt;/strong&gt;\r\n&lt;br /&gt;\r\n&lt;br /&gt;\r\nKMA: Světlana Tomiczkov&#225;, &lt;a href=&quot;mailto:svetlana@kma.zcu.cz&quot;&gt;svetlana@kma.zcu.cz&lt;/a&gt;\r\n&lt;br /&gt;\r\n&lt;br /&gt;\r\nKIV: Libor V&#225;ša, &lt;a href=&quot;mailto:lvasa@kiv.zcu.cz&quot;&gt;lvasa@kiv.zcu.cz&lt;/a&gt;\r\n&lt;/p&gt;', 'Upravitelný text na stránce kontakt.'),
 (15, 'SMTP', 'smtp.zcu.cz', 'SMTP server pro odesílání pošty'),
-(16, 'ADMIN_PASSWORD', 'XUJxA/FKFu6xvMaCVLcvdcvgf4w25CCWZ+D3wpovfXcP0LRG', 'Admin password!');
+(16, 'ADMIN_PASSWORD', 'XUJxA/FKFu6xvMaCVLcvdcvgf4w25CCWZ+D3wpovfXcP0LRG', 'Admin password!'),
+(17, 'TIMETABLE_MONTH_RANGE', '1', 'Doba na kterou se má vykreslovat rozvrh (v měsících).');
+
 
 -- --------------------------------------------------------
 

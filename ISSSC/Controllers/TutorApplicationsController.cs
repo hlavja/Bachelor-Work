@@ -25,6 +25,13 @@ namespace ISSSC.Controllers
         /// </summary>
         private SscisContext db = new SscisContext();
 
+        private readonly IEmailService _emailService;
+
+        public TutorApplicationsController(IEmailService emailService)
+        {
+            _emailService = emailService;
+        }
+
         /// <summary>
         /// Index UC - list of tutors applications
         /// </summary>
@@ -203,7 +210,32 @@ namespace ISSSC.Controllers
                 db.Approval.Add(app);
                 db.SaveChanges();
             }
-            
+
+            EmailMessage emailMessage = new EmailMessage();
+
+            EmailAddress emailFrom = new EmailAddress();
+            emailFrom.Address = "studentsuportcentre@kiv.zcu.cz";
+            emailFrom.Name = "Student Suport Centre";
+
+            EmailAddress emailTo = new EmailAddress();
+            emailTo.Address = tutorApplication.IdUserNavigation.Email;
+
+            List<EmailAddress> listFrom = new List<EmailAddress>();
+            listFrom.Add(emailFrom);
+
+            List<EmailAddress> listTo = new List<EmailAddress>();
+            listTo.Add(emailTo);
+
+            emailMessage.FromAddresses = listFrom;
+            emailMessage.ToAddresses = listTo;
+
+            emailMessage.Subject = "Byl jste přijat jako tutor do projektu Student Suport Centre!";
+            emailMessage.Content = "Byl jste přijat jako tutor do projektu Student Suport Centre! Nyní můžete vypisovat žádosti o hodiny do pravidelného rozvrhu hodin." +
+                "\n\n" +
+                "Na tento email neodpovídejte, je generován automaticky. Pro komunikaci použijte některý z kontaktů níže:\n" +
+                "Libor Váša: lvasa@kiv.zcu.cz";
+
+            _emailService.Send(emailMessage);
 
             return RedirectToAction("Index");
         }
@@ -230,6 +262,33 @@ namespace ISSSC.Controllers
             tutorApplication.IsAccepted = 0;
             tutorApplication.AcceptedBy = db.SscisUser.Find(HttpContext.Session.GetInt32("userId"));
             db.SaveChanges();
+
+            EmailMessage emailMessage = new EmailMessage();
+
+            EmailAddress emailFrom = new EmailAddress();
+            emailFrom.Address = "studentsuportcentre@kiv.zcu.cz";
+            emailFrom.Name = "Student Suport Centre";
+
+            EmailAddress emailTo = new EmailAddress();
+            emailTo.Address = tutorApplication.IdUserNavigation.Email;
+
+            List<EmailAddress> listFrom = new List<EmailAddress>();
+            listFrom.Add(emailFrom);
+
+            List<EmailAddress> listTo = new List<EmailAddress>();
+            listTo.Add(emailTo);
+
+            emailMessage.FromAddresses = listFrom;
+            emailMessage.ToAddresses = listTo;
+
+            emailMessage.Subject = "Vaše přihláška do projektu Student Suport Centre byla zamítnuta!";
+            emailMessage.Content = "Vaše přihláška do projektu Student Suport Centre byla zamítnuta!" +
+                "\n\n" +
+                "Na tento email neodpovídejte, je generován automaticky. Pro komunikaci použijte některý z kontaktů níže:\n" +
+                "Libor Váša: lvasa@kiv.zcu.cz";
+
+            _emailService.Send(emailMessage);
+
             return RedirectToAction("Index");
         }
 

@@ -17,7 +17,8 @@
             @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>SSCISUser</h4>
+        <hr />
+        <h4>@Html.Raw(Model.User.IdRoleNavigation.Role) - @Html.Raw(Model.User.Login) - <a href="@Html.Raw(Model.User.Email)">@Html.Raw(Model.User.Email)</a></h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.User.Id)

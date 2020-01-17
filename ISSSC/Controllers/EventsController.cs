@@ -24,6 +24,12 @@ namespace ISSSC.Controllers
         /// </summary>
         private SscisContext db = new SscisContext();
 
+        private readonly IEmailService _emailService;
+
+        public EventsController(IEmailService emailService)
+        {
+            _emailService = emailService;
+        }
         /// <summary>
         /// Timetable component renderer
         /// </summary>
@@ -38,8 +44,16 @@ namespace ISSSC.Controllers
         public ActionResult Index()
         {
             DateTime now = DateTime.Now;
-            var eventModel = db.Event.Where(e => e.TimeFrom > now /*&& e.IsExtraLesson == false*/).Include(@e => @e.IdSubjectNavigation).Include(@e => @e.IdTutorNavigation);
-            return View(eventModel.ToList());
+            int userId = (int)HttpContext.Session.GetInt32("userId");
+            if (HttpContext.Session.GetString("role").Equals(AuthorizationRoles.Administrator))
+            {
+                var eventModel = db.Event.Where(e => e.TimeFrom > now /*&& e.IsExtraLesson == false*/).Include(@e => @e.IdSubjectNavigation).Include(@e => @e.IdTutorNavigation);
+                return View(eventModel.ToList());
+            } else
+            {
+                var eventModel = db.Event.Where(e => e.TimeFrom > now && ((e.IsExtraLesson == false && e.IdTutor == userId) || (e.IsExtraLesson == true))).Include(@e => @e.IdSubjectNavigation).Include(@e => @e.IdTutorNavigation);
+                return View(eventModel.ToList());
+            }
         }
 
         #region Unused
@@ -117,6 +131,14 @@ namespace ISSSC.Controllers
                 subjectsIds.Add(app.IdSubject);
             }
 
+            if (!BoolParser.Parse(db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.STANDARTEVENTLENGTH)).ParamValue))
+            {
+                ViewBag.LessonLength = db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.STANDARTEVENTLENGTH)).ParamValue;
+            }
+            else
+            {
+                ViewBag.LessonLength = "2";
+            }
 
             if (db.SscisUser.Find(userId).IdRoleNavigation == db.EnumRole.Single(r => r.Role.Equals(SSCISResources.Resources.ADMIN)))
             {
@@ -185,7 +207,7 @@ namespace ISSSC.Controllers
                     db.Event.Add(newEvent);
                     db.SaveChanges();
                 }
-                return RedirectToAction("TutorEvents");
+                return RedirectToAction("TutorEvents", new { created = 1 });
             }
             return RedirectToAction("Create");
         }
@@ -210,6 +232,33 @@ namespace ISSSC.Controllers
             }
             @event.IsAccepted = true;
             db.SaveChanges();
+
+            //TODO poslat email studentovi, že byl přijat
+            EmailMessage emailMessage = new EmailMessage();
+
+            EmailAddress emailFrom = new EmailAddress();
+            emailFrom.Address = "studentsuportcentre@kiv.zcu.cz";
+            emailFrom.Name = "Student Suport Centre";
+
+            EmailAddress emailTo = new EmailAddress();
+            emailTo.Address = @event.IdTutorNavigation.Email;
+
+            List<EmailAddress> listFrom = new List<EmailAddress>();
+            listFrom.Add(emailFrom);
+
+            List<EmailAddress> listTo = new List<EmailAddress>();
+            listTo.Add(emailTo);
+
+            emailMessage.FromAddresses = listFrom;
+            emailMessage.ToAddresses = listTo;
+
+            emailMessage.Subject = "Vaše vypsaná lekce z "+ @event.IdSubjectNavigation.Code + "dne " + @event.TimeFrom + "byla schválena!";
+            emailMessage.Content = "Vaše vypsaná lekce z " + @event.IdSubjectNavigation.Code + "dne " + @event.TimeFrom + "byla schválena! Poznamenejte si tento datum a připravte se na výuku. :)" +
+                "\n\n" +
+                "Na tento email neodpovídejte, je generován automaticky. Pro komunikaci použijte některý z kontaktů níže:\n" +
+                "Libor Váša: lvasa@kiv.zcu.cz";
+
+            _emailService.Send(emailMessage);
             return RedirectToAction("Index");
         }
 
@@ -261,10 +310,14 @@ namespace ISSSC.Controllers
         [Route("MyEvents")]
         [HttpGet]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Tutor)]
-        public ActionResult TutorEvents()
+        public ActionResult TutorEvents(int created)
         {
             int userId = (int)HttpContext.Session.GetInt32("userId");
             ViewBag.TutorEventsTable = timetableRenderer.RenderTutor(db, userId);
+            if(created == 1)
+            {
+                ViewBag.EventCreated = "Lekce byla úspěšně vytvořena!";
+            }
             return View();
         }
 

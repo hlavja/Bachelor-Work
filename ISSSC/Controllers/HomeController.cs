@@ -25,6 +25,8 @@ namespace ISSSC.Controllers
         private TimetableRenderer timeTableRenderer = new TimetableRenderer();
         private PersonalTimetable personalTimetable = new PersonalTimetable();
 
+        private PasswordHash aa = new PasswordHash();
+
         private readonly IEmailService _emailService;
         public SscisContext Db { get; set; }
 
@@ -363,22 +365,10 @@ namespace ISSSC.Controllers
             SscisParam pass = Db.SscisParam.SingleOrDefault(p => p.ParamKey.Equals(SSCISParameters.ADMINPASSWORD, StringComparison.OrdinalIgnoreCase));
             if (pass == null)
             {
-                //Create the salt value with a cryptographic PRNG
-                byte[] salt;
-                new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
-                //Create the Rfc2898DeriveBytes and get the hash value:
-                var pbkdf2 = new Rfc2898DeriveBytes("admin", salt, 10000);
-                byte[] hash = pbkdf2.GetBytes(20);
-                //Combine the salt and password bytes for later use:
-                byte[] hashBytes = new byte[36];
-                Array.Copy(salt, 0, hashBytes, 0, 16);
-                Array.Copy(hash, 0, hashBytes, 16, 20);
-                //Save to DB
-                string savedPasswordHash = Convert.ToBase64String(hashBytes);
                 SscisParam password = new SscisParam();
                 password.Description = "Admin password!";
                 password.ParamKey = SSCISParameters.ADMINPASSWORD;
-                password.ParamValue = savedPasswordHash;
+                password.ParamValue = new PasswordHash().Encode("VasaAdmin"); ;
                 Db.SscisParam.Add(password);
                 Db.SaveChanges();
             }
@@ -402,43 +392,36 @@ namespace ISSSC.Controllers
         [Route("AdminLogin")]
         public ActionResult AdminLogin(MetaLogin model)
         {
-            string password = "";
+
             /* Fetch the stored value */
+            string password = "";
             string savedPasswordHash = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.ADMINPASSWORD, StringComparison.OrdinalIgnoreCase)).Single().ParamValue;
-            /* Extract the bytes */
-            byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
-            /* Get the salt */
-            byte[] salt = new byte[16];
-            Array.Copy(hashBytes, 0, salt, 0, 16);
-            /* Compute the hash on the password the user entered */
             if(model != null && !string.IsNullOrEmpty(model.Password))
             {
                 password = model.Password;
             }
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
-            byte[] hash = pbkdf2.GetBytes(20);
-            
-            /* Compare the results */
-            for (int i = 0; i < 20; i++)
-            {
-                if (hashBytes[i + 16] != hash[i])
-                {
-                    return AdminLogin("Invalid login");
-                    throw new UnauthorizedAccessException();
-                }
-            }
 
-            var count = Db.SscisUser.Count(usr => usr.Login.Equals(model.Login, StringComparison.OrdinalIgnoreCase));
-            if (count == 1)
+            bool match = new PasswordHash().Decode(savedPasswordHash, password);
+
+            if (match)
             {
-                new SSCISSessionManager().SessionStart(model.Login, HttpContext);
-                if (model.RedirectionUrl != null)
+                var count = Db.SscisUser.Count(usr => usr.Login.Equals(model.Login, StringComparison.OrdinalIgnoreCase));
+                if (count == 1)
                 {
-                    return Redirect(model.RedirectionUrl);
+                    new SSCISSessionManager().SessionStart(model.Login, HttpContext);
+                    if (model.RedirectionUrl != null)
+                    {
+                        return Redirect(model.RedirectionUrl);
+                    }
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction("Index");
+                return AdminLogin("Invalid login");
             }
-            return AdminLogin("Invalid login");
+            else
+            {
+                return AdminLogin("Invalid login");
+                throw new UnauthorizedAccessException();
+            }
         }
     }
 }

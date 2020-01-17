@@ -295,7 +295,7 @@ namespace SSCISResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Detail.
+        ///   Looks up a localized string similar to Detail |.
         /// </summary>
         public static string DETAIL {
             get {

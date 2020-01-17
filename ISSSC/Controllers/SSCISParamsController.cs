@@ -109,6 +109,10 @@ namespace ISSSC.Controllers
             {
                 sSCISParam.ParamValue = WebUtility.HtmlDecode(sSCISParam.ParamValue);
             }
+            if (sSCISParam.ParamKey.Contains("ADMIN_PASSWORD"))
+            {
+                sSCISParam.ParamValue = "";
+            }
             return View(sSCISParam);
         }
 
@@ -128,7 +132,12 @@ namespace ISSSC.Controllers
                 {
                     sSCISParam.ParamValue = WebUtility.HtmlEncode(sSCISParam.ParamValue);
                 }
-               
+
+                if (sSCISParam.ParamKey.Contains("ADMIN_PASSWORD"))
+                {
+                    sSCISParam.ParamValue = new PasswordHash().Encode(sSCISParam.ParamValue);
+                }
+
                 db.Entry(sSCISParam).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

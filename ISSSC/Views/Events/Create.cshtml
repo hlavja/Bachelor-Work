@@ -57,7 +57,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Recurrence, SSCISResources.Resources.RECURRENCE, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.TextBox("Recurrence", null, new { @class = "form-control" })
+                    @Html.TextBox("Recurrence", 1, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -65,6 +65,21 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="@SSCISResources.Resources.CREATE_EVENT" class="btn btn-default" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2"></label>
+                <div class="col-md-10">
+                    <h2>Legenda:</h2>
+                    <br />
+                        <p>
+                            <b>Počet opakování</b> - kolikrát se stejná lekce do systému vypíše s týdenním opakováním ve stejnou dobu<br />
+                            (Např: Počet opakování = 2, Datum vypsání = 1.1.2020  -> Lekce se mi vypíše dvakrát a to 1.1 a 8.1 ve stejný čas.)
+                        </p>
+                        <p>
+                            <b>Aktuální délka vypisované hodiny</b> - je nastavena na <b>@ViewBag.LessonLength h</b>
+                        </p>
                 </div>
             </div>
         </div>

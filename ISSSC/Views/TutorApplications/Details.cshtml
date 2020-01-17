@@ -32,6 +32,13 @@
                     <dd>
                         @Html.DisplayFor(model => model.Application.IdUserNavigation.Login)
                     </dd>
+                    <dt>
+                        Email
+                    </dt>
+
+                    <dd>
+                        <a href="@Html.Raw(Model.Application.IdUserNavigation.Email)">@Html.DisplayFor(model => model.Application.IdUserNavigation.Email)</a>
+                    </dd>
 
                 </dl>
 
@@ -59,7 +66,7 @@
                             <br />
                 }
                 <p>
-                    @Html.ActionLink(SSCISResources.Resources.ACCEPT, "Accept", new { id = Model.Application.Id }) |
+                    @Html.ActionLink(SSCISResources.Resources.ACCEPT, "Accept", new { id = Model.Application.Id }) 
                     @Html.ActionLink(SSCISResources.Resources.DECLINE, "Decline", new { id = Model.Application.Id }) |
                     @Html.ActionLink(SSCISResources.Resources.BACK, "Index")
                 </p>

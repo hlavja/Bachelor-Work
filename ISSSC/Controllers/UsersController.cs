@@ -34,6 +34,39 @@ namespace SSCIS.Controllers
         public ActionResult Index()
         {
             var sSCISUser = db.SscisUser.Include(s => s.IdRoleNavigation).Include(s => s.IsActivatedByNavigation);
+
+            //        subject, emails
+            Dictionary<string, string> tutorEmailsLists = new Dictionary<string, string>();
+            List<Approval> approvals = db.Approval.ToList();
+
+            foreach (Approval app in approvals)
+            {
+                string code = app.IdSubjectNavigation.Code;
+                string emails = null;
+                if (!tutorEmailsLists.TryGetValue(code, out emails))
+                {
+                    emails = "";
+                } else
+                {
+                    emails = tutorEmailsLists[code];
+                }
+                emails = emails + app.IdTutorNavigation.Email + ",";
+                tutorEmailsLists[code] = emails;
+            }
+
+            string tutorEmails = "";
+
+            foreach (var user in sSCISUser)
+            {
+                if (user.IdRoleNavigation.Role.Equals(SSCISResources.Resources.TUTOR))
+                {
+                    tutorEmails = tutorEmails + user.Email + ",";
+                }
+            }
+            tutorEmailsLists["TUTORS"] = tutorEmails;
+
+
+            ViewBag.TutorEmailsLists = tutorEmailsLists;
             return View(sSCISUser.ToList());
         }
 
