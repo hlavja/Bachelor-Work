@@ -73,6 +73,7 @@ namespace ISSSC.Controllers
             string username = Request.Headers[USERNAME_KEY];
             string firstName = Request.Headers[FIRST_NAME];
             string secondName = Request.Headers[SECOND_NAME];
+            string email = Request.Headers[EMAIL_KEY].ToString();
 
             //stránku na redirect posílat jako parametr a jako parametr se mi to vrátí
             //string redirectUrl = Request.Headers[redirect];
@@ -80,7 +81,6 @@ namespace ISSSC.Controllers
             var count = db.SscisUser.Count(usr => usr.Login.Equals(username, StringComparison.OrdinalIgnoreCase));
             if (count < 1)
             {
-                string email = Request.Headers[EMAIL_KEY].ToString();
                 SscisUser user = new SscisUser();
                 user.Created = DateTime.Now;
                 user.Activated = DateTime.Now;

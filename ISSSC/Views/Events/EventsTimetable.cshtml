@@ -1,0 +1,145 @@
+﻿@model ISSSC.Models.Meta.MetaTimetable
+@using ISSSC.Models;
+
+@{
+    ViewBag.Title = SSCISResources.Resources.EVENTS;
+    ViewBag.ActiveMenuItem = "menu-eventlist";
+}
+<style>
+    th:nth-child(1), td:nth-child(1) {
+        position: sticky;
+        left: 0px;
+        z-index: 0;
+    }
+
+    th:nth-child(2), td:nth-child(2) {
+        position: sticky;
+        left: 110px;
+        z-index: 0;
+        border: 1px;
+    }
+
+    tr:nth-child(odd) > th {
+        background-color: #FFFFFF;
+    }
+
+    tr:nth-child(even) > th {
+        background-color: #F9F9F9;
+    }
+
+    tr:nth-child(odd) > th {
+        background-color: #FFFFFF;
+    }
+
+</style>
+
+<div class="row content">
+    <div class="col-sm-1 sidenav">
+    </div>
+
+    <div class="col-sm-12 text-left">
+        <div class="table-responsive" id="timetableForm">
+            <table class="table table-striped table-bordered table-sm table-responsive">
+                <thead>
+                    <tr>
+                        <th class="first-col" scope="col">
+
+                        </th>
+                        <th class="table-bordered"></th>
+                        @foreach (DateTime dt in Model.dateTimes)
+                        {
+                            <th scope="col">
+                                @dt.Date.ToString("dd/MM/yyyy")
+                                <br />
+                                @dt.TimeOfDay
+                            </th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (SscisUser user in Model.tutors)
+                    {
+                        List<Event> ev = new List<Event>();
+                        Model.attendance.TryGetValue(user, out ev);
+                        <tr>
+                            <th class="first-col" scope="row">
+                                @user.Firstname
+                                <br />
+                                @user.Lastname
+                            </th>
+                            <th></th>
+                            @foreach (Event eve in ev)
+                            {
+                                if (eve == null)
+                                {
+                                    <td id="@user.Lastname" class="empty">
+                                    </td>
+
+                                }
+                                else if (eve.IsAccepted == true)
+                                {
+                                    <td id="@user.Lastname" class="accepted">
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td id="@user.Lastname" class="pending" onclick="(toggleSelected(this, @eve.Id))">
+                                    </td>
+                                }
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <form id="timetableForm" name="timetableForm" action="/Events/EventsTimetable" method="Post">
+            <input type="hidden" value="" id="selectedPendings" name="selectedPendings" />
+            <button type="submit" class="btn btn-default">SEND</button>
+        </form>
+    </div>
+
+
+    <div class="col-sm-1 sidenav">
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+
+    function calculate() {
+            $("#timetableForm table tbody").find("tr").each(function(rowIndex, rowElement) {
+                $(rowElement).filter(function(index, element) {
+                    var accepted = $(element).find("td.accepted").length;
+                    var pending = $(element).find("td.pending").length;
+                    var selected = $(element).find("td.pending-selected").length;
+                    var total = accepted + selected;
+                    //$("th", element).html(' accepted ' + accepted + ' pending ' + pending + ' selected ' + selected);
+                    $("th:nth-child(2)", element).html(' Hodin: ' + total);
+                });
+            });
+    }
+
+    calculate();
+
+    $("#timetableForm").submit(function(event) {
+            $("#selectedPendings").val(selected);
+            //event.preventDefault();
+            //console.log(event);
+    });
+
+    var selected = [];
+        function toggleSelected(element, item) {
+            $(element).toggleClass("pending");
+            $(element).toggleClass("pending-selected");
+            calculate();
+            if (selected.includes(item)) {
+                selected = selected.filter(function(itemInSelected) {
+                    return itemInSelected !== item;
+                })
+            } else {
+                selected.push(item);
+            }
+            console.log(selected);
+    }
+</script>

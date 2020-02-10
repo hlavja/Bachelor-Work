@@ -303,6 +303,75 @@ namespace ISSSC.Controllers
             return RedirectToAction("Index");
         }
 
+
+        [HttpGet]
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
+        public ActionResult EventsTimetable( )
+        {
+            DateTime now = DateTime.Now;
+
+            //List<DateTime> ahoj = db.Event.Where(p => p.TimeFrom > now.AddDays(-20) && p.TimeTo < now && p.IsExtraLesson == false).Select(e => e.TimeFrom).Distinct().ToList();
+
+            MetaTimetable metaTimetable = new MetaTimetable();
+            metaTimetable.dateTimes = db.Event.Where(p => p.TimeFrom > now.AddDays(-90) && p.TimeTo < now && p.IsExtraLesson == false && p.IsCancelled == false).Select(e => e.TimeFrom).Distinct().OrderBy(e =>e.Date).ToList();
+            metaTimetable.tutors = db.SscisUser.Where(t => t.IdRoleNavigation.Role.Equals(SSCISResources.Resources.TUTOR)).ToList();
+
+            Dictionary<SscisUser, List<Event>> events = new Dictionary<SscisUser, List<Event>>();
+            foreach (SscisUser user in metaTimetable.tutors)
+            {
+                List<Event> ev = new List<Event>();
+                foreach (DateTime dateTime in metaTimetable.dateTimes)
+                {
+                    Event response = db.Event.Where(e => e.IdTutor == user.Id && e.TimeFrom == dateTime).FirstOrDefault();
+                    if ( response != null)
+                    {
+                        ev.Add(response);
+                    }
+                    else
+                    {
+                        ev.Add(null);
+                    }
+                }
+                events.Add(user, ev);
+            }
+            metaTimetable.attendance = events;
+
+            return View(metaTimetable);
+        }
+
+
+        public List<DateTime> GetDateTimes(DateTime from, DateTime to)
+        {
+            return db.Event.Where(p => p.TimeFrom > from && p.TimeTo < to).Select(e => e.TimeFrom).Distinct().ToList();
+        }
+
+        /// <summary>
+        /// Acceptation of created event
+        /// </summary>
+        /// <param name="selectedPendings">Selected event IDs</param>
+        /// <returns>Redirection to timetable</returns>
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
+        [HttpPost]
+        public ActionResult EventsTimetable(string selectedPendings)
+        { 
+            if(selectedPendings != null)
+            {
+                int[] eventsIds = Array.ConvertAll(selectedPendings.Split(','), int.Parse);
+                for (int i = 0; i < eventsIds.Length; i++)
+                {
+                    Event eve = db.Event.Find(eventsIds[i]);
+                    if (eve == null)
+                    {
+                        return NotFound();
+                    }
+                    eve.IsAccepted = true;
+                    db.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("EventsTimetable");
+        }
+
         /// <summary>
         /// Shows tutors events
         /// </summary>

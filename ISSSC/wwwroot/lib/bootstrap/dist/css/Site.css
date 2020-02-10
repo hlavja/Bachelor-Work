@@ -1,6 +1,10 @@
 ﻿/* Remove the navbar's default margin-bottom and rounded borders */
 
 
+.pending-selected {
+    background: repeating-linear-gradient( 45deg, #bf8315, #bf8315 5px, #FFA500 5px, #FFA500 10px );
+}
+
 .navbar {
     margin-bottom: 0;
     border-radius: 0;
@@ -93,6 +97,19 @@
     min-height: 70px;
     min-width: 120px;
 }
+
+td.accepted {
+    background-color: green;
+}
+
+td.pending {
+    background-color: orange;
+}
+
+td.empty {
+    background-color: red;
+}
+
 
 
 /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
