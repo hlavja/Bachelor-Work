@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = SSCISResources.Resources.EVENTS;
     ViewBag.ActiveMenuItem = "menu-eventlist";
+    int ahoj = 0;
 }
 <style>
     th:nth-child(1), td:nth-child(1) {
@@ -38,14 +39,23 @@
     </div>
 
     <div class="col-sm-12 text-left">
+        <form id="monthPicker" name="monthPicker" action="/Events/GetTimetable" method="Post">
+            <div class="form-group row">
+                <div class="col-md-5">
+                    <div class="checkbox">
+                        @Html.DropDownList("Months", null, htmlAttributes: new { @class = "form-control month", onchange = "this.form.submit();" })
+                    </div>
+                </div>
+            </div>
+        </form>
         <div class="table-responsive" id="timetableForm">
-            <table class="table table-striped table-bordered table-sm table-responsive">
-                <thead>
-                    <tr>
-                        <th class="first-col" scope="col">
+            <table class="table table-striped table-bordered table-sm table-responsive" id="tablicka" style="width:auto">
+                <thead style="width:auto">
+                    <tr style="width:auto">
+                        <th class="first-col col-md-1" scope="col">
 
                         </th>
-                        <th class="table-bordered"></th>
+                        <th class="table-bordered col-md-1"></th>
                         @foreach (DateTime dt in Model.dateTimes)
                         {
                             <th scope="col">
@@ -61,13 +71,14 @@
                     {
                         List<Event> ev = new List<Event>();
                         Model.attendance.TryGetValue(user, out ev);
+                        ahoj = ev.Count();
                         <tr>
                             <th class="first-col" scope="row">
                                 @user.Firstname
                                 <br />
                                 @user.Lastname
                             </th>
-                            <th></th>
+                            <th class="hours"></th>
                             @foreach (Event eve in ev)
                             {
                                 if (eve == null)
@@ -89,15 +100,35 @@
                             }
                         </tr>
                     }
-                </tbody>
+                    <tr id="bottom">
+                        <th></th>
+                        <th></th>
+                        @for (int i = 0; i < ahoj; i++)
+                        {
+                            <td class="days">
+
+                            </td>
+                        }
+
+                    </tr>
+                    </tbody>
             </table>
         </div>
-
-        <form id="timetableForm" name="timetableForm" action="/Events/EventsTimetable" method="Post">
-            <input type="hidden" value="" id="selectedPendings" name="selectedPendings" />
-            <button type="submit" class="btn btn-default">SEND</button>
-        </form>
-    </div>
+        <div class="row">
+            <div class="col-md-1">
+                <form id="timetableSubmit" name="timetableSubmit" action="/Events/EventsTimetable" method="Post">
+                    <input type="hidden" value="" id="selectedPendings" name="selectedPendings" />
+                    <button type="submit" class="btn btn-default">SEND</button>
+                </form>
+            </div>
+            <div class="col-md-1">
+                <form id="csvSubmit" name="csvSubmit" action="/Events/CsvTimetableDownload" method="Post">
+                    <input type="hidden" value="@ViewBag.SelectedMonth" id="month" name="month" />
+                    <button type="submit" class="btn btn-default">DOWNLOAD CSV</button>
+                </form>
+            </div>
+        </div>
+     </div>
 
 
     <div class="col-sm-1 sidenav">
@@ -107,32 +138,52 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
 
-    function calculate() {
+    function calculateRow() {
             $("#timetableForm table tbody").find("tr").each(function(rowIndex, rowElement) {
                 $(rowElement).filter(function(index, element) {
                     var accepted = $(element).find("td.accepted").length;
-                    var pending = $(element).find("td.pending").length;
                     var selected = $(element).find("td.pending-selected").length;
                     var total = accepted + selected;
-                    //$("th", element).html(' accepted ' + accepted + ' pending ' + pending + ' selected ' + selected);
-                    $("th:nth-child(2)", element).html(' Hodin: ' + total);
+                    $("th.hours", element).html(' Hodin: ' + total);
                 });
             });
     }
 
-    calculate();
+    function calculateColumn() {
+        table = document.getElementById("tablicka");
+        tr = table.getElementsByTagName("tr");
+        thBottom = document.getElementById("bottom");
+        trBottom = thBottom.getElementsByTagName("td");
 
-    $("#timetableForm").submit(function(event) {
+        for (a = 0; a < trBottom.length; a++) {
+            var accepted = 0, selected = 0, total = 0;
+            for (i = 3; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td");
+                if ($(td[a]).hasClass("accepted")) {
+                    accepted = accepted + 1;
+                }
+                if ($(td[a]).hasClass("pending-selected")) {
+                    selected = selected + 1;
+                }
+            }
+            total = accepted + selected;
+            trBottom[a].textContent = total;
+        }
+    }
+
+    calculateColumn();
+    calculateRow();
+
+    $("#timetableSubmit").submit(function(event) {
             $("#selectedPendings").val(selected);
-            //event.preventDefault();
-            //console.log(event);
     });
 
     var selected = [];
         function toggleSelected(element, item) {
             $(element).toggleClass("pending");
             $(element).toggleClass("pending-selected");
-            calculate();
+            calculateRow();
+            calculateColumn();
             if (selected.includes(item)) {
                 selected = selected.filter(function(itemInSelected) {
                     return itemInSelected !== item;

@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Net;
+using System.Text;
 
 namespace ISSSC.Controllers
 {
@@ -306,14 +307,21 @@ namespace ISSSC.Controllers
 
         [HttpGet]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
-        public ActionResult EventsTimetable( )
+        public ActionResult EventsTimetable(int? month = null)
         {
+            if(month == null)
+            {
+                month = DateTime.Now.Month;
+            }
+
             DateTime now = DateTime.Now;
+            DateTime start = new DateTime(now.Year, (int)month, 1);
+            DateTime end = start.AddMonths(1).AddDays(-1);
 
             //List<DateTime> ahoj = db.Event.Where(p => p.TimeFrom > now.AddDays(-20) && p.TimeTo < now && p.IsExtraLesson == false).Select(e => e.TimeFrom).Distinct().ToList();
 
             MetaTimetable metaTimetable = new MetaTimetable();
-            metaTimetable.dateTimes = db.Event.Where(p => p.TimeFrom > now.AddDays(-90) && p.TimeTo < now && p.IsExtraLesson == false && p.IsCancelled == false).Select(e => e.TimeFrom).Distinct().OrderBy(e =>e.Date).ToList();
+            metaTimetable.dateTimes = db.Event.Where(p => p.TimeFrom > start && p.TimeTo < end && p.IsExtraLesson == false && p.IsCancelled == false).Select(e => e.TimeFrom).Distinct().OrderBy(e =>e.Date).ToList();
             metaTimetable.tutors = db.SscisUser.Where(t => t.IdRoleNavigation.Role.Equals(SSCISResources.Resources.TUTOR)).ToList();
 
             Dictionary<SscisUser, List<Event>> events = new Dictionary<SscisUser, List<Event>>();
@@ -335,14 +343,76 @@ namespace ISSSC.Controllers
                 events.Add(user, ev);
             }
             metaTimetable.attendance = events;
-
+            ViewBag.Months = new SelectList(TimetableMonths.Months, GetMontName((int)month));
+            ViewBag.SelectedMonth = month;
             return View(metaTimetable);
         }
 
 
-        public List<DateTime> GetDateTimes(DateTime from, DateTime to)
+        public static String GetMontName(int month)
         {
-            return db.Event.Where(p => p.TimeFrom > from && p.TimeTo < to).Select(e => e.TimeFrom).Distinct().ToList();
+            switch (month)
+            {
+                case 1:
+                    return "Leden";
+                case 2:
+                    return "Únor";
+                case 3:
+                    return "Březen";
+                case 4:
+                    return "Duben";
+                case 5:
+                    return "Květen";
+                case 6:
+                    return "Červen";
+                case 7:
+                    return "Červenec";
+                case 8:
+                    return "Srpen";
+                case 9:
+                    return "Září";
+                case 10:
+                    return "Říjen";
+                case 11:
+                    return "Listopad";
+                case 12:
+                    return "Prosinec";
+                default:
+                    return "Leden";
+            }
+        }
+
+        public static int GetMontId (string month)
+        {
+            switch (month)
+            {
+                case "Leden":
+                    return 1;
+                case "Únor":
+                    return 2;
+                case "Březen":
+                    return 3;
+                case "Duben":
+                    return 4;
+                case "Květen":
+                    return 5;
+                case "Červen":
+                    return 6;
+                case "Červenec":
+                    return 7;
+                case "Srpen":
+                    return 8;
+                case "Září":
+                    return 9;
+                case "Říjen":
+                    return 10;
+                case "Listopad":
+                    return 11;
+                case "Prosinec":
+                    return 12;
+                default:
+                    return 1;
+            }
         }
 
         /// <summary>
@@ -370,6 +440,70 @@ namespace ISSSC.Controllers
             }
 
             return RedirectToAction("EventsTimetable");
+        }
+
+        /// <summary>
+        /// Return csv file with feedbacks
+        /// </summary>
+        /// <param name="model">Filter model</param>
+        /// <returns>CSV file</returns>
+        [HttpPost]
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
+        public IActionResult CsvTimetableDownload(int month)
+        {
+            DateTime now = DateTime.Now;
+            DateTime start = new DateTime(now.Year, month, 1);
+            DateTime end = start.AddMonths(1).AddDays(-1);
+            
+            List<DateTime> dateTimes= db.Event.Where(p => p.TimeFrom > start && p.TimeTo < end && p.IsExtraLesson == false && p.IsCancelled == false).Select(e => e.TimeFrom).Distinct().OrderBy(e => e.Date).ToList();
+            List<SscisUser> tutors = db.SscisUser.Where(t => t.IdRoleNavigation.Role.Equals(SSCISResources.Resources.TUTOR)).ToList();
+
+            string csv = generateCsv(dateTimes, tutors);
+            string filename = "tutorTimetable.csv";
+            return File(new UTF8Encoding().GetBytes(csv), "text/csv", filename);
+        }
+
+        public string generateCsv(List<DateTime> dateTimes, List<SscisUser> tutors)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("Tutor atd");
+            builder.Append("\n");
+            builder.Append(" ;");
+            foreach (DateTime dateTime in dateTimes)
+            {
+                builder.Append(dateTime + ";");
+            }
+            builder.Append("Součet");
+            builder.Append("\n");
+            
+            foreach (SscisUser user in tutors)
+            {
+                builder.Append(user.Firstname + " " + user.Lastname + ";");
+                List<Event> ev = new List<Event>();
+                int count = 0;
+                foreach (DateTime dateTime in dateTimes)
+                {
+                    Event response = db.Event.Where(e => e.IdTutor == user.Id && e.TimeFrom == dateTime && e.IsAccepted == true).FirstOrDefault();
+                    if (response != null)
+                    {
+                        builder.Append("X;");
+                        count++;
+                    }
+                    else
+                    {
+                        builder.Append("-;");
+                    }
+                }
+                builder.Append(count + " \n");
+            }
+            return builder.ToString();
+        }
+
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
+        [HttpPost]
+        public ActionResult GetTimetable(string Months)
+        {
+            return RedirectToAction("EventsTimetable", new { month = GetMontId(Months) });
         }
 
         /// <summary>

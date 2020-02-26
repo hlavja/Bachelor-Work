@@ -18,6 +18,13 @@
             <p>
                 @Html.ActionLink(SSCISResources.Resources.CREATE_EVENT, "Create")
             </p>
+            @{if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Administrator))
+                {
+                    <p>
+                        @Html.ActionLink("Grafický rozvrh", "EventsTimetable")
+                    </p>
+                }
+            }
             <table class="table">
                 <tr>
                     <th class="col-md-2">
@@ -38,7 +45,7 @@
                     <th>
                         @SSCISResources.Resources.SUBJECT
                     </th>
-                    <th >
+                    <th>
                         @SSCISResources.Resources.TUTOR
                     </th>
                     <th class="col-md-2"></th>
@@ -46,7 +53,7 @@
 
                 @foreach (var item in Model)
                 {
-                    if ((item.IdTutorNavigation != null && ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Administrator)) ||item.IdTutor == ViewContext.HttpContext.Session.GetInt32("userId"))
+                    if ((item.IdTutorNavigation != null && ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals(ISSSC.Class.AuthorizationRoles.Administrator)) || item.IdTutor == ViewContext.HttpContext.Session.GetInt32("userId"))
                     {
                         <tr>
                             <td>
@@ -98,7 +105,7 @@
 
             </table>
 
-   
+
             <h2>Žádosti o extra lekce</h2>
 
             <table class="table">
@@ -156,7 +163,7 @@
                             <td>
                                 @if (ViewContext.HttpContext.Session.GetInt32("userId") != item.IdApplicant)
                                 {
-                                <p>@Html.ActionLink(SSCISResources.Resources.ACCEPT_LESSON, "AcceptLesson", new { id = item.Id })</p>
+                                    <p>@Html.ActionLink(SSCISResources.Resources.ACCEPT_LESSON, "AcceptLesson", new { id = item.Id })</p>
                                 }
                             </td>
                         </tr>

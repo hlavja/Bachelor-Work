@@ -8,7 +8,6 @@ namespace ISSSC.Models.Meta
 {
     public class MetaTimetable
     {
-
         public List<DateTime> dateTimes { get; set; }
 
         public List<SscisUser> tutors { get; set; }
