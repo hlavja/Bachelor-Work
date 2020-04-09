@@ -10,17 +10,10 @@ using System.Web;
 
 namespace ISSSC.Class
 {
-    /// <summary>
-    /// Class for rendering timetable component
-    /// </summary>
+
     public class PasswordHash
     {
-        /// <summary>
-        /// Renders timetable component
-        /// </summary>
-        /// <param name="events">List of events to display</param>
-        /// <param name="showState">Show state of event</param>
-        /// <returns>rendered component</returns>
+
         public string Encode(string blankPassword)
         {
             //Create the salt value with a cryptographic PRNG
@@ -38,12 +31,7 @@ namespace ISSSC.Class
             return(savedPasswordHash);
         }
 
-        /// <summary>
-        /// Renders public event timetable component
-        /// </summary>
-        /// <param name="db">Database context</param>
-        /// <param name="weeks">Weeks</param>
-        /// <returns>Html component</returns>
+
         public Boolean Decode(string savedPasswordHash, string password = "")
         {
             /* Extract the bytes */

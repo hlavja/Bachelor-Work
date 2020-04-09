@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Net;
 using System.Text;
 using System.Security.Cryptography;
+using Microsoft.Extensions.Configuration;
 
 namespace ISSSC.Controllers
 {
@@ -25,15 +26,16 @@ namespace ISSSC.Controllers
         private TimetableRenderer timeTableRenderer = new TimetableRenderer();
         private PersonalTimetable personalTimetable = new PersonalTimetable();
 
-        private PasswordHash aa = new PasswordHash();
-
+        private readonly PasswordHash aa = new PasswordHash();
+        readonly IConfiguration _configuration;
         private readonly IEmailService _emailService;
         public SscisContext Db { get; set; }
 
-        public HomeController(SscisContext context, IEmailService emailService)
+        public HomeController(SscisContext context, IEmailService emailService, IConfiguration configuration)
         {
             Db = context;
             _emailService = emailService;
+            _configuration = configuration;
         }    
 
         /// <summary>
@@ -124,12 +126,15 @@ namespace ISSSC.Controllers
                 userId = (int)HttpContext.Session.GetInt32("userId"); ;
             }
 
+            bool extraLessonEnable = true;
+            extraLessonEnable = BoolParser.Parse(Db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.EXTRALESSONENABLE, StringComparison.OrdinalIgnoreCase)).ParamValue);
             string text = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.POTREBUJIPOMOCHTML, StringComparison.OrdinalIgnoreCase)).Single().ParamValue;
             ViewBag.TextHelpMe = WebUtility.HtmlDecode(text);
 
             ViewBag.Title = "Potřebuji pomoc";
             ViewBag.PersonalTimeTable = personalTimetable.RenderEvents(Db, userId);
             ViewBag.PublicTimeTable = timeTableRenderer.RenderPublic(Db);
+            ViewBag.ExtraLessonEnable = extraLessonEnable;
             return View();
         }
 
@@ -142,7 +147,7 @@ namespace ISSSC.Controllers
         /// <returns>Creation result</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [SSCISAuthorize(AccessLevels =new[] { AuthorizationRoles.User, AuthorizationRoles.Tutor })]
+        [SSCISAuthorize(AccessLevels = new[] { AuthorizationRoles.User, AuthorizationRoles.Tutor, AuthorizationRoles.Administrator })]
         public ActionResult HelpMe(MetaEvent model)
         {
             if(model != null)
@@ -172,7 +177,7 @@ namespace ISSSC.Controllers
                 model.Event.IsExtraLesson = true;
                 model.Event.IdApplicantNavigation = Db.SscisUser.Find(userId);
                 string comment = model.Comment.ToString();
-                model.Event.CancelationComment = model.Comment.ToString();
+                model.Event.ExtraComment= model.Comment.ToString();
 
                 Db.Event.Add(model.Event);
                 Db.SaveChanges();
@@ -194,7 +199,7 @@ namespace ISSSC.Controllers
                 {
                     if (item.IdSubject == model.SubjectID)
                     {
-                        if (item.IdTutorNavigation.Email != null)
+                        if (item.IdTutorNavigation.Email != null && item.IdTutorNavigation.Email.Length > 2)
                         {
                             EmailAddress emailTo = new EmailAddress();
                             emailTo.Name = item.IdTutorNavigation.Login;
@@ -208,14 +213,9 @@ namespace ISSSC.Controllers
 
                 emailMessage.FromAddresses = listFrom;
                 emailMessage.ToAddresses = listTo;
-                            
-                emailMessage.Subject = "Žádost o extra lekci " + subjectCode + " v Student Support Centru";
-                emailMessage.Content = "Evidujeme novou žádost o extra lekci z předmětu, který můžeš vyučovat.\n"+
-                    "Studen si přeje pomoci s: " + comment + "\n\n" +
-                    "Pokud chceš lekci z " + subjectCode + " přijmout, klikni na následující link: " + SSCHttpContext.AppBaseUrl +"/ExtraLesson/Accept?id=" + newId +
-                    "\n\n" +
-                    "Na tento email neodpovídejte, je generován automaticky. Pro komunikaci použijte některý z kontaktů níže:\n" +
-                    "Libor Váša: lvasa@kiv.zcu.cz";
+
+                emailMessage.Subject = string.Format(_configuration.GetValue<string>("EmailMessageConfigs:ExtraLectionEmail:Subject"), subjectCode);
+                emailMessage.Content = string.Format(_configuration.GetValue<string>("EmailMessageConfigs:ExtraLectionEmail:Content"), comment, subjectCode, SSCHttpContext.AppBaseUrl, newId);
                 
                 _emailService.Send(emailMessage);
                 return RedirectToAction("HelpMe");

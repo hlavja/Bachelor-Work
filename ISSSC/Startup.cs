@@ -1,23 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using ISSSC.Controllers;
+﻿using ISSSC.Controllers;
 using ISSSC.Extensions;
 using ISSSC.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using MySql.Data.EntityFrameworkCore.Extensions;
 using Newtonsoft.Json;
 
 namespace ISSSC
@@ -46,6 +35,7 @@ namespace ISSSC
                 options.AutomaticAuthentication = false;
             });
 
+            services.AddSingleton(Configuration);
             services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             services.AddTransient<IEmailService, EmailService>();
             services.AddDbContext<SscisContext>();

@@ -46,9 +46,10 @@ namespace SSCIS.Controllers
         /// <param name="code">Code from url</param>
         /// <returns>Feedback form view</returns>
         [HttpGet]
+        //[SSCISAuthorize(AccessLevel = AuthorizationRoles.User)]
         public ActionResult Index(int? code)
         {
-            int? eventId = urlGenerator.ResolveEventID(code.ToString());
+            int? eventId = urlGenerator.resolveEventID(code.ToString());
             if (eventId == null)
             {
                 return new StatusCodeResult((int)HttpStatusCode.BadRequest);
@@ -63,13 +64,24 @@ namespace SSCIS.Controllers
         /// <param name="model">Feedback model</param>
         /// <returns>Redirection</returns>
         [HttpPost]
+        //[SSCISAuthorize(AccessLevel = AuthorizationRoles.User)]
         public ActionResult Index(Feedback model)
         {
-            int userId = (int)HttpContext.Session.GetInt32("userId");
-            int eventID = model.Id;
-            Event evnt = db.Event.Find(eventID);
+            int userId = 0;
+            if (HttpContext.Session.GetInt32("userId") != null)
+            {
+                userId = (int)HttpContext.Session.GetInt32("userId");
+            }
+            Event evnt = db.Event.Find(model.Id);
             Feedback feedback = new Feedback() { Text = model.Text };
-            Participation part = new Participation() { IdEventNavigation = evnt, IdUser = userId };
+            Participation part = null;
+            if (userId == 0)
+            {
+                 part = new Participation() { IdEventNavigation = evnt, IdUser = null };
+            } else
+            {
+                 part = new Participation() { IdEventNavigation = evnt, IdUser = userId };
+            }
 
             db.Participation.Add(part);
             db.SaveChanges();
@@ -122,7 +134,7 @@ namespace SSCIS.Controllers
             using (MemoryStream ms = new MemoryStream())
             {
                 QRCodeGenerator qrGenerator = new QRCodeGenerator();
-                string url = urlGenerator.GenerateURL(id.Value, db);
+                string url = urlGenerator.generateURL(id.Value, db);
                 ViewBag.FeedbackURL = url;
                 QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
                 QRCode qrCode = new QRCode(qrCodeData);
@@ -155,7 +167,26 @@ namespace SSCIS.Controllers
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public IActionResult Generate(MetaInterval model)
         {
-            List<Feedback> feedbacks = db.Feedback.Where(f => f.IdParticipationNavigation.IdEventNavigation.TimeFrom >= model.From && f.IdParticipationNavigation.IdEventNavigation.TimeTo <= model.To).ToList();
+            List<Feedback> feedbacks = new List<Feedback>();
+            DateTime today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59, 59);
+            DateTime def = new DateTime(DateTime.MinValue.Ticks);
+            if (model.From == def && model.To == def)
+            {
+                feedbacks = db.Feedback.Where(f => f.IdParticipationNavigation.IdEventNavigation.TimeTo <= today).ToList();
+            }
+            else if (model.From != def && model.To == def)
+            {
+                feedbacks = db.Feedback.Where(f => f.IdParticipationNavigation.IdEventNavigation.TimeFrom >= model.From && f.IdParticipationNavigation.IdEventNavigation.TimeTo <= today).ToList();
+            }
+            else if (model.From == def && model.To != def)
+            {
+                feedbacks = db.Feedback.Where(f => f.IdParticipationNavigation.IdEventNavigation.TimeTo <= model.To.AddHours(20)).ToList();
+            }
+            else
+            {
+                feedbacks = db.Feedback.Where(f => f.IdParticipationNavigation.IdEventNavigation.TimeFrom >= model.From && f.IdParticipationNavigation.IdEventNavigation.TimeTo <= model.To.AddHours(20)).ToList();
+            }
+
             string csv = csvConverter.Convert(feedbacks, db);
             string filename = string.Format("feedback.csv");
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", filename);
@@ -181,16 +212,32 @@ namespace SSCIS.Controllers
             return View(feedbacks);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public IActionResult List(MetaInterval model)
         {
             Statistics statistics = new Statistics();
             List<Event> events = new List<Event>();
+            DateTime today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59, 59);
+            DateTime def = new DateTime(DateTime.MinValue.Ticks);
+            if (model.From == def && model.To == def)
+            {
+                events = db.Event.Where(e => e.TimeTo <= today && e.IsAccepted == true && e.IsCancelled == false).ToList();
+            } else if (model.From != def && model.To == def)
+            {
+                events = db.Event.Where(e => e.TimeFrom >= model.From && e.TimeTo <= today && e.IsAccepted == true && e.IsCancelled == false).ToList();
+            } else if(model.From == def && model.To != def){ 
+                events = db.Event.Where(e => e.TimeTo <= model.To.AddHours(20) && e.IsAccepted == true && e.IsCancelled == false).ToList();
+            }
+            else {
+                events = db.Event.Where(e => e.TimeFrom >= model.From && e.TimeTo <= model.To.AddHours(20) && e.IsAccepted == true && e.IsCancelled == false).ToList();
+            }
 
-            events = db.Event.Where(e => e.TimeFrom >= model.From && e.TimeTo <= model.To).ToList();
-            
             foreach (var item in events)
             {
                 MetaStat meta = new MetaStat();
@@ -250,7 +297,10 @@ namespace SSCIS.Controllers
             return View(statistics);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public IActionResult LastMonthTutors()
@@ -264,8 +314,8 @@ namespace SSCIS.Controllers
 
             DateTime end = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month - 1), 23, 59, 59, 59);
 
-            tutors = db.SscisUser.Where(t => t.IdRoleNavigation.Role.Equals(AuthorizationRoles.Tutor)).ToList();
-            events = db.Event.Where(e => e.TimeFrom >= start && e.TimeTo <= end).ToList();
+            tutors = db.SscisUser.Where(t => t.IdRoleNavigation.Role.Equals(AuthorizationRoles.Tutor) || t.IdRoleNavigation.Role.Equals(AuthorizationRoles.Administrator)).ToList();
+            events = db.Event.Where(e => e.TimeFrom >= start && e.TimeTo <= end && e.IsAccepted == true && e.IsCancelled == false).ToList();
 
             foreach (var tutor in tutors)
             {
@@ -328,7 +378,11 @@ namespace SSCIS.Controllers
             return View("TutorList",statistics);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public IActionResult TutorList(MetaInterval model)
@@ -336,10 +390,27 @@ namespace SSCIS.Controllers
             StatisticsTutor statistics = new StatisticsTutor();
             List<Event> events = new List<Event>();
             List<SscisUser> tutors = new List<SscisUser>();
+            
+            DateTime today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59, 59);
+            DateTime def = new DateTime(DateTime.MinValue.Ticks);
+            if (model.From == def && model.To == def)
+            {
+                events = db.Event.Where(e => e.TimeTo <= today && e.IsAccepted == true).ToList();
+            }
+            else if (model.From != def && model.To == def)
+            {
+                events = db.Event.Where(e => e.TimeFrom >= model.From && e.TimeTo <= today && e.IsAccepted == true).ToList();
+            }
+            else if (model.From == def && model.To != def)
+            {
+                events = db.Event.Where(e => e.TimeTo <= model.To.AddHours(20) && e.IsAccepted == true).ToList();
+            }
+            else
+            {
+                events = db.Event.Where(e => e.TimeFrom >= model.From && e.TimeTo <= model.To.AddHours(20) && e.IsAccepted == true).ToList();
+            }
 
-
-            tutors = db.SscisUser.Where(t => t.IdRoleNavigation.Role.Equals(AuthorizationRoles.Tutor)).ToList();
-            events = db.Event.Where(e => e.TimeFrom >= model.From && e.TimeTo <= model.To.AddHours(20)).ToList();
+            tutors = db.SscisUser.Where(t => t.IdRoleNavigation.Role.Equals(AuthorizationRoles.Tutor) || t.IdRoleNavigation.Role.Equals(AuthorizationRoles.Administrator)).ToList();
 
             foreach (var tutor in tutors)
             {

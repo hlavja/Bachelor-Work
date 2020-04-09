@@ -91,11 +91,10 @@ D:\Skola\bakalarka\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.dll
 D:\Skola\bakalarka\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.pdb
 D:\Skola\bakalarka\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Feedbacks\TutorList.g.cshtml.cs
 D:\Skola\bakalarka\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Events\Attendance.g.cshtml.cs
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.csprojAssemblyReference.cache
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.RazorAssemblyInfo.cache
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.RazorAssemblyInfo.cs
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.AssemblyInfoInputs.cache
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.AssemblyInfo.cs
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\appsettings.Development.json
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\bower.json
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\libman.json
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\appsettings.json
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\ISSSC.deps.json
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\ISSSC.runtimeconfig.json
@@ -106,19 +105,14 @@ E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcor
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\ISSSC.Views.pdb
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\SSCISResources.dll
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\SSCISResources.pdb
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.csprojAssemblyReference.cache
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.RazorAssemblyInfo.cache
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.RazorAssemblyInfo.cs
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.AssemblyInfoInputs.cache
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.AssemblyInfo.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.TagHelpers.input.cache
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.TagHelpers.output.cache
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.RazorCoreGenerate.cache
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.RazorTargetAssemblyInfo.cache
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.RazorTargetAssemblyInfo.cs
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.Views.pdb
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.csproj.CopyComplete
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.dll
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.pdb
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\appsettings.Development.json
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\bower.json
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\libman.json
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Contents\Create.cshtml.g.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Contents\Delete.cshtml.g.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Contents\Details.cshtml.g.cs
@@ -134,6 +128,7 @@ E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcor
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Events\Delete.cshtml.g.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Events\Details.cshtml.g.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Events\Edit.cshtml.g.cs
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Events\EventsTimetable.cshtml.g.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Events\Index.cshtml.g.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Events\TutorEvents.cshtml.g.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Feedbacks\Create.cshtml.g.cs
@@ -144,6 +139,7 @@ E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcor
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Feedbacks\List.cshtml.g.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Feedbacks\Sent.cshtml.g.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Feedbacks\TutorList.cshtml.g.cs
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Home\AdminLogin.cshtml.g.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Home\Contact.cshtml.g.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Home\HelpMe.cshtml.g.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.cshtml.g.cs
@@ -187,4 +183,9 @@ E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcor
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Users\Index.cshtml.g.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.cshtml.g.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.cshtml.g.cs
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\Razor\Views\Home\AdminLogin.cshtml.g.cs
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.RazorTargetAssemblyInfo.cache
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.RazorTargetAssemblyInfo.cs
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.Views.pdb
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.csproj.CopyComplete
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.dll
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ISSSC\obj\Debug\netcoreapp2.2\ISSSC.pdb

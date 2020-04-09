@@ -166,6 +166,12 @@ namespace ISSSC.Models
                     .HasMaxLength(480)
                     .IsUnicode(false);
 
+                entity.Property(e => e.ExtraComment)
+                    .HasColumnName("EXTRA_COMMENT")
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("NULL");
+
                 entity.Property(e => e.IdApplicant)
                     .HasColumnName("ID_APPLICANT")
                     .HasColumnType("int(11)");

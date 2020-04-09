@@ -22,5 +22,6 @@ namespace ISSSC.Class
         public const string MAPTOKEN = "MAP_TOKEN";
         public const string ADMINPASSWORD = "ADMIN_PASSWORD";
         public const string TIMETABLEMONTHRANGE = "TIMETABLE_MONTH_RANGE";
+        public const string EXTRALESSONENABLE = "EXTRA_LESSONS";
     }
 }

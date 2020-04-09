@@ -23,13 +23,14 @@ namespace ISSSC.Class
         public HtmlString Render(List<Event> events, string id = null, bool showState = false)
         {
             StringBuilder builder = new StringBuilder();
+            builder.Append("<div class=\"table-responsive\">");
             if (id != null)
             {
-                builder.Append(string.Format("<table id=\"{0}\" class=\"table\">", id));
+                builder.Append(string.Format("<table id=\"{0}\" class=\"table table-responsive\">", id));
             }
             else
             {
-                builder.Append("<table class=\"table\">");
+                builder.Append("<table class=\"table table-responsive\">");
             }
             builder.Append("<tr>");
             builder.Append("<th>Čas od</th>");
@@ -57,8 +58,6 @@ namespace ISSSC.Class
                 {
                     builder.Append("<tr>");
                 }
-                /*builder.Append(item.IsCancelled != null && item.IsCancelled.Value ? "<tr class=\"canceled-evnt\">" : "<tr>");
-                builder.Append(item.IsExtraLesson == true ? "<tr class=\"extra-evnt\">" : "<tr>");*/
                 builder.Append("<td>");
                 builder.Append(item.TimeFrom.ToString("d") + " " + item.TimeFrom.ToString("t"));
                 builder.Append("</td>");
@@ -66,7 +65,13 @@ namespace ISSSC.Class
                 builder.Append(item.TimeTo.ToString("d") + " " + item.TimeTo.ToString("t"));
                 builder.Append("</td>");
                 builder.Append("<td>");
-                builder.Append(item.CancelationComment);
+                if(item.IsCancelled == true)
+                {
+                    builder.Append(item.CancelationComment);
+                } else
+                {
+                    builder.Append(item.ExtraComment);
+                }
                 builder.Append("</td>");
                 builder.Append("<td>");
                 builder.Append(item.IdSubjectNavigation.Code);
@@ -87,6 +92,7 @@ namespace ISSSC.Class
             }
 
             builder.Append("</table>");
+            builder.Append("</div>");
             return new HtmlString(builder.ToString());
         }
 

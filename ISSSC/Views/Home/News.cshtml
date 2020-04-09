@@ -16,20 +16,20 @@
         }
         @foreach (var modelItem in Model.Contents)
         {
+        <hr />
+         <div class="well">
+            <h3>@Html.DisplayFor(m => modelItem.Header)</h3>
+            <h6>@Html.DisplayFor(m => modelItem.Created)</h6>
             <hr />
-            <div class="well">
-                <h3>@Html.DisplayFor(m => modelItem.Header)</h3>
-                <h6>@Html.DisplayFor(m => modelItem.Created)</h6>
-                <hr />
-                <p>
-                    @Html.DisplayFor(m => modelItem.TextContent)
-                </p>
-                @if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals("ADMIN"))
-                {
-                    @Html.ActionLink("Upravit", "Edit", "Contents", new { id = modelItem.Id }, null)
-                    <br>
-                    @Html.ActionLink("Smazat", "Delete", "Contents", new { id = modelItem.Id }, null)
-                }
+            <p>
+               @Html.DisplayFor(m => modelItem.TextContent)
+            </p>
+            @if (ViewContext.HttpContext.Session.GetString("role") != null && ViewContext.HttpContext.Session.GetString("role").Equals("ADMIN"))
+            {
+             @Html.ActionLink("Upravit", "Edit", "Contents", new { id = modelItem.Id }, null)
+             <br>
+             @Html.ActionLink("Smazat", "Delete", "Contents", new { id = modelItem.Id }, null)
+            }
             </div>
         }
         <hr>

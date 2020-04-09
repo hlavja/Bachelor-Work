@@ -11,7 +11,20 @@
 
     <div class="col-sm-8 text-left">
         <h2>Uživatelé</h2>
+        @foreach (KeyValuePair<string, string> item in ViewBag.TutorEmailsLists)
+        {
+            if (item.Key.Equals("TUTORS"))
+            {
+                <a href="mailto:@item.Value">Email all Tutors!   </a>
+                <br />
+            }
+            else
+            {
+                <a href="mailto:@item.Value">Email @item.Key tutors!   </a>
+                <br />
+            }
 
+        }
         <table class="table">
             <tr>
                 <th>
@@ -63,20 +76,6 @@
                     </td>
                 </tr>
             }
-            @foreach (KeyValuePair<string, string> item in ViewBag.TutorEmailsLists)
-            {
-                if (item.Key.Equals("TUTORS"))
-                {
-                    <a href="mailto:@item.Value">Email all Tutors!   </a>
-                    <br />
-                } else
-                {
-                    <a href="mailto:@item.Value">Email @item.Key tutors!   </a>
-                    <br />
-                }
-                                      
-            }
-            
         </table>
     </div>
 

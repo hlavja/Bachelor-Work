@@ -16,7 +16,7 @@ namespace ISSSC.Class
         /// <summary>
         /// CSV header
         /// </summary>
-        private const string CSV_HEADER = "Datum\tOd\tDo\tPredmet\tText";
+        private const string CSV_HEADER = "Datum;Od;Do;Predmet;Text";
 
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace ISSSC.Class
         /// <returns>String representation of feedback</returns>
         public string FeedbackToString(Feedback feedback, Event @event)
         {
-            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}", @event.TimeFrom.Day + "." + @event.TimeFrom.Month + "." + @event.TimeFrom.Year, @event.TimeFrom.Hour.ToString("00") + ":" + @event.TimeFrom.Minute.ToString("00"), @event.TimeTo.Hour.ToString("00") + ":" + @event.TimeTo.Minute.ToString("00"), @event.IdSubjectNavigation.Code, feedback.Text);
+            return string.Format("{0};{1};{2};{3};{4}", @event.TimeFrom.Day + "." + @event.TimeFrom.Month + "." + @event.TimeFrom.Year, @event.TimeFrom.Hour.ToString("00") + ":" + @event.TimeFrom.Minute.ToString("00"), @event.TimeTo.Hour.ToString("00") + ":" + @event.TimeTo.Minute.ToString("00"), @event.IdSubjectNavigation.Code, feedback.Text);
         }
     }
 }

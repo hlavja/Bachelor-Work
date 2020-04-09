@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace ISSSC.Controllers
 {
@@ -26,9 +27,12 @@ namespace ISSSC.Controllers
         private SscisContext db = new SscisContext();
 
         private readonly IEmailService _emailService;
+        readonly IConfiguration _configuration;
 
-        public TutorApplicationsController(IEmailService emailService)
+
+        public TutorApplicationsController(IEmailService emailService, IConfiguration configuration)
         {
+            _configuration = configuration;
             _emailService = emailService;
         }
 
@@ -88,7 +92,8 @@ namespace ISSSC.Controllers
                 return RedirectToAction("ApplicationPending");
             }
 
-            int countOfSubjects = int.Parse(db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.MAXSUBJECTSCOUNT)).Single().ParamValue);
+            //int countOfSubjects = int.Parse(db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.MAXSUBJECTSCOUNT)).Single().ParamValue);
+            int countOfSubjects = db.EnumSubject.Count(s => s.IdParent != null && s.Lesson == true);
 
             MetaTutorApplication model = new MetaTutorApplication(countOfSubjects);
 
@@ -114,19 +119,19 @@ namespace ISSSC.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 int userID = (int)HttpContext.Session.GetInt32("userId");
+                int countOfSubjects = int.Parse(Request.Form["subjects_count"]);
+
+                if (countOfSubjects < 1)
+                {
+                    return RedirectToAction("Create");
+                }
+
                 model.Application.ApplicationDate = DateTime.Now;
-                
                 model.Application.IdUserNavigation = db.SscisUser.Find(userID);
                 db.TutorApplication.Add(model.Application);
                 db.SaveChanges();
-
-                int countOfSubjects = int.Parse(Request.Form["subjects_count"]);
-
-               /* if (countOfSubjects < 1)
-                {
-                    return View(model);
-                }*/
 
                 string znamky = Request.Form["Degree"];
                 string predmety = HttpContext.Request.Form["SubjectID"];
@@ -180,10 +185,7 @@ namespace ISSSC.Controllers
                 return NotFound();
             }
             int? userID = (int)HttpContext.Session.GetInt32("userId");
-
-            //TutorApplicationSubject subj = db.TutorApplicationSubject.Find(15);
-
-          
+                                 
             tutorApplication.AcceptedDate = DateTime.Now;
             tutorApplication.IsAccepted = 1;
             tutorApplication.AcceptedBy = db.SscisUser.Find(userID);
@@ -229,11 +231,8 @@ namespace ISSSC.Controllers
             emailMessage.FromAddresses = listFrom;
             emailMessage.ToAddresses = listTo;
 
-            emailMessage.Subject = "Byl jste přijat jako tutor do projektu Student Suport Centre!";
-            emailMessage.Content = "Byl jste přijat jako tutor do projektu Student Suport Centre! Nyní můžete vypisovat žádosti o hodiny do pravidelného rozvrhu hodin." +
-                "\n\n" +
-                "Na tento email neodpovídejte, je generován automaticky. Pro komunikaci použijte některý z kontaktů níže:\n" +
-                "Libor Váša: lvasa@kiv.zcu.cz";
+            emailMessage.Subject = _configuration.GetValue<string>("EmailMessageConfigs:AcceptApplicationEmail:Subject");
+            emailMessage.Content = _configuration.GetValue<string>("EmailMessageConfigs:AcceptApplicationEmail:Content");
 
             _emailService.Send(emailMessage);
 
@@ -281,11 +280,8 @@ namespace ISSSC.Controllers
             emailMessage.FromAddresses = listFrom;
             emailMessage.ToAddresses = listTo;
 
-            emailMessage.Subject = "Vaše přihláška do projektu Student Suport Centre byla zamítnuta!";
-            emailMessage.Content = "Vaše přihláška do projektu Student Suport Centre byla zamítnuta!" +
-                "\n\n" +
-                "Na tento email neodpovídejte, je generován automaticky. Pro komunikaci použijte některý z kontaktů níže:\n" +
-                "Libor Váša: lvasa@kiv.zcu.cz";
+            emailMessage.Subject = _configuration.GetValue<string>("EmailMessageConfigs:AcceptApplicationEmail:Subject");
+            emailMessage.Content = _configuration.GetValue<string>("EmailMessageConfigs:AcceptApplicationEmail:Content");
 
             _emailService.Send(emailMessage);
 

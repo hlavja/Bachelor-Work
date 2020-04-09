@@ -58,8 +58,12 @@ namespace ISSSC.Class
         /// <param name="httpSession">session in request conext</param>
         public void SessionDestroy(long sessionId, HttpContext httpSession)
         {
-            db.SscisSession.Remove(db.SscisSession.Find((int)sessionId));
-            db.SaveChanges();
+            var itemToRemove = db.SscisSession.SingleOrDefault(x => x.Id == (int)sessionId);
+            if (itemToRemove != null)
+            {
+                db.SscisSession.Remove(db.SscisSession.Find((int)sessionId));
+                db.SaveChanges();
+            }
             httpSession.Session.Remove("sessionId");
             httpSession.Session.Remove("role");
             httpSession.Session.Remove("hash");

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using ISSSC.Models;
 using ISSSC.Models.Meta;
 using ISSSC.Class;
@@ -12,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Net;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace ISSSC.Controllers
 {
@@ -26,9 +26,11 @@ namespace ISSSC.Controllers
         private SscisContext db = new SscisContext();
 
         private readonly IEmailService _emailService;
+        readonly IConfiguration _configuration;
 
-        public EventsController(IEmailService emailService)
+        public EventsController(IEmailService emailService, IConfiguration configuration)
         {
+            _configuration = configuration;
             _emailService = emailService;
         }
         /// <summary>
@@ -253,11 +255,8 @@ namespace ISSSC.Controllers
             emailMessage.FromAddresses = listFrom;
             emailMessage.ToAddresses = listTo;
 
-            emailMessage.Subject = "Vaše vypsaná lekce z "+ @event.IdSubjectNavigation.Code + "dne " + @event.TimeFrom + "byla schválena!";
-            emailMessage.Content = "Vaše vypsaná lekce z " + @event.IdSubjectNavigation.Code + "dne " + @event.TimeFrom + "byla schválena! Poznamenejte si tento datum a připravte se na výuku. :)" +
-                "\n\n" +
-                "Na tento email neodpovídejte, je generován automaticky. Pro komunikaci použijte některý z kontaktů níže:\n" +
-                "Libor Váša: lvasa@kiv.zcu.cz";
+            emailMessage.Subject = string.Format(_configuration.GetValue<string>("EmailMessageConfigs:AcceptedLessonEmail:Subject"), @event.IdSubjectNavigation.Code, @event.TimeFrom);
+            emailMessage.Content = string.Format(_configuration.GetValue<string>("EmailMessageConfigs:AcceptedLessonEmail:Content"), @event.IdSubjectNavigation.Code, @event.TimeFrom);
 
             _emailService.Send(emailMessage);
             return RedirectToAction("Index");
@@ -466,7 +465,7 @@ namespace ISSSC.Controllers
         public string generateCsv(List<DateTime> dateTimes, List<SscisUser> tutors)
         {
             StringBuilder builder = new StringBuilder();
-            builder.Append("Tutor atd");
+            builder.Append("Tutor;Hodiny");
             builder.Append("\n");
             builder.Append(" ;");
             foreach (DateTime dateTime in dateTimes)

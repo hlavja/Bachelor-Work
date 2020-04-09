@@ -26,7 +26,8 @@ namespace ISSSC.Class
             StringBuilder builder = new StringBuilder();
 
             builder.Append("<h4>Moje lekce</h4>");
-            builder.Append("<table class=\"table\">");
+            builder.Append("<div class=\"table-responsive\">");
+            builder.Append("<table class=\"table table-responsive\">");
             builder.Append("<tr>");
             builder.Append("<th>Čas od</th>");
             builder.Append("<th>Čas do</th>");
@@ -35,7 +36,7 @@ namespace ISSSC.Class
 
             foreach (var item in myEvents)
             {
-                if (item.IsCancelled == false && item.TimeFrom >= DateTime.Now)
+                if (item.IsCancelled == false && item.IsAccepted == true && item.TimeFrom >= DateTime.Now)
                 {
                     builder.Append("<tr>");
                     builder.Append("<td>");
@@ -52,42 +53,44 @@ namespace ISSSC.Class
             }
 
             builder.Append("</table>");
-
+            builder.Append("</div>");
 
             if (myExtraEvents.Any())
             {
                 builder.Append("<h4>Přijaté lekce</h4>");
-            builder.Append("<table class=\"table\">");
-            builder.Append("<tr>");
-            builder.Append("<th>Čas od</th>");
-            builder.Append("<th>Čas do</th>");
-            builder.Append("<th>Předmět</th>");
-            builder.Append("</tr>");
+                builder.Append("<div class=\"table-responsive\">");
+                builder.Append("<table class=\"table table-responsive\">");
+                builder.Append("<tr>");
+                builder.Append("<th>Čas od</th>");
+                builder.Append("<th>Čas do</th>");
+                builder.Append("<th>Předmět</th>");
+                builder.Append("</tr>");
 
-            foreach (var item in myExtraEvents)
-            {
-                if (item.IdApplicant == userId && item.IdTutor != null && item.TimeFrom >= DateTime.Now)
+                foreach (var item in myExtraEvents)
                 {
-                    builder.Append("<tr>");
-                    builder.Append("<td>");
-                    builder.Append(item.TimeFrom.ToString("d") + " " + item.TimeFrom.ToString("t"));
-                    builder.Append("</td>");
-                    builder.Append("<td>");
-                    builder.Append(item.TimeTo.ToString("d") + " " + item.TimeTo.ToString("t"));
-                    builder.Append("</td>");
-                    builder.Append("<td>");
-                    builder.Append(item.IdSubjectNavigation.Code);
-                    builder.Append("</td>");
-                    builder.Append("</tr>");
+                    if (item.IdApplicant == userId && item.IdTutor != null && item.TimeFrom >= DateTime.Now)
+                    {
+                        builder.Append("<tr>");
+                        builder.Append("<td>");
+                        builder.Append(item.TimeFrom.ToString("d") + " " + item.TimeFrom.ToString("t"));
+                        builder.Append("</td>");
+                        builder.Append("<td>");
+                        builder.Append(item.TimeTo.ToString("d") + " " + item.TimeTo.ToString("t"));
+                        builder.Append("</td>");
+                        builder.Append("<td>");
+                        builder.Append(item.IdSubjectNavigation.Code);
+                        builder.Append("</td>");
+                        builder.Append("</tr>");
+                    }
                 }
-            }
 
-            builder.Append("</table>");
+                builder.Append("</table>");
+                builder.Append("</div>");
 
 
-            
                 builder.Append("<h4>Žádosti o lekce</h4>");
-                builder.Append("<table class=\"table\">");
+                builder.Append("<div class=\"table-responsive\">");
+                builder.Append("<table class=\"table table-responsive\">");
                 builder.Append("<tr>");
                 builder.Append("<th>Čas od</th>");
                 builder.Append("<th>Čas do</th>");
@@ -113,32 +116,35 @@ namespace ISSSC.Class
                 }
 
                 builder.Append("</table>");
+                builder.Append("</div>");
             }
             if (myEventsWithoutAttendace.Any()) { 
-            builder.Append("<h4>Nevyplněné návštěvnosti</h4>");
-            builder.Append("<table class=\"table\">");
-            builder.Append("<tr>");
-            builder.Append("<th>Čas od</th>");
-            builder.Append("<th>Předmět</th>");
-            builder.Append("<th>Vyplnit</th>");
-            builder.Append("</tr>");
+                builder.Append("<h4>Nevyplněné návštěvnosti</h4>");
+                builder.Append("<div class=\"table-responsive\">");
+                builder.Append("<table class=\"table table-responsive\">");
+                builder.Append("<tr>");
+                builder.Append("<th>Čas od</th>");
+                builder.Append("<th>Předmět</th>");
+                builder.Append("<th>Vyplnit</th>");
+                builder.Append("</tr>");
 
-            foreach (var item in myEventsWithoutAttendace)
-            {
-                    builder.Append("<tr>");
-                    builder.Append("<td>");
-                    builder.Append(item.TimeFrom.ToString("d") + " " + item.TimeFrom.ToString("t"));
-                    builder.Append("</td>");
-                    builder.Append("<td>");
-                    builder.Append(item.IdSubjectNavigation.Code);
-                    builder.Append("</td>");
-                    builder.Append("<td>");
-                    builder.Append("<a href=\"/Events/Attendance/"+item.Id+"\" > Vyplnit</a>");
-                    builder.Append("</td>");
-                    builder.Append("</tr>");
-            }
+                foreach (var item in myEventsWithoutAttendace)
+                {
+                        builder.Append("<tr>");
+                        builder.Append("<td>");
+                        builder.Append(item.TimeFrom.ToString("d") + " " + item.TimeFrom.ToString("t"));
+                        builder.Append("</td>");
+                        builder.Append("<td>");
+                        builder.Append(item.IdSubjectNavigation.Code);
+                        builder.Append("</td>");
+                        builder.Append("<td>");
+                        builder.Append("<a href=\"/Events/Attendance/"+item.Id+"\" > Vyplnit</a>");
+                        builder.Append("</td>");
+                        builder.Append("</tr>");
+                }
 
-            builder.Append("</table>");
+                builder.Append("</table>");
+                builder.Append("</div>");
             }
             return new HtmlString(builder.ToString());
         }
@@ -150,7 +156,8 @@ namespace ISSSC.Class
 
 
             builder.Append("<h4>Nevyplněné návštěvnosti</h4>");
-            builder.Append("<table class=\"table\">");
+            builder.Append("<div class=\"table-responsive\">");
+            builder.Append("<table class=\"table table-responsive\">");
             builder.Append("<tr>");
             builder.Append("<th class=\"col-md-5\">Čas od</th>");
             builder.Append("<th class=\"col-md-3\">Předmět</th>");
@@ -173,6 +180,7 @@ namespace ISSSC.Class
             }
 
             builder.Append("</table>");
+            builder.Append("</div>");
             return new HtmlString(builder.ToString());
         }
 
@@ -196,7 +204,7 @@ namespace ISSSC.Class
             DateTime end = start.AddDays(7);
             DateTime endTime = now.AddDays(7);
 
-            List<Event> myEvents = db.Event.Where(e => e.IdTutor == userID).ToList();
+            List<Event> myEvents = db.Event.Where(e => e.IdTutor == userID && e.IsAccepted == true).ToList();
             List<Event> myExtraEvents = db.Event.Where(e => e.IdApplicant == userID).ToList();
             List<Event> myEventsWithoutAttendance = db.Event.Where(e => (e.IdTutor == userID && e.IsAccepted == true && e.Attendance == null && e.IsCancelled == false && e.TimeTo <= DateTime.Now)).ToList();
             return Render(myEvents, myExtraEvents, myEventsWithoutAttendance, userID);

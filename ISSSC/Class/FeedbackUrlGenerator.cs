@@ -18,7 +18,7 @@ namespace ISSSC.Class
         /// <param name="eventId">Event ID</param>
         /// <param name="db">Database context</param>
         /// <returns>Generated URL</returns>
-        public string GenerateURL(int eventId, SscisContext db)
+        public string generateURL(int eventId, SscisContext db)
         {
             Event e = db.Event.Find(eventId);
             string code = string.Format("{0}{1}{2}{3}", e.TimeFrom.Year.ToString("0000").Substring(2), e.TimeFrom.Month.ToString("00"), e.TimeFrom.Day.ToString("00"), eventId);
@@ -30,10 +30,9 @@ namespace ISSSC.Class
         /// </summary>
         /// <param name="code">Feedback code from end of URL</param>
         /// <returns>Event id</returns>
-        public int? ResolveEventID(string code)
+        public int? resolveEventID(string code)
         {
-            int result = -1;
-            if (int.TryParse(code.Substring(6), out result))
+            if (int.TryParse(code.Substring(6), out int result))
             {
                 return result;
             }

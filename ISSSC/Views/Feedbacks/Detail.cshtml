@@ -28,7 +28,14 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IdParticipationNavigation.IdUserNavigation.Login)
+                            @if (item.IdParticipationNavigation.IdUserNavigation != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.IdParticipationNavigation.IdUserNavigation.Login)
+                            }
+                            else
+                            {
+                                @Html.Raw("ANONYM")
+                            }
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Text)
@@ -37,9 +44,6 @@
                 }
 
             </table>
-            <p>
-                @Html.ActionLink(@SSCISResources.Resources.BACK, "Generate")
-            </p>
         </div>
         <div class="col-sm-2 sidenav">
 
