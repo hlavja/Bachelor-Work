@@ -222,8 +222,11 @@ FakesAssemblies/
 # Visual Studio 6 build log
 *.plg
 
+# Visual Studio 19 log
+*.plg
+
 # Visual Studio 6 workspace options file
-*.opt
+ISSSC/logs/
 
 # Visual Studio LightSwitch build output
 **/*.HTMLClient/GeneratedArtifacts
