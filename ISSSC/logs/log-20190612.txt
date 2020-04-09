@@ -1,2 +1,0 @@
-2019-06-12 22:29:08.331 +02:00 [Information] Starting web host
-2019-06-12 22:33:45.694 +02:00 [Information] Starting web host

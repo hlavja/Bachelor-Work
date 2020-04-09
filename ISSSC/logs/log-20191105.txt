@@ -1,2 +1,0 @@
-2019-11-05 18:51:05.367 +01:00 [Information] Starting web host
-2019-11-05 18:52:49.169 +01:00 [Information] Starting web host

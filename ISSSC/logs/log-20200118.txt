@@ -1,7 +1,0 @@
-2020-01-18 00:00:18.135 +01:00 [Information] Starting web host
-2020-01-18 00:04:09.198 +01:00 [Information] Starting web host
-2020-01-18 00:09:13.180 +01:00 [Information] Starting web host
-2020-01-18 00:10:55.512 +01:00 [Information] Starting web host
-2020-01-18 00:15:14.822 +01:00 [Information] Starting web host
-2020-01-18 00:28:09.388 +01:00 [Information] Starting web host
-2020-01-18 00:35:26.863 +01:00 [Information] Starting web host
