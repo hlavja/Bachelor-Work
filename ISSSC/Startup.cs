@@ -19,8 +19,11 @@ namespace ISSSC
         }
 
         public IConfiguration Configuration { get; }
-        
-        // This method gets called by the runtime. Use this method to add services to the container.
+
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -46,7 +49,11 @@ namespace ISSSC
             services.AddSSCHttpContextAccessor();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public static void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -59,6 +66,7 @@ namespace ISSSC
                 app.UseHsts();
             }
 
+            //redirect all http requests to https
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

@@ -149,8 +149,12 @@ namespace ISSSC.Class
             return new HtmlString(builder.ToString());
         }
 
-
-        public HtmlString RenderAttendance(List<Event> myEventsWithoutAttendace, bool showState = false)
+        /// <summary>
+        /// Renders attendance component
+        /// </summary>
+        /// <param name="events">List of my events without attendance</param>
+        /// <returns>rendered component</returns>
+        public HtmlString RenderAttendance(List<Event> myEventsWithoutAttendace)
         {
             StringBuilder builder = new StringBuilder();
 
@@ -184,6 +188,13 @@ namespace ISSSC.Class
             return new HtmlString(builder.ToString());
         }
 
+        /// <summary>
+        /// Renders attendance component
+        /// </summary>
+        /// <param name="db">Database context</param>
+        /// <param name="userID">Logged user ID</param>
+        /// <param name="weeks">Number of weeks</param>
+        /// <returns>Html component</returns>
         public HtmlString RenderAttendance(SscisContext db, int userID, int weeks = 0)
         {
             List<Event> myEventsWithoutAttendance = db.Event.Where(e => (e.IdTutor == userID && e.IsAccepted == true && e.Attendance == null && e.IsCancelled == false && e.TimeTo <= DateTime.Now)).ToList();

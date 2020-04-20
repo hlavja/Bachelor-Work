@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ISSSC.Class;
+﻿using ISSSC.Class;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ISSSC.Extensions
 {
+    /// <summary>
+    /// Class for HttpContext injection
+    /// </summary>
     public static class HttpContextExtension
     {
         public static void AddSSCHttpContextAccessor(this IServiceCollection services)

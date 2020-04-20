@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace ISSSC.Class
 {
+    /// <summary>
+    /// HttpContext class
+    /// </summary>
     public class SSCHttpContext
     {
         private static IHttpContextAccessor _httpContextAccessor;

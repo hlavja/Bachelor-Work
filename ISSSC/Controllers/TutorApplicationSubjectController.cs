@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using ISSSC.Models;
-using ISSSC.Models.Meta;
-using ISSSC.Class;
-using ISSSC.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Net;
+using ISSSC.Attributes;
+using ISSSC.Class;
 
 namespace ISSSC.Controllers
 {
@@ -21,6 +16,7 @@ namespace ISSSC.Controllers
         #region Unused
 
         // GET: TutorApplicationSubjects
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public ActionResult Index()
         {
             var tutorApplicationSubject = db.TutorApplicationSubject.Include(t => t.IdSubjectNavigation).Include(t => t.IdApplicationNavigation);
@@ -28,6 +24,7 @@ namespace ISSSC.Controllers
         }
 
         // GET: TutorApplicationSubjects/Details/5
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -43,6 +40,7 @@ namespace ISSSC.Controllers
         }
 
         // GET: TutorApplicationSubjects/Create
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public ActionResult Create()
         {
             ViewBag.SubjectID = new SelectList(db.EnumSubject, "Id", "Code");
@@ -52,6 +50,7 @@ namespace ISSSC.Controllers
 
         
         [HttpPost]
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind("Id","IdSubject","IdApplication","Degree")] TutorApplicationSubject tutorApplicationSubject)
         {
@@ -68,6 +67,7 @@ namespace ISSSC.Controllers
         }
 
         // GET: TutorApplicationSubjects/Edit/5
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -89,6 +89,7 @@ namespace ISSSC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public ActionResult Edit([Bind("Id","IdSubject","IdApplication","Degree")] TutorApplicationSubject tutorApplicationSubject)
         {
             if (ModelState.IsValid)
@@ -103,6 +104,7 @@ namespace ISSSC.Controllers
         }
 
         // GET: TutorApplicationSubjects/Delete/5
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -120,6 +122,7 @@ namespace ISSSC.Controllers
         // POST: TutorApplicationSubjects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public ActionResult DeleteConfirmed(int id)
         {
             TutorApplicationSubject tutorApplicationSubject = db.TutorApplicationSubject.Find(id);

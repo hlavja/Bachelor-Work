@@ -14,7 +14,9 @@ namespace ISSSC.Controllers
     {
         Task Send(EmailMessage emailMessage);
     }
-
+    /// <summary>
+    /// Class for email service
+    /// </summary>
     public class EmailService : IEmailService
     {
         private readonly IEmailConfiguration _emailConfiguration;
@@ -27,8 +29,20 @@ namespace ISSSC.Controllers
             _emailConfiguration = emailConfiguration;
         }
 
+        /// <summary>
+        /// Async task for sending emails from application
+        /// </summary>
+        /// <param name="emailMessage">email message object with preffiled data</param>
+        /// <returns></returns>
         public async Task Send(EmailMessage emailMessage)
         {
+            EmailAddress emailFrom = new EmailAddress();
+            emailFrom.Address = "studentsuportcentre@kiv.zcu.cz";
+            emailFrom.Name = "Student Suport Centre";
+            List<EmailAddress> listFrom = new List<EmailAddress>();
+            listFrom.Add(emailFrom);
+            emailMessage.FromAddresses = listFrom;
+
             var message = new MimeMessage();
             message.To.AddRange(emailMessage.ToAddresses.Select(x => new MailboxAddress(x.Name, x.Address)));
             message.From.AddRange(emailMessage.FromAddresses.Select(x => new MailboxAddress(x.Name, x.Address)));
@@ -43,6 +57,7 @@ namespace ISSSC.Controllers
             using (var emailClient = new SmtpClient())
             {
                 string smtp = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.SMTP, StringComparison.OrdinalIgnoreCase)).Single().ParamValue;
+                //no SMTP in database => use default from appsetings.json
                 if (string.IsNullOrEmpty(smtp))
                 {
                     emailClient.Connect(_emailConfiguration.SmtpServer, _emailConfiguration.SmtpPort, true);

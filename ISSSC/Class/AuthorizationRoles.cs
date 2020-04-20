@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ISSSC.Class
+﻿namespace ISSSC.Class
 {
     /// <summary>
     /// Class with list of authorization roles for UCs

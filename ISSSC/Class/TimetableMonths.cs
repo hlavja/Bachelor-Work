@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ISSSC.Class
+﻿namespace ISSSC.Class
 {
     /// <summary>
-    /// Tutor applicatoin degrees definition
+    /// Czech months declaration
     /// </summary>
     public static class TimetableMonths
     {

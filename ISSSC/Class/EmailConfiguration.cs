@@ -13,6 +13,9 @@
         string PopPassword { get; }
     }
 
+    /// <summary>
+    /// Mapping email configuration from appsetings.json
+    /// </summary>
     public class EmailConfiguration : IEmailConfiguration
     {
         public string SmtpServer { get; set; }

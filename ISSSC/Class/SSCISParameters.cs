@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ISSSC.Class
+﻿namespace ISSSC.Class
 {
+    /// <summary>
+    /// SSCIS parameters keys in database
+    /// </summary>
     public static class SSCISParameters
     {
         public const string MAXSUBJECTSCOUNT = "MAX_SUBJECTS_COUNT";

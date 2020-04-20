@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 
-//TODO School database usage
 namespace ISSSC.Models
 {
     public partial class SscisContext : DbContext
@@ -31,6 +28,10 @@ namespace ISSSC.Models
         public virtual DbSet<TutorApplication> TutorApplication { get; set; }
         public virtual DbSet<TutorApplicationSubject> TutorApplicationSubject { get; set; }
 
+        /// <summary>
+        /// Connection to database when application is starting
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

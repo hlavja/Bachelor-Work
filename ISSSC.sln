@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ISSSC", "ISSSC\ISSSC.csproj
 		{012E9C70-E771-4A0F-9E9C-286B1B152A38} = {012E9C70-E771-4A0F-9E9C-286B1B152A38}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSCISResources", "ClassLibrary1\SSCISResources.csproj", "{012E9C70-E771-4A0F-9E9C-286B1B152A38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ISSSCResources", "ClassLibrary1\ISSSCResources.csproj", "{012E9C70-E771-4A0F-9E9C-286B1B152A38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

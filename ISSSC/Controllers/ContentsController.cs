@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Net;
-using System.Web;
-using System.Threading.Tasks;
 using ISSSC.Models;
-using ISSSC.Models.Meta;
 using ISSSC.Class;
 using ISSSC.Attributes;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Http.Headers;
 
 namespace ISSSC.Controllers
 {

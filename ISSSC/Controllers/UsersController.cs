@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Net;
-using System.Web;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using ISSSC.Models;
@@ -35,7 +33,6 @@ namespace SSCIS.Controllers
         {
             var sSCISUser = db.SscisUser.Include(s => s.IdRoleNavigation).Include(s => s.IsActivatedByNavigation);
 
-            //        subject, emails
             Dictionary<string, string> tutorEmailsLists = new Dictionary<string, string>();
             List<Approval> approvals = db.Approval.ToList();
 
@@ -251,7 +248,6 @@ namespace SSCIS.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.RoleID = new SelectList(db.EnumRole, "Id", "Role", editUser.User.IdRole);
-            //ViewBag.RoleID = new SelectList(db.EnumRole.ToList(), "Id", "Role");
             ViewBag.ActivatedByID = new SelectList(db.SscisUser, "Id", "Login", editUser.User.IsActivatedBy);
             return View(editUser.User);
         }
@@ -293,9 +289,12 @@ namespace SSCIS.Controllers
 
             try
             {
+                //remove sessions
                 db.SscisSession.RemoveRange(db.SscisSession.Where(s => s.IdUser == id));
+                //remove approvals
                 db.Approval.RemoveRange(db.Approval.Where(s => s.IdTutor == id));
 
+                //edit news, dont want to delete them
                 List<SscisContent> userContent = db.SscisContent.Where(a => a.IdAuthor == id || a.IdEditedBy == id).ToList();
                 foreach (SscisContent content in userContent)
                 {
@@ -309,12 +308,14 @@ namespace SSCIS.Controllers
                     }
                 }
 
+                //edit feedbacks if inserted nonanonymous
                 List<Participation> userParticipation = db.Participation.Where(a => a.IdUser == id).ToList();
                 foreach (Participation participation in userParticipation)
                 {
                     participation.IdUserNavigation = null;
                 }
 
+                //set user events to cancelled
                 List<Event> userEvent = db.Event.Where(a => a.IdTutor == id || a.IdApplicant == id).ToList();
                 foreach (Event sscisEvent in userEvent)
                 {
@@ -331,6 +332,7 @@ namespace SSCIS.Controllers
                     sscisEvent.IsCancelled = true;
                 }
 
+                //delete tutor applications
                 List<TutorApplication> userAplication = db.TutorApplication.Where(a => a.IdUser == id).ToList();
                 foreach (TutorApplication tutorApplication in userAplication)
                 {

@@ -25,7 +25,14 @@ namespace ISSSC.Controllers
         /// </summary>
         private SscisContext db = new SscisContext();
 
+        /// <summary>
+        /// Email service
+        /// </summary>
         private readonly IEmailService _emailService;
+
+        /// <summary>
+        /// Injection of configuration
+        /// </summary>
         readonly IConfiguration _configuration;
 
         public EventsController(IEmailService emailService, IConfiguration configuration)
@@ -61,6 +68,7 @@ namespace ISSSC.Controllers
 
         #region Unused
         // GET: Events/Details/5
+        // debug
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -76,6 +84,11 @@ namespace ISSSC.Controllers
         }
         #endregion
 
+        /// <summary>
+        /// Acceptation of extra lesson
+        /// </summary>
+        /// <param name="id">Lesson ID</param>
+        /// <returns></returns>
         [Route("ExtraLesson/Accept")]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Tutor)]
         [HttpGet]
@@ -168,8 +181,6 @@ namespace ISSSC.Controllers
             model.Event = new Event();
             if (ModelState.IsValid && model.Date >= DateTime.Now)
             {
-                //int userId = (int)HttpContext.Session.GetInt32("userId");
-
                 for (int i = 0; i < model.Recurrence; i++)
                 {
                     Event newEvent = new Event();
@@ -186,7 +197,6 @@ namespace ISSSC.Controllers
                     }                   
                     newEvent.IsExtraLesson = false;
                     newEvent.TimeFrom = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour, model.TimeFrom.Minute, 0);
-                    //model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeTo.Hour, model.TimeTo.Minute, 0);
 
                     if (!BoolParser.Parse(db.SscisParam.Single(p => p.ParamKey.Equals(SSCISParameters.STANDARTEVENTLENGTH)).ParamValue))
                     {
@@ -217,6 +227,7 @@ namespace ISSSC.Controllers
 
         /// <summary>
         /// Acceptation of created event
+        /// Method sends email notification to tutor
         /// </summary>
         /// <param name="id">Event ID</param>
         /// <returns>Redirection to list of events</returns>
@@ -236,23 +247,12 @@ namespace ISSSC.Controllers
             @event.IsAccepted = true;
             db.SaveChanges();
 
-            //TODO poslat email studentovi, že byl přijat
             EmailMessage emailMessage = new EmailMessage();
-
-            EmailAddress emailFrom = new EmailAddress();
-            emailFrom.Address = "studentsuportcentre@kiv.zcu.cz";
-            emailFrom.Name = "Student Suport Centre";
 
             EmailAddress emailTo = new EmailAddress();
             emailTo.Address = @event.IdTutorNavigation.Email;
-
-            List<EmailAddress> listFrom = new List<EmailAddress>();
-            listFrom.Add(emailFrom);
-
             List<EmailAddress> listTo = new List<EmailAddress>();
             listTo.Add(emailTo);
-
-            emailMessage.FromAddresses = listFrom;
             emailMessage.ToAddresses = listTo;
 
             emailMessage.Subject = string.Format(_configuration.GetValue<string>("EmailMessageConfigs:AcceptedLessonEmail:Subject"), @event.IdSubjectNavigation.Code, @event.TimeFrom);
@@ -303,7 +303,11 @@ namespace ISSSC.Controllers
             return RedirectToAction("Index");
         }
 
-
+        /// <summary>
+        /// Graphical represation of events (like timetable) for given month
+        /// </summary>
+        /// <param name="month">Given month in actual year</param>
+        /// <returns></returns>
         [HttpGet]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public ActionResult EventsTimetable(int? month = null)
@@ -316,8 +320,6 @@ namespace ISSSC.Controllers
             DateTime now = DateTime.Now;
             DateTime start = new DateTime(now.Year, (int)month, 1);
             DateTime end = start.AddMonths(1).AddDays(-1);
-
-            //List<DateTime> ahoj = db.Event.Where(p => p.TimeFrom > now.AddDays(-20) && p.TimeTo < now && p.IsExtraLesson == false).Select(e => e.TimeFrom).Distinct().ToList();
 
             MetaTimetable metaTimetable = new MetaTimetable();
             metaTimetable.dateTimes = db.Event.Where(p => p.TimeFrom > start && p.TimeTo < end && p.IsExtraLesson == false && p.IsCancelled == false).Select(e => e.TimeFrom).Distinct().OrderBy(e =>e.Date).ToList();
@@ -347,7 +349,11 @@ namespace ISSSC.Controllers
             return View(metaTimetable);
         }
 
-
+        /// <summary>
+        /// Convert month int represantion to czech string
+        /// </summary>
+        /// <param name="month">Month</param>
+        /// <returns>Month name</returns>
         public static String GetMontName(int month)
         {
             switch (month)
@@ -381,6 +387,11 @@ namespace ISSSC.Controllers
             }
         }
 
+        /// <summary>
+        /// Convert month name to int representation
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns>Month id</returns>
         public static int GetMontId (string month)
         {
             switch (month)
@@ -415,7 +426,7 @@ namespace ISSSC.Controllers
         }
 
         /// <summary>
-        /// Acceptation of created event
+        /// Acceptation of created events from graphical timetable
         /// </summary>
         /// <param name="selectedPendings">Selected event IDs</param>
         /// <returns>Redirection to timetable</returns>
@@ -439,13 +450,13 @@ namespace ISSSC.Controllers
             }
 
             return RedirectToAction("EventsTimetable");
-        }
-
+        }   
+        
         /// <summary>
-        /// Return csv file with feedbacks
+        /// Generation of CVS representation of displayed timetable
         /// </summary>
-        /// <param name="model">Filter model</param>
-        /// <returns>CSV file</returns>
+        /// <param name="month">Month</param>
+        /// <returns>CVS file</returns>
         [HttpPost]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public IActionResult CsvTimetableDownload(int month)
@@ -462,6 +473,12 @@ namespace ISSSC.Controllers
             return File(new UTF8Encoding().GetBytes(csv), "text/csv", filename);
         }
 
+        /// <summary>
+        /// Generatin CVS content
+        /// </summary>
+        /// <param name="dateTimes">List of unique dateTime</param>
+        /// <param name="tutors">List of tutors</param>
+        /// <returns>CSV content string</returns>
         public string generateCsv(List<DateTime> dateTimes, List<SscisUser> tutors)
         {
             StringBuilder builder = new StringBuilder();
@@ -498,6 +515,11 @@ namespace ISSSC.Controllers
             return builder.ToString();
         }
 
+        /// <summary>
+        /// Switching timetable display
+        /// </summary>
+        /// <param name="Months">Month ID</param>
+        /// <returns>Timetable view</returns>
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         [HttpPost]
         public ActionResult GetTimetable(string Months)
@@ -523,6 +545,11 @@ namespace ISSSC.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Form to filling lesson attendance
+        /// </summary>
+        /// <param name="id">Lesson ID</param>
+        /// <returns>Confirmation view</returns>
         [HttpGet]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Tutor)]
         public ActionResult Attendance(int? id)
@@ -541,6 +568,11 @@ namespace ISSSC.Controllers
             return View(@event);
         }
 
+        /// <summary>
+        /// Confirmation view of attendance
+        /// </summary>
+        /// <param name="model">Event model</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Tutor)]

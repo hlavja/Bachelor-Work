@@ -22,4 +22,5 @@ E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debu
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.AssemblyInfo.cs
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.dll
 E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.pdb
-E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.csprojAssemblyReference.cache
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.csproj.CoreCompileInputs.cache
+E:\School\Bakalarka\Bakalářka final\Projekt ISSSC\ISSSC\ClassLibrary1\obj\Debug\netcoreapp2.2\SSCISResources.genruntimeconfig.cache

@@ -13123,9 +13123,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\School\\Bakalarka\\Bakalářka final\\Projekt ISSSC\\ISSSC\\ClassLibrary1\\SSCISResources.csproj",
+      "projectUniqueName": "E:\\School\\Bakalarka\\Bakalářka final\\Projekt ISSSC\\ISSSC\\ClassLibrary1\\ISSSCResources.csproj",
       "projectName": "SSCISResources",
-      "projectPath": "E:\\School\\Bakalarka\\Bakalářka final\\Projekt ISSSC\\ISSSC\\ClassLibrary1\\SSCISResources.csproj",
+      "projectPath": "E:\\School\\Bakalarka\\Bakalářka final\\Projekt ISSSC\\ISSSC\\ClassLibrary1\\ISSSCResources.csproj",
       "packagesPath": "C:\\Users\\hlavj\\.nuget\\packages\\",
       "outputPath": "E:\\School\\Bakalarka\\Bakalářka final\\Projekt ISSSC\\ISSSC\\ClassLibrary1\\obj\\",
       "projectStyle": "PackageReference",
@@ -13220,7 +13220,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

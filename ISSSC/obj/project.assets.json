@@ -14013,8 +14013,8 @@
     },
     "SSCISResources/1.0.0": {
       "type": "project",
-      "path": "../ClassLibrary1/SSCISResources.csproj",
-      "msbuildProject": "../ClassLibrary1/SSCISResources.csproj"
+      "path": "../ClassLibrary1/ISSSCResources.csproj",
+      "msbuildProject": "../ClassLibrary1/ISSSCResources.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -14071,8 +14071,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "E:\\School\\Bakalarka\\Bakalářka final\\Projekt ISSSC\\ISSSC\\ClassLibrary1\\SSCISResources.csproj": {
-              "projectPath": "E:\\School\\Bakalarka\\Bakalářka final\\Projekt ISSSC\\ISSSC\\ClassLibrary1\\SSCISResources.csproj"
+            "E:\\School\\Bakalarka\\Bakalářka final\\Projekt ISSSC\\ISSSC\\ClassLibrary1\\ISSSCResources.csproj": {
+              "projectPath": "E:\\School\\Bakalarka\\Bakalářka final\\Projekt ISSSC\\ISSSC\\ClassLibrary1\\ISSSCResources.csproj"
             }
           }
         }
@@ -14181,7 +14181,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
       }
     }
   },

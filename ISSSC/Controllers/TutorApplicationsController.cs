@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace ISSSC.Controllers
 {
@@ -26,7 +24,14 @@ namespace ISSSC.Controllers
         /// </summary>
         private SscisContext db = new SscisContext();
 
+        /// <summary>
+        /// Injection of email service
+        /// </summary>
         private readonly IEmailService _emailService;
+
+        /// <summary>
+        /// Injection of config
+        /// </summary>
         readonly IConfiguration _configuration;
 
 
@@ -92,7 +97,6 @@ namespace ISSSC.Controllers
                 return RedirectToAction("ApplicationPending");
             }
 
-            //int countOfSubjects = int.Parse(db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.MAXSUBJECTSCOUNT)).Single().ParamValue);
             int countOfSubjects = db.EnumSubject.Count(s => s.IdParent != null && s.Lesson == true);
 
             MetaTutorApplication model = new MetaTutorApplication(countOfSubjects);
@@ -215,20 +219,10 @@ namespace ISSSC.Controllers
 
             EmailMessage emailMessage = new EmailMessage();
 
-            EmailAddress emailFrom = new EmailAddress();
-            emailFrom.Address = "studentsuportcentre@kiv.zcu.cz";
-            emailFrom.Name = "Student Suport Centre";
-
             EmailAddress emailTo = new EmailAddress();
             emailTo.Address = tutorApplication.IdUserNavigation.Email;
-
-            List<EmailAddress> listFrom = new List<EmailAddress>();
-            listFrom.Add(emailFrom);
-
             List<EmailAddress> listTo = new List<EmailAddress>();
             listTo.Add(emailTo);
-
-            emailMessage.FromAddresses = listFrom;
             emailMessage.ToAddresses = listTo;
 
             emailMessage.Subject = _configuration.GetValue<string>("EmailMessageConfigs:AcceptApplicationEmail:Subject");
@@ -264,24 +258,14 @@ namespace ISSSC.Controllers
 
             EmailMessage emailMessage = new EmailMessage();
 
-            EmailAddress emailFrom = new EmailAddress();
-            emailFrom.Address = "studentsuportcentre@kiv.zcu.cz";
-            emailFrom.Name = "Student Suport Centre";
-
             EmailAddress emailTo = new EmailAddress();
             emailTo.Address = tutorApplication.IdUserNavigation.Email;
-
-            List<EmailAddress> listFrom = new List<EmailAddress>();
-            listFrom.Add(emailFrom);
-
             List<EmailAddress> listTo = new List<EmailAddress>();
             listTo.Add(emailTo);
-
-            emailMessage.FromAddresses = listFrom;
             emailMessage.ToAddresses = listTo;
 
-            emailMessage.Subject = _configuration.GetValue<string>("EmailMessageConfigs:AcceptApplicationEmail:Subject");
-            emailMessage.Content = _configuration.GetValue<string>("EmailMessageConfigs:AcceptApplicationEmail:Content");
+            emailMessage.Subject = _configuration.GetValue<string>("EmailMessageConfigs:DeclineApplicationEmail:Subject");
+            emailMessage.Content = _configuration.GetValue<string>("EmailMessageConfigs:DeclineApplicationEmail:Content");
 
             _emailService.Send(emailMessage);
 

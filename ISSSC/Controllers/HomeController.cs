@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ISSSC.Models.Meta;
 using ISSSC.Models;
 using ISSSC.Class;
 using ISSSC.Attributes;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Net;
 using System.Text;
-using System.Security.Cryptography;
 using Microsoft.Extensions.Configuration;
 
 namespace ISSSC.Controllers
@@ -60,7 +56,6 @@ namespace ISSSC.Controllers
                 };
             }
 
-
             int userId = 0;
 
             if (HttpContext.Session.GetInt32("userId").HasValue)
@@ -83,6 +78,10 @@ namespace ISSSC.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// About page
+        /// </summary>
+        /// <returns>About view</returns>
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -168,7 +167,6 @@ namespace ISSSC.Controllers
                 {
                     model.Event.TimeTo = model.Event.TimeFrom.AddHours(1);
                 }
-                //model.Event.TimeTo = new DateTime(model.Date.Year, model.Date.Month, model.Date.Day, model.TimeFrom.Hour + 1, model.TimeFrom.Minute, 0);
                 model.Event.IdSubjectNavigation = Db.EnumSubject.Find(model.SubjectID);
                 model.Event.IdTutorNavigation = null;
                 model.Event.IdTutor = null;
@@ -185,14 +183,6 @@ namespace ISSSC.Controllers
                 int newId = model.Event.Id;
 
                 EmailMessage emailMessage = new EmailMessage();
-
-                EmailAddress emailFrom = new EmailAddress();
-                emailFrom.Address = "studentsuportcentre@kiv.zcu.cz";
-                emailFrom.Name = "Student Suport Centre";
-
-                List<EmailAddress> listFrom = new List<EmailAddress>();
-                listFrom.Add(emailFrom);
-
                 List<EmailAddress> listTo = new List<EmailAddress>();
 
                 foreach (var item in Db.Approval)
@@ -211,7 +201,6 @@ namespace ISSSC.Controllers
 
                 string subjectCode = Db.EnumSubject.Where(s => s.Id == model.SubjectID).Single().Code;
 
-                emailMessage.FromAddresses = listFrom;
                 emailMessage.ToAddresses = listTo;
 
                 emailMessage.Subject = string.Format(_configuration.GetValue<string>("EmailMessageConfigs:ExtraLectionEmail:Subject"), subjectCode);
@@ -354,7 +343,7 @@ namespace ISSSC.Controllers
 
 
         /// <summary>
-        /// Login UC
+        /// Login Admin
         /// </summary>
         /// <param name="validationMessage">validation message</param>
         /// <returns>View with login form</returns>
@@ -393,7 +382,7 @@ namespace ISSSC.Controllers
         public ActionResult AdminLogin(MetaLogin model)
         {
 
-            /* Fetch the stored value */
+            // Fetch the stored value
             string password = "";
             string savedPasswordHash = Db.SscisParam.Where(p => p.ParamKey.Equals(SSCISParameters.ADMINPASSWORD, StringComparison.OrdinalIgnoreCase)).Single().ParamValue;
             if(model != null && !string.IsNullOrEmpty(model.Password))

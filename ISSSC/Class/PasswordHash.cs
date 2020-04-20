@@ -1,19 +1,18 @@
-﻿using ISSSC.Models;
-using Microsoft.AspNetCore.Html;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Security.Cryptography;
-using System.Security.Policy;
-using System.Text;
-using System.Web;
 
 namespace ISSSC.Class
 {
-
+    /// <summary>
+    /// Class for manipulation with administrator password
+    /// </summary>
     public class PasswordHash
     {
-
+        /// <summary>
+        /// Endoce given password
+        /// </summary>
+        /// <param name="blankPassword">filled password in param form</param>
+        /// <returns>Returns password hash</returns>
         public string Encode(string blankPassword)
         {
             //Create the salt value with a cryptographic PRNG
@@ -31,19 +30,21 @@ namespace ISSSC.Class
             return(savedPasswordHash);
         }
 
-
+        /// <summary>
+        /// Decode given password and compare it with the one in database
+        /// </summary>
+        /// <param name="savedPasswordHash">saved password hash from database</param>
+        /// <param name="password">filled password in login form</param>
+        /// <returns>returns boolean value if passwords are equal</returns>
         public Boolean Decode(string savedPasswordHash, string password = "")
         {
-            /* Extract the bytes */
             byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
             string savedPassword = Convert.ToBase64String(hashBytes);
-            /* Get the salt */
             byte[] salt = new byte[16];
             Array.Copy(hashBytes, 0, salt, 0, 16);
             var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
             byte[] hash = pbkdf2.GetBytes(20);
-
-            /* Compare the results */
+            //compare passwords
             for (int i = 0; i < 20; i++)
             {
                 if (hashBytes[i + 16] != hash[i])

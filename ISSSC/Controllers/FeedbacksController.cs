@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.IO;
 using QRCoder;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Threading.Tasks;
 using ISSSC.Models;
 using ISSSC.Models.Meta;
 using ISSSC.Class;
 using ISSSC.Attributes;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SSCIS.Controllers
 {
@@ -46,7 +41,6 @@ namespace SSCIS.Controllers
         /// <param name="code">Code from url</param>
         /// <returns>Feedback form view</returns>
         [HttpGet]
-        //[SSCISAuthorize(AccessLevel = AuthorizationRoles.User)]
         public ActionResult Index(int? code)
         {
             int? eventId = urlGenerator.resolveEventID(code.ToString());
@@ -64,7 +58,6 @@ namespace SSCIS.Controllers
         /// <param name="model">Feedback model</param>
         /// <returns>Redirection</returns>
         [HttpPost]
-        //[SSCISAuthorize(AccessLevel = AuthorizationRoles.User)]
         public ActionResult Index(Feedback model)
         {
             int userId = 0;
@@ -101,8 +94,12 @@ namespace SSCIS.Controllers
         {
             return View();
         }
-
-        // GET: Feedbacks/Details/5
+        /// <summary>
+        /// Gives exact feedback
+        /// GET: Feedbacks/Details/5
+        /// </summary>
+        /// <param name="id">Feedback ID</param>
+        /// <returns>Feedback view</returns>
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -148,7 +145,7 @@ namespace SSCIS.Controllers
         }
 
         /// <summary>
-        /// Creates view with form with filter for generating csv file with feedback
+        /// Creates view with form with filter for generating statistics
         /// </summary>
         /// <returns>View with form</returns>
         [HttpGet]
@@ -213,10 +210,10 @@ namespace SSCIS.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Show list of events statistics
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">Filter dateTime model</param>
+        /// <returns>Returns events statistics view</returns>
         [HttpPost]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public IActionResult List(MetaInterval model)
@@ -298,9 +295,9 @@ namespace SSCIS.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Show last month statistics for tutors
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Tutos statistics view</returns>
         [HttpPost]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public IActionResult LastMonthTutors()
@@ -379,10 +376,10 @@ namespace SSCIS.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Show tutor statistics for given date interval
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">DateTime interval model</param>
+        /// <returns>Tutor statistics view</returns>
         [HttpPost]
         [SSCISAuthorize(AccessLevel = AuthorizationRoles.Administrator)]
         public IActionResult TutorList(MetaInterval model)
