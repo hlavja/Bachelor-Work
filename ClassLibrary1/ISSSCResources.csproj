@@ -35,7 +35,7 @@
 
   <ItemGroup>
     <PackageReference Include="MailKit" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.6" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.HttpOverrides" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Server.IIS" Version="2.2.2" />
